@@ -1,4 +1,13 @@
 /* Do not delete this file or move it */
+:root {
+  --primaryRed: #ED1B2F;
+  --secondaryRed: #F9CCD0;
+  --primaryYellow: #FFD400;
+  --secondaryYellow: #FFF7CC;
+  --primaryGreen: #33EE9C;
+  --secondaryGreen: #D5F6E8;
+}
+
 * {
   margin: auto;
 }
@@ -15,4 +24,22 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.borderBase {
+  border-width: 3px;
+  border-style: solid;
+  border-radius: 10px;
+}
+
+.redBorder {
+  border-color: var(--primaryRed);
+}
+
+.yellowBorder {
+  border-color: var(--primaryYellow);
+}
+
+.greenBorder {
+  border-color: var(--primaryGreen);
 }
