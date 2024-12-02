@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 import '../index.css';
-import '../css/appt-details.css';
+import '../css/meeting-details.css';
 import { FaRegClock } from "react-icons/fa";
 import { CgAttachment } from "react-icons/cg";
 import { MdEdit } from "react-icons/md";
@@ -10,7 +10,7 @@ import { MdEdit } from "react-icons/md";
 
   import profilePic from './assets/testProfilePic.png';
 
-  const fakeAppt = {
+  const fakeMeeting = {
     id: '1234',
     hostName: 'Joseph Vybihal',
     hostProfilePic: profilePic,
@@ -21,7 +21,7 @@ import { MdEdit } from "react-icons/md";
     attachment: 'COMP_307_project_outline.pdf',
   };
 
-  <ApptDetails appt={fakeAppt} showEditButton={true} /> 
+  <MeetingDetails meeting={fakeMeeting} showEditButton={true} /> 
 */
 
 /* TO DO:
@@ -31,11 +31,11 @@ import { MdEdit } from "react-icons/md";
 */
 
 
-const ApptDetails = ({ appt, showEditButton=false }) => {
-  const { id, hostName, hostProfilePic, title, duration, location, description, attachment } = appt;
+const MeetingDetails = ({ meeting, showEditButton=false }) => {
+  const { id, hostName, hostProfilePic, title, duration, location, description, attachment } = meeting;
 
   return (
-    <div id='appt-details-container'>
+    <div id='meeting-details-container'>
       <div id='profile-container'>
         <img
           src={hostProfilePic}
@@ -45,7 +45,7 @@ const ApptDetails = ({ appt, showEditButton=false }) => {
         {hostName}
       </div>
       <h1>{title}</h1>
-      <div id='appt-time-container' class='row'>
+      <div id='meeting-time-container' class='row'>
         <FaRegClock id='clock-icon'/>
         {duration} mins
       </div>
@@ -86,4 +86,4 @@ const ApptDetails = ({ appt, showEditButton=false }) => {
   );
 };
 
-export default ApptDetails;
+export default MeetingDetails;
