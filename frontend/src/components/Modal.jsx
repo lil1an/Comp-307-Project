@@ -17,8 +17,8 @@ const Modal = ({
   return (
     <>
       {visible && (
-        <div class='modal-background centered'>
-          <div class='modal-container centered border-base border-red'>
+        <div id='modal-background' class='centered'>
+          <div id='modal-container' class='centered border-base border-red'>
             <div>
               <h1>{title}</h1>
               <div style={{marginBottom: '15px'}}>{message}</div>
