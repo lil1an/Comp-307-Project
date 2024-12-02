@@ -17,6 +17,15 @@ function NavBar() {
 
   // To Do Later: Write login authenticator logic (manually change for now in the above line)
 
+  // Notification Panel Toggle (Bell Icon)
+  const [isNotifsOpen, setIsNotifsOpen] = useState(false)
+
+  // Function for toggling notifications
+  const toggleNotifs = () => {
+    setIsNotifsOpen((prev) => !prev); // Flipping state
+  };
+
+
   return (
     <div id="nav">
       {isLoggedIn ? (
@@ -40,7 +49,7 @@ function NavBar() {
               Documents
             </Link>
 
-            <IoIosNotifications id="bell-icon" />
+            <IoIosNotifications id="bell-icon" onClick={toggleNotifs}/>
 
             <Link to="/" class="nav-button">
               <FiLogIn class="icon" />
@@ -64,6 +73,7 @@ function NavBar() {
           </div>
         </>
       )}
+
     </div>
   )
 }
