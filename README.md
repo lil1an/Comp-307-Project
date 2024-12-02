@@ -14,4 +14,16 @@ A booking software that allows McGill University students and teachers alike to 
 - MongoDB 
 
 ## Contributing
+
+`node` version: 18.20.5; we use `npm`.
+
+Install dependencies:
+```
+npm install
+```
+
+Run in development:
+```
+npm run dev
+```
 Commit messages follow the [conventional commits standard](https://www.conventionalcommits.org/en/v1.0.0/). [Helpful info](https://gist.github.com/qoomon/5dfcdf8eec66a051ecd85625518cfd13).
