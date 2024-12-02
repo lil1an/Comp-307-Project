@@ -40,7 +40,7 @@ const MeetingDetails = ({ meeting, showEditButton=false }) => {
         <img
           src={hostProfilePic}
           class='profile-circle'
-          style={{ marginRight: '10px' }}
+          style={{ width: '100px', height: '100px', marginRight: '10px' }}
         />
         {hostName}
       </div>
