@@ -1,7 +1,7 @@
 import React from 'react';
 import '../index.css';
 import '../css/modal.css'
-import closeIcon from '../assets/close.png';
+import { IoIosClose } from "react-icons/io";
 
 const Modal = ({
   visible, 
@@ -54,11 +54,9 @@ const Modal = ({
               </div>
               )}
               {closeButtonCallback && (
-                <img 
-                  src={closeIcon} 
-                  class="close"
-                  alt="close" 
-                  onClick={() => closeButtonCallback()}
+                <IoIosClose
+                 onClick={() => closeButtonCallback()}
+                 class='close'
                 />
               )}
             </div>
