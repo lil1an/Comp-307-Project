@@ -1,0 +1,61 @@
+#appt-details-container {
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+}
+
+#profile-container {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+}
+
+#appt-time-container {
+  display: flex;
+  align-items: center;
+  color: var(--primaryRed);
+  font-size: 16px;
+  font-weight: 800;
+}
+
+#clock-icon {
+  color: var(--primaryRed);
+  height: auto;
+  width: 30px;
+  margin-right: 10px;
+}
+
+#attachment-container {
+  display: flex;
+  align-items: center;
+}
+
+#edit-button {
+  background-color: var(--primaryGreen);
+  color: black;
+  text-decoration: none;
+  font-weight: 800;
+  height: auto;
+  width: 120px;
+  padding: 10px 20px;
+  margin: 15px;
+}
+
+#edit-button:hover {
+  filter: brightness(0.95);
+}
+
+.bold-text {
+  font-weight: 800;
+}
+
+.row {
+  margin-bottom: 15px;
+}
+
+.icon {
+  color: black;
+  height: auto;
+  width: 20px;
+  margin-right: 5px;
+}

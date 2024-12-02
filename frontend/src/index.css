@@ -51,3 +51,12 @@ h1 {
 .border-green {
   border-color: var(--primaryGreen);
 }
+
+.profile-circle {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
