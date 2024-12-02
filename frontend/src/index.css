@@ -1,15 +1,11 @@
 /* Do not delete this file or move it */
 :root {
-  --primaryRed: #ED1B2F;
-  --secondaryRed: #F9CCD0;
-  --primaryYellow: #FFD400;
-  --secondaryYellow: #FFF7CC;
-  --primaryGreen: #33EE9C;
-  --secondaryGreen: #D5F6E8;
-}
-
-* {
-  margin: auto;
+  --primaryRed: #ed1b2f;
+  --secondaryRed: #f9ccd0;
+  --primaryYellow: #ffd400;
+  --secondaryYellow: #fff7cc;
+  --primaryGreen: #33ee9c;
+  --secondaryGreen: #d5f6e8;
 }
 
 body {

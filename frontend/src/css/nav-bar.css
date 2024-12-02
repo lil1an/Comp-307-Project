@@ -1,0 +1,110 @@
+@import url(../index.css);
+
+#nav {
+  background-color: var(--primaryRed);
+  height: 65px;
+  width: wv;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#logo {
+  height: auto;
+  width: 250px;
+  margin-left: 10px;
+}
+
+#logout-options {
+  display: flex;
+  margin-right: 10px;
+}
+
+#login-options {
+  display: flex;
+  margin-right: 10px;
+}
+
+.nav-button {
+  color: white;
+  font-weight: 800;
+  width: 100px;
+  height: auto;
+  border: 3px solid white;
+  border-radius: 10px;
+  padding: 10px 20px;
+  text-decoration: none;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 10px 10px;
+}
+
+.icon {
+  color: white;
+  height: auto;
+  width: 20px;
+  margin-right: 5px;
+}
+
+.nav-button:hover {
+  color: var(--primaryRed);
+  background-color: white;
+}
+
+.nav-button:hover .icon {
+  color: var(--primaryRed);
+}
+
+/* Buttons Users See After Logging In */
+.user-button {
+  width: 120px;
+  height: auto;
+  color: black;
+  font-weight: 800;
+  border-radius: 10px;
+  padding: 10px 20px;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 10px;
+}
+
+.user-button:nth-child(1) {
+  background-color: var(--primaryGreen);
+}
+
+.user-button:nth-child(1):hover {
+  background-color: #8bf6c7;
+}
+
+.user-button:nth-child(2) {
+  background-color: var(--primaryYellow);
+}
+
+.user-button:nth-child(2):hover {
+  background-color: #ffe979;
+}
+
+.user-button:nth-child(3) {
+  background-color: var(--secondaryRed);
+}
+
+.user-button:nth-child(3):hover {
+  background-color: #fde3e4;
+}
+
+#bell-icon {
+  color: white;
+  height: auto;
+  width: 40px;
+  margin-right: 5px;
+}
+
+.icon2 {
+  color: black;
+  height: auto;
+  width: 20px;
+  margin-right: 10px;
+}
