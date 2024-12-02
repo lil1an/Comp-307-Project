@@ -22,20 +22,32 @@ code {
     monospace;
 }
 
-.borderBase {
-  border-width: 3px;
-  border-style: solid;
-  border-radius: 10px;
+h1 {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 10px;
 }
 
-.redBorder {
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.border-base {
+  border-width: 3px;
+  border-style: solid;
+  border-radius: 7px;
+}
+
+.border-red {
   border-color: var(--primaryRed);
 }
 
-.yellowBorder {
+.border-yellow {
   border-color: var(--primaryYellow);
 }
 
-.greenBorder {
+.border-green {
   border-color: var(--primaryGreen);
 }
