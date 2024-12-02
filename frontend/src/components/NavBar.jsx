@@ -22,9 +22,8 @@ function NavBar() {
 
   // Function for toggling notifications
   const toggleNotifs = () => {
-    setIsNotifsOpen((prev) => !prev); // Flipping state
-  };
-
+    setIsNotifsOpen((prev) => !prev) // Flipping state
+  }
 
   return (
     <div id="nav">
@@ -49,10 +48,10 @@ function NavBar() {
               Documents
             </Link>
 
-            <IoIosNotifications id="bell-icon" onClick={toggleNotifs}/>
+            <IoIosNotifications id="bell-icon" onClick={toggleNotifs} />
 
             <Link to="/" class="nav-button">
-              <FiLogIn class="icon" />
+              <FiLogIn className="icon1" />
               Logout
             </Link>
           </div>
@@ -62,18 +61,17 @@ function NavBar() {
           <img src={logo} alt="logo" id="logo" />
           <div id="logout-options">
             <Link to="/login" class="nav-button">
-              <FiLogIn class="icon" />
+              <FiLogIn className="icon1" />
               Login
             </Link>
 
             <Link to="/registration" class="nav-button">
-              <IoPersonAdd class="icon" />
+              <IoPersonAdd className="icon1" />
               Register
             </Link>
           </div>
         </>
       )}
-
     </div>
   )
 }

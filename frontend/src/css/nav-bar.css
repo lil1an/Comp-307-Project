@@ -40,7 +40,7 @@
   margin: 10px 10px;
 }
 
-.icon {
+.icon1 {
   color: white;
   height: auto;
   width: 20px;
@@ -52,7 +52,7 @@
   background-color: white;
 }
 
-.nav-button:hover .icon {
+.nav-button:hover .icon1 {
   color: var(--primaryRed);
 }
 
