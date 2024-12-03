@@ -1,0 +1,70 @@
+.meeting-row-container {
+  background-color: #f4f4f4;
+  border-radius: 20px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 50px;
+}
+
+.meeting-row-datetime-container {
+ display: flex;
+ justify-content: start;
+ align-items: center;
+}
+
+.meeting-row-title-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+}
+
+.meeting-row-button-container {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+
+}
+
+.meeting-row-button {
+  color: black;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 8px 16px;
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.meeting-row-button:hover {
+  filter: brightness(0.95);
+}
+
+.green-background {
+  background-color: var(--primaryGreen);
+}
+
+.yellow-background {
+  background-color: var(--primaryYellow);
+}
+
+.subtitle {
+  color: #4a4a4a;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.no-hover:hover {
+  filter: brightness(1) !important;
+  cursor: default !important;
+}
+
+.icon-margin {
+  margin-right: 10px;
+}
