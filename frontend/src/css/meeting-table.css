@@ -1,0 +1,49 @@
+#meeting-table-header {
+  background-color: var(--secondaryRed);
+  padding: 5px;
+  height: 60px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+#meeting-table-meetings {
+  background-color: white;
+  padding: 20px 10px;
+}
+
+.tab-button {
+  background-color: var(--secondaryRed);
+  font-size: 16px;
+  font-weight: 700;
+  padding: 12px 36px;
+  margin: 20px 15px;
+  width: 100px;
+  border-radius: 25px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.tab-button--selected {
+  color: white;
+  background-color: var(--primaryRed);
+}
+
+.tab-button:hover {
+  filter: brightness(0.95);
+}
+
+.notification {
+  height: 13px;
+  width: 13px;
+  color: black;
+  margin-left: 2px;
+  margin-bottom: 9px;
+}
+
+.notification--selected {
+  color: white;
+}
