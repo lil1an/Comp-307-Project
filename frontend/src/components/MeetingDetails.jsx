@@ -39,39 +39,39 @@ const MeetingDetails = ({ meeting, showEditButton=false }) => {
       <div id='profile-container'>
         <img
           src={hostProfilePic}
-          class='profile-circle'
+          className='profile-circle'
           style={{ width: '100px', height: '100px', marginRight: '10px' }}
         />
         {hostName}
       </div>
       <h1>{title}</h1>
-      <div id='meeting-time-container' class='row'>
+      <div id='meeting-time-container' className='row'>
         <FaRegClock id='clock-icon'/>
         {duration} mins
       </div>
       {location && (
-        <div class='row'>
-          <span class='bold-text'>Location: </span>
+        <div className='row'>
+          <span className='bold-text'>Location: </span>
           <span>{location}</span>
         </div>
       )}
       {description && (
-        <div class='row'>
-         <span class='bold-text'>Description: </span>
+        <div className='row'>
+         <span className='bold-text'>Description: </span>
          <span>{description}</span>
         </div>
       )}
       {attachment && (
-        <div id='attachment-container' class='row'>
-          <CgAttachment class='icon'/>
-          <span class='bold-text'>Attachment: </span>
+        <div id='attachment-container' className='row'>
+          <CgAttachment className='icon'/>
+          <span className='bold-text'>Attachment: </span>
           <a href='https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley' target="_blank" rel="noopener noreferrer">
             {attachment}
           </a>
         </div>
       )}
       {showEditButton && (
-        <div class='row centered'>
+        <div className='row centered'>
           <Link 
             to={`/edit?id=${id}`}
             id='edit-button' 

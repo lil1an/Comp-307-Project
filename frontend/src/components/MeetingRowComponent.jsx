@@ -8,7 +8,7 @@ import { IoMdShare } from "react-icons/io";
 import { IoMdClose } from "react-icons/io";
 import { FaCheck } from "react-icons/fa6";
 
-/* NOTE: meeting types are 'upcoming', 'request', 'past' or 'declined'
+/* NOTE: meeting types are 'Upcoming', 'Requests', 'Past' or 'Declined'
 
   Example Usage: meeting types are upcoming, requests, past or declined
     import profilePic from './assets/testProfilePic.png';
@@ -17,7 +17,7 @@ import { FaCheck } from "react-icons/fa6";
       id: '1234',
       hostName: 'Joseph Vybihal',
       hostProfilePic: profilePic,
-      attendeeName:'Harry Potter',
+      attendeeNames:'Harry Potter',
       title: 'Professor Vybihal\'s Office Hours',
       duration: 30,
       starttime: '5:30pm',
@@ -27,11 +27,12 @@ import { FaCheck } from "react-icons/fa6";
       location: 'In person, Leacock 910',
       description: 'Please come prepared with your project outline filled out. See attachment for required components.',
       attachment: 'COMP_307_project_outline.pdf',
+      typeOfMeeting: 'Upcoming',
     };
 
     <MeetingRowComponent 
       meeting={fakeMeeting} 
-      typeOfMeeting='upcoming'
+      typeOfMeeting='Upcoming'
       acceptCallback={() => console.log('accept button clicked')}
       shareCallback={() => console.log('shared button clicked')}
       declineCallback={() => console.log('declined button clicked')}
@@ -56,7 +57,6 @@ const MeetingRowComponent = ({
 
   const { 
     id, 
-    hostName, 
     hostProfilePic = null, 
     attendeeNames,
     title, 
@@ -67,46 +67,47 @@ const MeetingRowComponent = ({
   } = meeting;
 
   return (
-    <div class='meeting-row-container'>
-      <div class='meeting-row-datetime-container'>
-        <span class='icon-margin'>
+    <div className='meeting-row-container'>
+      <div className='meeting-row-datetime-container'>
+        <span className='icon-margin'>
           {hostProfilePic ? 
             <img
               src={hostProfilePic}
-              class='profile-circle'
+              className='profile-circle'
               style={{height: '70px', width:'70px'}}
+              alt='host profile'
             />
             : <CgProfile style={{height: '70px', width:'70px'}}/>
           }
         </span>
         <div>
           {starttime}-{endtime}
-          <div class='subtitle'>{date}</div>
+          <div className='subtitle'>{date}</div>
         </div>
       </div>
-      <div class='meeting-row-title-container'>
+      <div className='meeting-row-title-container'>
         <Link 
           to={`/meetings?id=${id}`}
           style={{color:'black', textDecoration:'none'}}
         >
           {title}
         </Link>
-        <div class='subtitle'>
+        <div className='subtitle'>
           {attendeeNames.length > 0 &&
           (attendeeNames.join(', ').length > 40
             ? attendeeNames.join(', ').slice(0, 40) + '...'
             : attendeeNames.join(', '))}
         </div>
       </div>
-      <div class='meeting-row-button-container'>
-        {typeOfMeeting == 'upcoming' && (
+      <div className='meeting-row-button-container'>
+        {typeOfMeeting === 'Upcoming' && (
           <>
             {isInPerson ? 
-              <div class='meeting-row-button green-background no-hover'>In Person</div>
+              <div className='meeting-row-button green-background no-hover'>In Person</div>
               : 
               <Link 
                 to={link}
-                class='meeting-row-button green-background'
+                className='meeting-row-button green-background'
               >
                   Join
               </Link>
@@ -115,13 +116,13 @@ const MeetingRowComponent = ({
               <>
                 <Link 
                   to={`/edit?id=${id}`}
-                  class='meeting-row-button green-background'
+                  className='meeting-row-button green-background'
                 >
                   <MdEdit />
                 </Link>
 
                 <div 
-                  class='meeting-row-button green-background'
+                  className='meeting-row-button green-background'
                   onClick={shareCallback}
                 >
                   <IoMdShare />
@@ -129,38 +130,38 @@ const MeetingRowComponent = ({
               </>
             )}
             <div 
-              class='meeting-row-button yellow-background'
+              className='meeting-row-button yellow-background'
               onClick={declineCallback}
             >
               <IoMdClose />
             </div>
           </>
         )}
-        {typeOfMeeting == 'request' && (
+        {typeOfMeeting === 'Requests' && (
           <>
             <div 
-              class='meeting-row-button green-background'
+              className='meeting-row-button green-background'
               onClick={acceptCallback}
             >
-              <FaCheck class='icon-margin'/>
+              <FaCheck className='icon-margin'/>
               Accept
             </div>
 
             <div 
-              class='meeting-row-button yellow-background'
+              className='meeting-row-button yellow-background'
               onClick={declineCallback}
             >
-              <IoMdClose class='icon-margin'/>
+              <IoMdClose className='icon-margin'/>
               Decline
             </div>
           </>
         )}
-        {typeOfMeeting == 'declined' && (
+        {typeOfMeeting === 'Declined' && (
            <div 
-           class='meeting-row-button green-background'
+           className='meeting-row-button green-background'
            onClick={acceptCallback}
          >
-           <FaCheck class='icon-margin'/>
+           <FaCheck className='icon-margin'/>
            Accept
          </div>
         )}

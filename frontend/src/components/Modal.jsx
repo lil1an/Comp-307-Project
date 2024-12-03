@@ -3,6 +3,20 @@ import '../index.css';
 import '../css/modal.css'
 import { IoIosClose } from "react-icons/io";
 
+/* Example Usage
+  <Modal
+    visible='true'
+    title='Office Hours Created'
+    message='For more information about office hours, please email the professor'
+    afterMessageContent={<button> click me </button>}
+    primaryButtonLabel='Confirm'
+    primaryButtonCallback={() => console.log('primary button clicked')}
+    secondaryButtonLabel='Cancel'
+    secondaryButtonCallback={() => console.log('secondary button clicked')}
+    closeButtonCallback={() => console.log('close button clicked')}
+  />
+*/
+
 const Modal = ({
   visible, 
   title, 
@@ -17,8 +31,8 @@ const Modal = ({
   return (
     <>
       {visible && (
-        <div id='modal-background' class='centered'>
-          <div id='modal-container' class='centered border-base border-red'>
+        <div id='modal-background' className='centered'>
+          <div id='modal-container' className='centered border-base border-red'>
             <div>
               <h1>{title}</h1>
               <div style={{marginBottom: '15px'}}>{message}</div>
@@ -26,7 +40,7 @@ const Modal = ({
                 <div>{afterMessageContent}</div>
               )}
               {(primaryButtonLabel || secondaryButtonLabel) && (
-                <div class='centered'>
+                <div className='centered'>
                   {secondaryButtonLabel && (
                     <div 
                       onClick={() => {
@@ -34,7 +48,7 @@ const Modal = ({
                           secondaryButtonCallback();
                         }
                       }} 
-                      class='modal-button secondary-button border-red'
+                      className='modal-button secondary-button border-red'
                     >
                       {secondaryButtonLabel}
                     </div>
@@ -46,7 +60,7 @@ const Modal = ({
                           primaryButtonCallback();
                         }
                       }} 
-                      class='modal-button primary-button border-red'
+                      className='modal-button primary-button border-red'
                     >
                       {primaryButtonLabel}
                     </div>
@@ -56,7 +70,7 @@ const Modal = ({
               {closeButtonCallback && (
                 <IoIosClose
                  onClick={() => closeButtonCallback()}
-                 class='close'
+                 className='close'
                 />
               )}
             </div>
