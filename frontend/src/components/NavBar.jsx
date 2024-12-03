@@ -54,6 +54,19 @@ function NavBar() {
               <FiLogIn className="icon1" />
               Logout
             </Link>
+
+            {/* Notification Panel Popup Test with List*/}
+            {isNotifsOpen && (
+              <div id="notifs-panel">
+                <button id="close-notifs" onClick={toggleNotifs}> &times; </button>
+                <ul>
+                  <li> Professor Vyhibal’s Office Hours: A document was attached. </li>
+                  <li> Professor Vyhibal’s Office Hours: Meeting was modified. </li>
+                  <li> Professor Vyhibal’s Office Hours: You were invited. </li>
+                  <li> Welcome to Commit2Gather! </li>
+                </ul>
+              </div>
+            )}
           </div>
         </>
       ) : (
@@ -72,6 +85,7 @@ function NavBar() {
           </div>
         </>
       )}
+
     </div>
   )
 }
