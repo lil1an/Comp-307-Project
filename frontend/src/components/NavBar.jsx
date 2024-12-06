@@ -62,27 +62,27 @@ function NavBar() {
             <img src={logo} alt="logo" id="logo" />
           </Link>
           <div id="login-options">
-            <Link to="/edit" class="user-button">
-              <FaPen class="icon2" />
+            <Link to="/edit" className="user-button">
+              <FaPen className="icon2" />
               Create
             </Link>
 
-            <Link to="/meetings" class="user-button">
-              <IoPeople class="icon2" />
+            <Link to="/meetings" className="user-button">
+              <IoPeople className="icon2" />
               Meetings
             </Link>
 
-            <Link to="/documents" class="user-button">
-              <HiDocument class="icon2" />
+            <Link to="/documents" className="user-button">
+              <HiDocument className="icon2" />
               Documents
             </Link>
 
             {/* Notification Icon with dot for new notifications*/}
-            {isNewNotifs ? (<VscBellDot class="bell-icon" onClick={toggleNotifs} />
-            ) : (<VscBell class="bell-icon" onClick={toggleNotifs} />)
+            {isNewNotifs ? (<VscBellDot className="bell-icon" onClick={toggleNotifs} />
+            ) : (<VscBell className="bell-icon" onClick={toggleNotifs} />)
             }
 
-            <Link to="/" class="nav-button" onClick={toggleLoggedIn}>
+            <Link to="/" className="nav-button" onClick={toggleLoggedIn}>
               <FiLogIn className="icon1" />
               Logout
             </Link>
@@ -91,58 +91,58 @@ function NavBar() {
             {isNotifsOpen && (
               <div id="notifs-panel" onMouseLeave={toggleNotifs}>
                 <button id="close-notifs" onClick={toggleNotifs}> &times; </button>
-                <div class="notifs-container">
-                  <div class="notifs-top-bar">
-                    <HiDocument class="notifs-logo" />
-                    <a href="#" class="notifs-title"><b><u>Professor's Vyhibal Office Hours</u></b></a>
+                <div className="notifs-container">
+                  <div className="notifs-top-bar">
+                    <HiDocument className="notifs-logo" />
+                    <a href="#" className="notifs-title"><b><u>Professor's Vyhibal Office Hours</u></b></a>
                   </div>
-                  <p class="notifs-desc">A document was attached to this meeting you are attending.</p>
-                  <p class="notifs-desc">Sunday, November 24, 2024, 8:19pm, by Joseph Vyhibal</p>
+                  <p className="notifs-desc">A document was attached to this meeting you are attending.</p>
+                  <p className="notifs-desc">Sunday, November 24, 2024, 8:19pm, by Joseph Vyhibal</p>
                 </div>
 
-                <div class="notifs-container">
-                  <div class="notifs-top-bar">
-                    <HiDocument class="notifs-logo" />
-                    <a href="#" class="notifs-title"><b><u>Professor's Vyhibal Office Hours</u></b></a>
+                <div className="notifs-container">
+                  <div className="notifs-top-bar">
+                    <HiDocument className="notifs-logo" />
+                    <a href="#" className="notifs-title"><b><u>Professor's Vyhibal Office Hours</u></b></a>
                   </div>
-                  <p class="notifs-desc">A document was attached to this meeting you are attending.</p>
-                  <p class="notifs-desc">Sunday, November 24, 2024, 8:19pm, by Joseph Vyhibal</p>
+                  <p className="notifs-desc">A document was attached to this meeting you are attending.</p>
+                  <p className="notifs-desc">Sunday, November 24, 2024, 8:19pm, by Joseph Vyhibal</p>
                 </div>
 
-                <div class="notifs-container">
-                  <div class="notifs-top-bar">
-                    <HiDocument class="notifs-logo" />
-                    <a href="#" class="notifs-title"><b><u>Professor's Vyhibal Office Hours</u></b></a>
+                <div className="notifs-container">
+                  <div className="notifs-top-bar">
+                    <HiDocument className="notifs-logo" />
+                    <a href="#" className="notifs-title"><b><u>Professor's Vyhibal Office Hours</u></b></a>
                   </div>
-                  <p class="notifs-desc">A document was attached to this meeting you are attending.</p>
-                  <p class="notifs-desc">Sunday, November 24, 2024, 8:19pm, by Joseph Vyhibal</p>
+                  <p className="notifs-desc">A document was attached to this meeting you are attending.</p>
+                  <p className="notifs-desc">Sunday, November 24, 2024, 8:19pm, by Joseph Vyhibal</p>
                 </div>
 
-                <div class="notifs-container">
-                  <div class="notifs-top-bar">
-                    <HiDocument class="notifs-logo" />
-                    <a href="#" class="notifs-title"><b><u>Professor's Vyhibal Office Hours</u></b></a>
+                <div className="notifs-container">
+                  <div className="notifs-top-bar">
+                    <HiDocument className="notifs-logo" />
+                    <a href="#" className="notifs-title"><b><u>Professor's Vyhibal Office Hours</u></b></a>
                   </div>
-                  <p class="notifs-desc">A document was attached to this meeting you are attending.</p>
-                  <p class="notifs-desc">Sunday, November 24, 2024, 8:19pm, by Joseph Vyhibal</p>
+                  <p className="notifs-desc">A document was attached to this meeting you are attending.</p>
+                  <p className="notifs-desc">Sunday, November 24, 2024, 8:19pm, by Joseph Vyhibal</p>
                 </div>
 
-                <div class="notifs-container">
-                  <div class="notifs-top-bar">
-                    <HiDocument class="notifs-logo" />
-                    <a href="#" class="notifs-title"><b><u>Professor's Vyhibal Office Hours</u></b></a>
+                <div className="notifs-container">
+                  <div className="notifs-top-bar">
+                    <HiDocument className="notifs-logo" />
+                    <a href="#" className="notifs-title"><b><u>Professor's Vyhibal Office Hours</u></b></a>
                   </div>
-                  <p class="notifs-desc">A document was attached to this meeting you are attending.</p>
-                  <p class="notifs-desc">Sunday, November 24, 2024, 8:19pm, by Joseph Vyhibal</p>
+                  <p className="notifs-desc">A document was attached to this meeting you are attending.</p>
+                  <p className="notifs-desc">Sunday, November 24, 2024, 8:19pm, by Joseph Vyhibal</p>
                 </div>
 
-                <div class="notifs-container">
-                  <div class="notifs-top-bar">
-                    <HiDocument class="notifs-logo" />
-                    <a href="#" class="notifs-title"><b><u>Professor's Vyhibal Office Hours</u></b></a>
+                <div className="notifs-container">
+                  <div className="notifs-top-bar">
+                    <HiDocument className="notifs-logo" />
+                    <a href="#" className="notifs-title"><b><u>Professor's Vyhibal Office Hours</u></b></a>
                   </div>
-                  <p class="notifs-desc">A document was attached to this meeting you are attending.</p>
-                  <p class="notifs-desc">Sunday, November 24, 2024, 8:19pm, by Joseph Vyhibal</p>
+                  <p className="notifs-desc">A document was attached to this meeting you are attending.</p>
+                  <p className="notifs-desc">Sunday, November 24, 2024, 8:19pm, by Joseph Vyhibal</p>
                 </div>
               
                 
@@ -154,12 +154,12 @@ function NavBar() {
         <>
           <img src={logo} alt="logo" id="logo" />
           <div id="logout-options">
-            <Link to="/login" class="nav-button">
+            <Link to="/login" className="nav-button">
               <FiLogIn className="icon1" />
               Login
             </Link>
 
-            <Link to="/registration" class="nav-button">
+            <Link to="/registration" className="nav-button">
               <IoPersonAdd className="icon1" />
               Register
             </Link>
