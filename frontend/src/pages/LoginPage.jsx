@@ -9,7 +9,7 @@ function LoginPage() {
       <div className="login-container">
         <div className="login-box">
           <h2 className="login-title">Sign In</h2>
-          <form className="login-info" action="http://localhost:3000/home" method="POST">
+          <form className="login-info">
             <input type="email" placeholder="Email" className="login-input" />
             <input type="password" placeholder="Password" className="login-input" />
             <Link to="/home" className="login-button">Login</Link>
