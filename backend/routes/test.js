@@ -1,12 +1,13 @@
-const express = require('express')
+import express from 'express'
 const router = express.Router()
 
 // import controllers
-const { getTest } = require('../controllers/test')
+import { getTest } from '../controllers/test.js'
 
-// import middlewares
+// import middlewares (if you have any)
 
-// api routes
+// API routes
 router.get('/test', getTest)
 
-module.exports = router
+// Export the router using ES modules syntax
+export default router
