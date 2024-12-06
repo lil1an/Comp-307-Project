@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import logo from '../assets/logo.png'
 import '../css/nav-bar.css'
 import { useState, useEffect } from 'react'
@@ -40,6 +40,20 @@ function NavBar() {
     setIsNewNotifs((prev) => !prev) // Flipping state
   }
 
+  // Function for toggling login/logout
+  const toggleLoggedIn = () => {
+    setIsLoggedIn((prev)=> !prev) // Flipping state
+  }
+
+  // Function to set the user as not logged in when on the landing or login pages
+  const location = useLocation();
+
+   useEffect(() => {
+    if (location.pathname === '/' || location.pathname === "/login" || location.pathname === "/registration") {
+      setIsLoggedIn(false);
+    }
+  }, [location.pathname]);
+
   return (
     <div id="nav">
       {isLoggedIn ? (
@@ -68,7 +82,7 @@ function NavBar() {
             ) : (<VscBell class="bell-icon" onClick={toggleNotifs} />)
             }
 
-            <Link to="/" class="nav-button">
+            <Link to="/" class="nav-button" onClick={toggleLoggedIn}>
               <FiLogIn className="icon1" />
               Logout
             </Link>
