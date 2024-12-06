@@ -6,7 +6,7 @@ const { Schema, model } = mongoose
 const request = new Schema({
   meeting: { type: Meeting, required: true },
   availabilities: { type: Array, required: true },
-  userAsking: { type: User, required: true },
+  userAsking: { type: [User, Array], required: true },
   userAnswering: { type: User, required: true },
   userAnsweringResponse: { type: Boolean, required: false },
 })
