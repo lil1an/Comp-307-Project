@@ -1,8 +1,37 @@
 import NavBar from '../components/NavBar';
-import { Link, useLocation } from 'react-router-dom'
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import '../css/login-page.css';
 
 function LoginPage() {
+
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const navigate = useNavigate();
+
+  // Function to handle User Form Submission. -> Similar to registration.
+  const SubmitForm = (event) => {
+    event.preventDefault(); // Prevents submit button to reload page.
+    
+    axios.post( 'http://localhost:8080/userConnection/login', {email, password})
+    .then(result => {
+        console.log(result);
+        if(result.data === "Already registered"){
+            alert("E-mail already registered! Please Login to proceed.");
+            navigate('/login');
+        }
+        else{
+            alert("Registered successfully! Please Login to proceed.")
+            navigate('/login');
+        }
+        
+    })
+    .catch(err => console.log(err));
+    // End of template code
+    //
+
+  }
   return (
     <>
       <NavBar />

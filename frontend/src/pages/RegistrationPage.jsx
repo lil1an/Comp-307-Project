@@ -6,9 +6,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; 
 
 function RegistrationPage() {
-
-  // Template code from
-    // https://github.com/AkshataGanbote/Registration_Login_Form_MERN_Stack/blob/main/frontend/src/components/Register.jsx
     
   // User data accessible from here. We need to change user data when changes in the form occur.
   const [firstName, setFirstName] = useState(''); // User fields initialization
@@ -21,22 +18,22 @@ function RegistrationPage() {
   const SubmitForm = (event) => {
     event.preventDefault(); // Prevents submit button to reload page.
     
+    // Axios posting to our user route for registering user in the database
     axios.post( 'http://localhost:8080/userConnection/register', {firstName, lastName, email, password})
     .then(result => {
-        console.log(result);
-        if(result.data === "Already registered"){
-            alert("E-mail already registered! Please Login to proceed.");
-            navigate('/login');
-        }
-        else{
-            alert("Registered successfully! Please Login to proceed.")
-            navigate('/login');
-        }
-        
+          alert("Registered successfully! Please Login to proceed.")
+          navigate('/login');
     })
-    .catch(err => console.log(err));
-    // End of template code
-    //
+    .catch((err) => {
+
+      // Error catching for User Already Exists error from our backend
+      if (err.response?.status === 400 && err.response?.data?.error === "User already exists") {
+        alert("Error: E-mail already registered!");
+      }
+      else {
+        alert('Something went wrong. Please try again later.');
+      }
+    });
 
   }
   return (
