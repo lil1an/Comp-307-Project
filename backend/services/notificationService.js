@@ -6,7 +6,7 @@ export const getNotificationByIdFromDatabase = async (notificationId) => {
     return notification || null;
   } catch (error) {
     console.error('Error fetching notification by ID:', error.message);
-    throw new Error('Unable to fetch notification');
+    throw new Error(`Unable to fetch notification with ID ${notificationId}`);
   }
 };
 
@@ -20,9 +20,36 @@ export const createNewNotificationInDatabase = async (notification) => {
   }
 };
 
-const notificationService = {
-  getNotificationByIdFromDatabase,
-  createNewNotificationInDatabase,
+export const deleteNotificationFromDatabase = async (notificationId) => {
+  try {
+    const result = await Notification.findByIdAndDelete(notificationId);
+    if (!result) {
+      throw new Error(`Notification with ID ${notificationId} not found`)
+    }
+    return result;
+
+  } catch (error) {
+    console.error('Error deleting notification:', error);
+    throw new Error(`Unable to delete notification with ID ${notificationId}`);
+  }
 };
 
-export default notificationService;
+export const updateNotificationInDatabase = async (notificationId, updatedData) => {
+  try {
+    const updatedNotification = await Notification.findByIdAndUpdate(notificationId, updatedData, { new: true });
+    if (!updatedNotification) {
+      throw new Error(`Notification with ID ${notificationId} not found`);
+    }
+    console.log('Updated notification:', updatedNotification);
+  } catch (error) {
+    console.error('Error updating notification:', error);
+    throw new Error(`Unable to update notification with ID ${notificationId}`);
+  }
+};
+
+export default {
+  getNotificationByIdFromDatabase,
+  createNewNotificationInDatabase,
+  deleteNotificationFromDatabase,
+  updateNotificationInDatabase
+};

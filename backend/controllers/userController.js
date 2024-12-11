@@ -23,14 +23,39 @@ export const createNewUser = async (req, res) => {
 
     res.status(201).json(userData);
   } catch (error) {
-    console.error('Error getting user by ID:', error);
+    console.error('Error creating user:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
 
-const userController = {
-  getUserById,
-  createNewUser,
+export const deleteUser = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    await userService.deleteUserFromDatabase(userId);
+
+    res.status(204).json();
+  } catch (error) {
+    console.error(`Error deleting user with ID ${req.params.id}:`, error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 };
 
-export default userController;
+export const updateUser = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const updatedUser = req.body;
+    const userData = await userService.updateUserInDatabase(userId, updatedUser);
+
+    res.status(204).json(userData);
+  } catch (error) {
+    console.error('Error updating user in database:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+export default {
+  getUserById,
+  createNewUser,
+  deleteUser,
+  updateUser
+};

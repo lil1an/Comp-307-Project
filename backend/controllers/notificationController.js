@@ -23,14 +23,39 @@ export const createNewNotification = async (req, res) => {
 
     res.status(201).json(notificationData);
   } catch (error) {
-    console.error('Error getting notification by ID:', error);
+    console.error('Error creating notification:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
 
-const notificationController = {
-  getNotificationById,
-  createNewNotification,
+export const deleteNotification = async (req, res) => {
+  try {
+    const notificationId = req.params.id;
+    await notificationService.deleteNotificationFromDatabase(notificationId);
+
+    res.status(204).json();
+  } catch (error) {
+    console.error(`Error deleting notification with ID ${req.params.id}:`, error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 };
 
-export default notificationController;
+export const updateNotification = async (req, res) => {
+  try {
+    const notificationId = req.params.id;
+    const updatedNotification = req.body;
+    const notificationData = await notificationService.updateNotificationInDatabase(notificationId, updatedNotification);
+
+    res.status(204).json(notificationData);
+  } catch (error) {
+    console.error('Error updating notification in database:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+export default {
+  getNotificationById,
+  createNewNotification,
+  deleteNotification,
+  updateNotification
+};

@@ -6,7 +6,7 @@ export const getRequestByIdFromDatabase = async (requestId) => {
     return request || null;
   } catch (error) {
     console.error('Error fetching request by ID:', error.message);
-    throw new Error('Unable to fetch request');
+    throw new Error(`Unable to fetch request with ID ${requestId}`);
   }
 };
 
@@ -20,9 +20,36 @@ export const createNewRequestInDatabase = async (request) => {
   }
 };
 
-const requestService = {
-  getRequestByIdFromDatabase,
-  createNewRequestInDatabase,
+export const deleteRequestFromDatabase = async (requestId) => {
+  try {
+    const result = await Request.findByIdAndDelete(requestId);
+    if (!result) {
+      throw new Error(`Request with ID ${requestId} not found`)
+    }
+    return result;
+
+  } catch (error) {
+    console.error('Error deleting request:', error);
+    throw new Error(`Unable to delete request with ID ${requestId}`);
+  }
 };
 
-export default requestService;
+export const updateRequestInDatabase = async (requestId, updatedData) => {
+  try {
+    const updatedRequest = await Request.findByIdAndUpdate(requestId, updatedData, { new: true });
+    if (!updatedRequest) {
+      throw new Error(`Request with ID ${requestId} not found`);
+    }
+    console.log('Updated request:', updatedRequest);
+  } catch (error) {
+    console.error('Error updating request:', error);
+    throw new Error(`Unable to update request with ID ${requestId}`);
+  }
+};
+
+export default {
+  getRequestByIdFromDatabase,
+  createNewRequestInDatabase,
+  deleteRequestFromDatabase,
+  updateRequestInDatabase
+};

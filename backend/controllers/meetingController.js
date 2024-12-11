@@ -23,14 +23,39 @@ export const createNewMeeting = async (req, res) => {
 
     res.status(201).json(meetingData);
   } catch (error) {
-    console.error('Error getting meeting by ID:', error);
+    console.error('Error creating meeting:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
 
-const meetingController = {
-  getMeetingById,
-  createNewMeeting,
+export const deleteMeeting = async (req, res) => {
+  try {
+    const meetingId = req.params.id;
+    await meetingService.deleteMeetingFromDatabase(meetingId);
+
+    res.status(204).json();
+  } catch (error) {
+    console.error(`Error deleting meeting with ID ${req.params.id}:`, error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 };
 
-export default meetingController;
+export const updateMeeting = async (req, res) => {
+  try {
+    const meetingId = req.params.id;
+    const updatedMeeting = req.body;
+    const meetingData = await meetingService.updateMeetingInDatabase(meetingId, updatedMeeting);
+
+    res.status(204).json(meetingData);
+  } catch (error) {
+    console.error('Error updating meeting in database:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+export default {
+  getMeetingById,
+  createNewMeeting,
+  deleteMeeting,
+  updateMeeting
+};

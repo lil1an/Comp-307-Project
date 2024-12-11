@@ -23,14 +23,39 @@ export const createNewRequest = async (req, res) => {
 
     res.status(201).json(requestData);
   } catch (error) {
-    console.error('Error getting request by ID:', error);
+    console.error('Error creating request:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
 
-const requestController = {
-  getRequestById,
-  createNewRequest,
+export const deleteRequest = async (req, res) => {
+  try {
+    const requestId = req.params.id;
+    await requestService.deleteRequestFromDatabase(requestId);
+
+    res.status(204).json();
+  } catch (error) {
+    console.error(`Error deleting request with ID ${req.params.id}:`, error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 };
 
-export default requestController;
+export const updateRequest = async (req, res) => {
+  try {
+    const requestId = req.params.id;
+    const updatedRequest = req.body;
+    const requestData = await requestService.updateRequestInDatabase(requestId, updatedRequest);
+
+    res.status(204).json(requestData);
+  } catch (error) {
+    console.error('Error updating request in database:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+export default {
+  getRequestById,
+  createNewRequest,
+  deleteRequest,
+  updateRequest
+};
