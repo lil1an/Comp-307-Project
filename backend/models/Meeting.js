@@ -1,9 +1,8 @@
 import mongoose from 'mongoose'
-import User from './User'
 const { Schema, model } = mongoose
 
 const meeting = new Schema({
-  host: { type: User, required: true },
+  host: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   title: { type: String, required: true },
   description: { type: String, required: false },
   availabilities: { type: Array, required: true },
