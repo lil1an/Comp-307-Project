@@ -18,10 +18,10 @@ router.post('/register', async (req, res) => {
     }
 
     // Here we protect user data with hashing on password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    //const hashedPassword = await bcrypt.hash(password, 10);
 
     // 
-    const newUser = new User({ firstName, lastName, email, password: hashedPassword });
+    const newUser = new User({ firstName, lastName, email, password});
     await newUser.save();
 
     res.status(201).json({ message: 'User registered successfully' });

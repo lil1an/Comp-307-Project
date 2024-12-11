@@ -21,7 +21,7 @@ function RegistrationPage() {
   const SubmitForm = (event) => {
     event.preventDefault(); // Prevents submit button to reload page.
     
-    axios.post( 'http://localhost:8080/register', {firstName, lastName, email, password})
+    axios.post( 'http://localhost:8080/userConnection/register', {firstName, lastName, email, password})
     .then(result => {
         console.log(result);
         if(result.data === "Already registered"){
