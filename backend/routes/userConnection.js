@@ -1,8 +1,7 @@
 // We will put in this file the register and login routes needed to authenticate users.
-
-const express = require('express');
-const bcrypt = require('bcryptjs');
-const User = require('../models/User');
+import express from 'express'; 
+//import bcrypt from 'bcryptjs';
+import User from '../models/User.js';
 
 // Router for routing information
 const router = express.Router();
@@ -33,4 +32,4 @@ router.post('/register', async (req, res) => {
 });
 
 // Exporting the userConnection router to other files.
-module.exports = router;
+export default router;
