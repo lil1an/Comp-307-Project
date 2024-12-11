@@ -1,36 +1,25 @@
-// import modules
-import express from 'express'
-import mongoose from 'mongoose'
-import morgan from 'morgan'
-import cors from 'cors'
+// Import environment variables
 import dotenv from 'dotenv'
 dotenv.config()
 
-// Import Models
+// Import modules
+import express from 'express'
+import morgan from 'morgan'
+import cors from 'cors'
+import connectDB from './config/database.js';
+import userRoutes from './routes/userRoutes.js';
+import meetingRoutes from './routes/meetingRoutes.js';
+import requestRoutes from './routes/requestRoutes.js';
+import notificationRoutes from './routes/notificationRoutes.js';
+
+// Import models
 import User from './models/User.js'
 
-// app
+// Connect to the database
+connectDB();
+
+// Initialize express app
 const app = express()
-
-// db
-console.log(process.env.MONGO_URI)
-mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log('DB CONNECTED'))
-  .catch((err) => console.log('DB CONNECTION ERROR', err))
-
-// Test
-const user = new User({
-  firstName: 'Lian',
-  lastName: 'Lambert',
-  email: 'lian.lambert@gmail.com',
-  password: 'pwd',
-})
-
-await user.save()
 
 // middleware
 app.use(morgan('dev'))
@@ -38,14 +27,15 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cors({ origin: true, credentials: true }))
 
-// routes
-import testRoutes from './routes/test.js'
-app.use('/', testRoutes)
+// Routes
+app.use('/users', userRoutes);
+app.use('/meetings', meetingRoutes);
+app.use('/requests', requestRoutes);
+app.use('/notifications', notificationRoutes);
 
-// port
+// Start servier
 const port = process.env.PORT || 8080
 
-// listener
 const server = app.listen(port, () =>
   console.log(`Server is running on port ${port}`)
 )
