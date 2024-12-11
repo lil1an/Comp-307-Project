@@ -7,6 +7,7 @@ const user = new Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   profilePic: { type: String, required: false },
+  hasUnreadNotification: { type: Boolean, required: true, default: false }
 })
 
 const User = model('users', user)
