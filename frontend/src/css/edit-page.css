@@ -1,0 +1,114 @@
+@import url(../index.css);
+
+.create-page-wrapper {
+  justify-content: space-around;
+  display: flex;
+  height: 85vh;
+  padding: 20px;
+  gap: 20px;
+}
+
+.edit-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-width: 50%;
+  gap: 5px;
+}
+
+.edit-wrapper h2 {
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+
+.preview-wrapper {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  max-width: 500px;
+  min-width: 300px;
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.tab-navigation button {
+  background-color: var(--primaryRed);
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.tab-navigation button:hover {
+  background-color: #ff3247;
+}
+
+.tab-navigation .active-tab {
+    text-decoration: underline;
+
+}
+
+/* Text area */
+.input-field textarea {
+  height: 150px;
+  resize: none; 
+}
+
+/* Common toggle-section styles */
+.toggle-section {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 580px;
+  max-height: 580px;
+  gap: 20px;
+}
+
+.toggle-section h3 {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 0 0 0;
+  color: black;
+}
+
+/* Common input styles */
+.input-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.input-field label,
+.toggle-section h5 {
+  font-size: 16px;
+  margin-bottom: 5px;
+  font-weight: normal;
+}
+
+.input-field input,
+.input-field select,
+.input-field textarea {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input-field input:focus,
+.input-field select:focus,
+.input-field textarea:focus {
+  border: 1px solid #007bff;
+  outline: none;
+}
