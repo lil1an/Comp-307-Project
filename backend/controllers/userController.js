@@ -1,4 +1,6 @@
 import userService from '../services/userService.js';
+import User from '../models/User.js'
+//import bcrypt from 'bcryptjs';
 
 export const getUserById = async (req, res) => {
   try {
@@ -18,10 +20,19 @@ export const getUserById = async (req, res) => {
 
 export const createNewUser = async (req, res) => {
   try {
+    // Only one user per email.
+    const isEmailTaken = await User.findOne({ email });
+    if (isEmailTaken) {
+      return res.status(400).json({ error: 'User already exists' });
+    }
+
+    // Here we protect user data with hashing on password
+    //const hashedPassword = await bcrypt.hash(password, 10);
+
     const user = req.body;
     const userData = await userService.createNewUserInDatabase(user);
 
-    res.status(201).json(userData);
+    res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
     console.error('Error creating user:', error);
     res.status(500).json({ message: 'Internal server error' });

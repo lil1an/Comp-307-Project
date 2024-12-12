@@ -11,7 +11,6 @@ import userRoutes from './routes/userRoutes.js';
 import meetingRoutes from './routes/meetingRoutes.js';
 import requestRoutes from './routes/requestRoutes.js';
 import notificationRoutes from './routes/notificationRoutes.js';
-import userConnection from './routes/userConnection.js';
 
 // Import models
 import User from './models/User.js'
@@ -33,7 +32,6 @@ app.use('/users', userRoutes);
 app.use('/meetings', meetingRoutes);
 app.use('/requests', requestRoutes);
 app.use('/notifications', notificationRoutes);
-app.use('/userConnection', userConnection);
 
 // Start servier
 const port = process.env.PORT || 8080

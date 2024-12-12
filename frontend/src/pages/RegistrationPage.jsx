@@ -1,7 +1,6 @@
 import NavBar from '../components/NavBar';
 import '../css/registration-page.css';
 import React, { useReact, useState } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; 
 
@@ -19,7 +18,7 @@ function RegistrationPage() {
     event.preventDefault(); // Prevents submit button to reload page.
     
     // Axios posting to our user route for registering user in the database
-    axios.post( 'http://localhost:8080/userConnection/register', {firstName, lastName, email, password})
+    axios.post( 'http://localhost:8080/users/create', {firstName, lastName, email, password})
     .then(result => {
           alert("Registered successfully! Please Login to proceed.")
           navigate('/login');
