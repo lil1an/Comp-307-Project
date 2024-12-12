@@ -1,0 +1,62 @@
+@import './edit-page.css';
+
+.available-hours-wrapper {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #fcefef;
+  padding: 10px;
+  background-color: #fbfafa;
+  border-radius: 4px;
+  margin-top: 5px;
+}
+
+.day-availability {
+  margin-bottom: 10px;
+}
+
+.time-interval {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.dropdown-header {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px 12px;
+  background-color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  z-index: 1000;
+}
+
+.dropdown-item {
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
