@@ -6,6 +6,7 @@
   height: 85vh;
   padding: 20px;
   gap: 20px;
+  background-color: #fbfafa;
 }
 
 .edit-wrapper {
@@ -20,17 +21,27 @@
   margin-top: 0px;
 }
 
+/* Preview Section */
+
 .preview-wrapper {
   display: flex;
-  justify-content: center;
-  flex: 1;
+  flex-direction: column;
+  align-items: center;
   max-width: 500px;
-  min-width: 300px;
-  border: 1px solid black;
+  min-width: 45%;
+  border: 1px solid #f3f2f2;
   border-radius: 8px;
   padding: 20px;
+  box-sizing: border-box;
+  background-color: white;
 }
 
+.calendar-preview {
+    margin-top: 10px;
+
+}
+
+/* EDIT SECTION */
 .tab-navigation button {
   background-color: var(--primaryRed);
   color: white;
@@ -47,14 +58,13 @@
 }
 
 .tab-navigation .active-tab {
-    text-decoration: underline;
-
+  text-decoration: underline;
 }
 
 /* Text area */
 .input-field textarea {
   height: 150px;
-  resize: none; 
+  resize: none;
 }
 
 /* Common toggle-section styles */
@@ -64,7 +74,7 @@
   padding: 20px;
   background-color: white;
   border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   width: 100%;
   box-sizing: border-box;
   min-height: 580px;

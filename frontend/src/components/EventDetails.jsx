@@ -1,20 +1,10 @@
-import { useState } from 'react'
-
-const EventDetails = () => {
-  const [eventDetails, setEventDetails] = useState({
-    name: '',
-    duration: 30,
-    location: '',
-    description: '',
-  })
-
+const EventDetails = ({ eventDetails, setEventDetails }) => {
   const handleEventDetailChange = (key, value) => {
     setEventDetails({ ...eventDetails, [key]: value })
   }
 
   return (
     <div className="toggle-section">
-      {/* <h3>Event Details</h3> */}
       <div className="event-details">
         <div className="input-field">
           Event Name:
@@ -39,7 +29,7 @@ const EventDetails = () => {
         <div className="input-field">
           Location:
           <input
-            placeholder="Enter a link or adress"
+            placeholder="Enter a link or address"
             value={eventDetails.location}
             onChange={(e) =>
               handleEventDetailChange('location', e.target.value)
