@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import '../css/schedule-settings.css'
-import Time from './Time'
+import Time, { generateTimeOptions } from './Time'
 
 const ScheduleSettings = () => {
   const [scheduleSettings, setScheduleSettings] = useState({
@@ -43,8 +43,6 @@ const ScheduleSettings = () => {
     handleAvailableHoursChange(day, updatedIntervals)
   }
 
-    // index is the interval of the day you want to update
-    // field is start-time or end-time
   const updateInterval = (day, index, field, newValue) => {
     const updatedIntervals = scheduleSettings.availableHours[day].map(
       (interval, i) =>
@@ -53,26 +51,12 @@ const ScheduleSettings = () => {
     handleAvailableHoursChange(day, updatedIntervals)
   }
 
-  const generateTimeOptions = () => {
-    const times = []
-    for (let hour = 0; hour < 24; hour++) {
-      for (let minute = 0; minute < 60; minute += 15) {
-        const time = `${String(hour).padStart(2, '0')}:${String(
-          minute
-        ).padStart(2, '0')}`
-        times.push(time)
-      }
-    }
-    return times
-  }
-
   const timeOptions = generateTimeOptions()
 
   return (
     <div className="toggle-section">
-      {/* <h3>Schedule Settings</h3> */}
       <div className="schedule-settings">
-        {/* Available Date Range*/}
+        {/* Available Date Range */}
         <div className="input-field">
           <label>Start Date:</label>
           <input
@@ -112,7 +96,7 @@ const ScheduleSettings = () => {
                   onChange={(e) =>
                     handleAvailableHoursChange(
                       day,
-                      e.target.checked ? [{}] : [],
+                      e.target.checked ? [{}] : []
                     )
                   }
                 />
@@ -123,7 +107,7 @@ const ScheduleSettings = () => {
               {scheduleSettings.availableHours[day].length > 0 && (
                 <div>
                   {scheduleSettings.availableHours[day].map(
-                    (interval, index) => ( // retrieves array of intervals for given day
+                    (interval, index) => (
                       <div key={index} className="time-interval">
                         <Time
                           value={interval.start}
@@ -140,13 +124,13 @@ const ScheduleSettings = () => {
                           }
                           options={timeOptions}
                         />
-                        <button onClick={() => removeInterval(day, index)}>
+                        <button className='remove-interval' onClick={() => removeInterval(day, index)}>
                           ✖
                         </button>
                       </div>
                     )
                   )}
-                  <button onClick={() => addInterval(day)}>
+                  <button className='add-interval' onClick={() => addInterval(day)}>
                     ＋ Add Interval
                   </button>
                 </div>

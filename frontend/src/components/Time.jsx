@@ -1,37 +1,54 @@
 import React, { useState, useRef } from 'react'
 import '../css/time.css'
 
-// Dropdown menu for schedule settings (time)
+// Generate time options (e.g., "09:00", "09:15")
+export const generateTimeOptions = () => {
+  const times = []
+  for (let hour = 0; hour < 24; hour++) {
+    for (let minute = 0; minute < 60; minute += 15) {
+      const time = `${String(hour).padStart(2, '0')}:${String(minute).padStart(
+        2,
+        '0'
+      )}`
+      times.push(time)
+    }
+  }
+  return times
+}
+
+// Dropdown menu for selecting and validating time
 const Time = ({ value, onChange, options }) => {
   const [isOpen, setIsOpen] = useState(false)
-  const [searchValue, setSearchValue] = useState(value || '') // stores curr value of input
-  const [isValid, setIsValid] = useState(true)
+  const [searchValue, setSearchValue] = useState(value || '') // Current input value
+  const [isValid, setIsValid] = useState(true) // Validity of input
   const dropdownRef = useRef(null)
 
+  // Toggle dropdown visibility
   const toggleDropdown = () => setIsOpen((prev) => !prev)
 
+  // Handle option selection
   const handleOptionClick = (option) => {
     onChange(option)
     setSearchValue(option)
-    setIsValid(true) // Reset validity when a valid option is selected
+    setIsValid(true)
     setIsOpen(false)
   }
 
+  // Handle text input and validation
   const handleSearchChange = (e) => {
     const input = e.target.value
     setSearchValue(input)
 
-    // Check input format (must be HH:mm)
     const isValidTime = /^\d{2}:\d{2}$/.test(input) && options.includes(input)
     setIsValid(isValidTime)
 
-    // Only update the parent state if the input is valid
     if (isValidTime) {
       onChange(input)
       setIsOpen(false)
     }
   }
 
+  // Close dropdown when mouse leaves
   const closeDropdown = () => {
     setIsOpen(false)
   }
@@ -40,14 +57,13 @@ const Time = ({ value, onChange, options }) => {
     <div className="dropdown" ref={dropdownRef} onMouseLeave={closeDropdown}>
       <input
         type="text"
-        className={`dropdown-header ${isValid ? '' : 'invalid-input'}`} // Add a class for invalid state
+        className={`dropdown-header ${isValid ? '' : 'invalid-input'}`}
         value={searchValue}
-        onChange={handleSearchChange} // Allow user to type a time
-        onClick={toggleDropdown} // Toggle dropdown on click
+        onChange={handleSearchChange}
+        onClick={toggleDropdown}
         placeholder="Select Time"
       />
       {!isValid && <div className="error-message">Invalid time format</div>}
-      {/* Error message */}
       {isOpen && (
         <div className="dropdown-menu">
           {options.map((option) => (
