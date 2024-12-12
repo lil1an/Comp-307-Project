@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import '../css/event-details.css'
 
 const EventDetails = () => {
   const [eventDetails, setEventDetails] = useState({
@@ -15,9 +14,9 @@ const EventDetails = () => {
 
   return (
     <div className="toggle-section">
-      <h3>Event Details</h3>
+      {/* <h3>Event Details</h3> */}
       <div className="event-details">
-        <h5 className="event-input">
+        <div className="input-field">
           Event Name:
           <input
             type="text"
@@ -25,33 +24,29 @@ const EventDetails = () => {
             value={eventDetails.name}
             onChange={(e) => handleEventDetailChange('name', e.target.value)}
           />
-        </h5>
-        <h5 className="event-input">
-          Duration
+        </div>
+        <div className="input-field">
+          Duration:
           <input
             type="number"
-            placeholder="Duration:"
+            placeholder="Duration"
             value={eventDetails.duration}
             onChange={(e) =>
               handleEventDetailChange('duration', e.target.value)
             }
           />
-        </h5>
-        <h5 className="event-input">
+        </div>
+        <div className="input-field">
           Location:
-          <select
+          <input
+            placeholder="Enter a link or adress"
             value={eventDetails.location}
             onChange={(e) =>
               handleEventDetailChange('location', e.target.value)
             }
-          >
-            <option value="">Select Location</option>
-            <option value="zoom">Zoom</option>
-            <option value="phone-call">Phone Call</option>
-            <option value="in-person">In-Person</option>
-          </select>
-        </h5>
-        <h5 className="event-input">
+          />
+        </div>
+        <div className="input-field">
           Description:
           <textarea
             placeholder="Description"
@@ -60,7 +55,7 @@ const EventDetails = () => {
               handleEventDetailChange('description', e.target.value)
             }
           />
-        </h5>
+        </div>
       </div>
     </div>
   )
