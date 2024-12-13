@@ -18,7 +18,40 @@ export const getUserById = async (req, res) => {
   }
 };
 
+export const getUserByEmailAndPassword = async (req, res) => {
+  try {
+    console.log('Request body:', req.body);
+    console.log('Headers:', req.headers);
+    const userEmail = req.body.email;
+    const userData = await userService.getUserByEmailFromDatabase(userEmail);
+
+    if (!userData) {
+      return res.status(404).json({ message: 'User under this email not found' });
+    }
+
+    if(userData.password !== req.body.password ){
+      console.log("password wrong");
+      return res.status(404).json({ message: 'Incorrect password for this user.'})
+    }
+
+    res.status(200).json(userData);
+
+  } catch (error) {
+    console.error('Error while logging in user:', error.message);
+
+    if (error.message.startsWith('Unable to fetch user with email')) {
+      res.status(500).json({ message: 'Internal server error while fetching user.' });
+    } else {
+      res.status(500).json({ message: 'An unexpected error occurred.' });
+    }
+  }
+
+}
+
 export const createNewUser = async (req, res) => {
+
+  const { firstName, lastName, email, password } = req.body;
+
   try {
     // Only one user per email.
     const isEmailTaken = await User.findOne({ email });
@@ -68,5 +101,6 @@ export default {
   getUserById,
   createNewUser,
   deleteUser,
-  updateUser
+  updateUser,
+  getUserByEmailAndPassword
 };

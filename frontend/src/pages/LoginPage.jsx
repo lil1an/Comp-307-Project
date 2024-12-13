@@ -1,7 +1,7 @@
 import NavBar from '../components/NavBar';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, React } from 'react';
 import '../css/login-page.css';
 
 function LoginPage() {
@@ -10,26 +10,23 @@ function LoginPage() {
   const [password, setPassword] = useState();
   const navigate = useNavigate();
 
-  // Function to handle User Form Submission. -> Similar to registration.
+  // Function to handle User Form Submission
   const SubmitForm = (event) => {
     event.preventDefault(); // Prevents submit button to reload page.
     
-    axios.post( 'http://localhost:8080/userConnection/login', {email, password})
+    axios.post( 'http://localhost:8080/users/login', {email, password})
     .then(result => {
-        console.log(result);
-        if(result.data === "Already registered"){
-            alert("E-mail already registered! Please Login to proceed.");
-            navigate('/login');
-        }
-        else{
-            alert("Registered successfully! Please Login to proceed.")
-            navigate('/login');
-        }
-        
+        navigate('/home', { state: {firstName: result.data.firstName}});
     })
-    .catch(err => console.log(err));
-    // End of template code
-    //
+    .catch((err) => {
+      // Error catching for email not registered error from our backend
+      if (err.response?.status === 404) {
+        alert("Error: Login Information Incorrect.");
+      }
+      else {
+        alert('Something went wrong. Please try again later.');
+      }
+    });
 
   }
   return (
@@ -38,11 +35,12 @@ function LoginPage() {
       <div className="login-container">
         <div className="login-box">
           <h2 className="login-title">Sign In</h2>
-          <form className="login-info">
-            <input type="email" placeholder="Email" className="login-input" />
-            <input type="password" placeholder="Password" className="login-input" />
-            <Link to="/home" className="login-button">Login</Link>
-            {/*<button type="submit" className="login-button">Login</button>*/}
+          <form className="login-info" onSubmit={SubmitForm}>
+            <input type="email" placeholder="Email" className="login-input"
+              onChange={(event) => setEmail(event.target.value)} required/>
+            <input type="password" placeholder="Password" className="login-input" required
+              onChange={(event) => setPassword(event.target.value)} />
+            <button type="submit" className="login-button">Login</button>
           </form>
           <div className="login-links">
             <p>

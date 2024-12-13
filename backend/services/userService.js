@@ -10,6 +10,16 @@ export const getUserByIdFromDatabase = async (userId) => {
   }
 };
 
+export const getUserByEmailFromDatabase = async (userEmail) => {
+  try {
+    const user = await User.findOne({email:userEmail});
+    return user || null;
+  } catch (error) {
+    console.error('Error fetching user by email:', error.message);
+    throw new Error(`Unable to fetch user with email ${userEmail}`);
+  }
+};
+
 export const createNewUserInDatabase = async (user) => {
   try {
     const newUser = await User.create(user);
@@ -51,5 +61,6 @@ export default {
   getUserByIdFromDatabase,
   createNewUserInDatabase,
   deleteUserFromDatabase,
-  updateUserInDatabase
+  updateUserInDatabase,
+  getUserByEmailFromDatabase
 };

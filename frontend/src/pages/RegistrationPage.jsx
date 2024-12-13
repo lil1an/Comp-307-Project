@@ -1,6 +1,6 @@
 import NavBar from '../components/NavBar';
 import '../css/registration-page.css';
-import React, { useReact, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; 
 
@@ -20,7 +20,7 @@ function RegistrationPage() {
     // Axios posting to our user route for registering user in the database
     axios.post( 'http://localhost:8080/users/create', {firstName, lastName, email, password})
     .then(result => {
-          alert("Registered successfully! Please Login to proceed.")
+          alert("Registered successfully! Please login next.")
           navigate('/login');
     })
     .catch((err) => {
