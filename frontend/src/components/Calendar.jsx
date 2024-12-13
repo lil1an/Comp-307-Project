@@ -17,7 +17,7 @@ import '../css/calendar.css'
 import { MdOutlineArrowBackIosNew } from 'react-icons/md'
 import { MdOutlineArrowForwardIos } from 'react-icons/md'
 
-const Calendar = ({ dateRange }) => {
+const Calendar = ({ dateRange, availableDays }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date())
   const [selectedDate, setSelectedDate] = useState(null)
 
@@ -31,10 +31,14 @@ const Calendar = ({ dateRange }) => {
 
   const isWithinRange = (date) => {
     if (!dateRange.start || !dateRange.end) return false
+
     const startDate = new Date(dateRange.start)
     const endDate = new Date(dateRange.end)
-    console.log(endDate)
-    return date >= startDate && date <= addDays(endDate, 1)
+    const dayName = format(date, 'EEEE')
+
+    return (
+      date >= startDate && date <= endDate && availableDays[dayName]?.length > 0
+    )
   }
 
   const renderHeader = () => {

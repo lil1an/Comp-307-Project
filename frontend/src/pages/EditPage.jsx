@@ -24,13 +24,13 @@ const EditPage = () => {
   const [scheduleSettings, setScheduleSettings] = useState({
     dateRange: { start: '', end: '' },
     availableHours: {
-      Monday: [],
-      Tuesday: [],
-      Wednesday: [],
-      Thursday: [],
-      Friday: [],
-      Saturday: [],
-      Sunday: [],
+      Monday: [{ start: '09:00', end: '17:00' }], // Default availability
+      Tuesday: [{ start: '09:00', end: '17:00' }],
+      Wednesday: [{ start: '09:00', end: '17:00' }],
+      Thursday: [{ start: '09:00', end: '17:00' }],
+      Friday: [{ start: '09:00', end: '17:00' }],
+      Saturday: [{ start: '09:00', end: '17:00' }],
+      Sunday: [{ start: '09:00', end: '17:00' }],
     },
   })
 
@@ -85,7 +85,10 @@ const EditPage = () => {
         <div className="preview-wrapper">
           <Preview eventDetails={eventDetails} />
           <div className="calendar-preview">
-            <Calendar dateRange={scheduleSettings.dateRange} />
+            <Calendar
+              dateRange={scheduleSettings.dateRange}
+              availableDays={scheduleSettings.availableHours}
+            />
           </div>
         </div>
       </div>
