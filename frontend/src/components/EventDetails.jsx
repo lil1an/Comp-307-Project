@@ -39,7 +39,7 @@ const EventDetails = ({ eventDetails, setEventDetails }) => {
         <div className="input-field">
           Description:
           <textarea
-            placeholder="Description"
+            placeholder="Write any details your invitees should know about the event."
             value={eventDetails.description}
             onChange={(e) =>
               handleEventDetailChange('description', e.target.value)
