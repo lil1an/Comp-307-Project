@@ -20,8 +20,6 @@ export const getUserById = async (req, res) => {
 
 export const getUserByEmailAndPassword = async (req, res) => {
   try {
-    console.log('Request body:', req.body);
-    console.log('Headers:', req.headers);
     const userEmail = req.body.email;
     const userData = await userService.getUserByEmailFromDatabase(userEmail);
 
@@ -33,8 +31,7 @@ export const getUserByEmailAndPassword = async (req, res) => {
       console.log("password wrong");
       return res.status(404).json({ message: 'Incorrect password for this user.'})
     }
-
-    res.status(200).json(userData);
+    res.status(200).json({id:userData._id});
 
   } catch (error) {
     console.error('Error while logging in user:', error.message);

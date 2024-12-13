@@ -1,10 +1,28 @@
-import React from 'react'
-import NavBar from '../components/NavBar'
+import React, {useState, useEffect} from 'react';
+import NavBar from '../components/NavBar';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 function HomePage() {
+
+  const [firstName, setFirstName] = useState('');
   const location = useLocation();
-  const { firstName } = location.state || {}; 
+  const { id } = location.state || {}; 
+  
+  // We want to show user first name after first render
+  useEffect(() => { // Let's avoid giving access to user data directly.
+    if (id){
+      axios.get(`http://localhost:8080/users/${id}`)
+        .then((res) => {
+          setFirstName(res.data.firstName);
+        })
+        .catch((err) =>{
+          console.error('Error fetching user by ID:', err.response?.data || err.message);
+        })
+    }
+
+
+  })
 
   return (
     <>
