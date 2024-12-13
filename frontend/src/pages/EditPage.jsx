@@ -5,6 +5,7 @@ import EventDetails from '../components/EventDetails'
 import ScheduleSettings from '../components/ScheduleSettings'
 import Preview from '../components/Preview'
 import { useLocation } from 'react-router-dom'
+import TimeSlot from '../components/TimeSlot'
 import '../css/edit-page.css'
 
 const EditPage = () => {
@@ -24,15 +25,18 @@ const EditPage = () => {
   const [scheduleSettings, setScheduleSettings] = useState({
     dateRange: { start: '', end: '' },
     availableHours: {
-      Monday: [{ start: '09:00', end: '17:00' }], // Default availability
-      Tuesday: [{ start: '09:00', end: '17:00' }],
-      Wednesday: [{ start: '09:00', end: '17:00' }],
-      Thursday: [{ start: '09:00', end: '17:00' }],
-      Friday: [{ start: '09:00', end: '17:00' }],
-      Saturday: [{ start: '09:00', end: '17:00' }],
-      Sunday: [{ start: '09:00', end: '17:00' }],
+      Monday: [{ start: '09:00', end: '12:00' }], // Default availability
+      Tuesday: [{ start: '09:00', end: '12:00' }],
+      Wednesday: [{ start: '09:00', end: '12:00' }],
+      Thursday: [{ start: '09:00', end: '12:00' }],
+      Friday: [{ start: '09:00', end: '12:00' }],
+      Saturday: [{ start: '09:00', end: '12:00' }],
+      Sunday: [{ start: '09:00', end: '12:00' }],
     },
   })
+
+  // State for selected date
+  const [selectedDate, setSelectedDate] = useState(null)
 
   // Tabs
   const [activeTab, setActiveTab] = useState('EventDetails')
@@ -88,6 +92,12 @@ const EditPage = () => {
             <Calendar
               dateRange={scheduleSettings.dateRange}
               availableDays={scheduleSettings.availableHours}
+              onDateSelect={setSelectedDate}
+            />
+            <TimeSlot
+              selectedDate={selectedDate}
+              availableDays={scheduleSettings.availableHours}
+              duration={eventDetails.duration}
             />
           </div>
         </div>

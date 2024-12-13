@@ -1,0 +1,49 @@
+@import url(../index.css);
+
+.time-slots-wrapper {
+  width: 100%;
+  max-width: 100%;
+  padding: 10px;
+  border: 1px solid #fcefef;
+  border-radius: 5px;
+  background-color: #fbfafa;
+  overflow-y: auto;
+}
+
+.time-slots-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  max-width: 100%;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.time-slot-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 40px;
+  background-color: white;
+  border: 1px solid #fce9eb;
+  border-radius: 5px;
+  color: var(--primaryRed);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: bold;
+}
+
+.time-slot-box:hover {
+  border: 1px solid var(--primaryRed);
+  /* color: white; */
+}
+
+/* Text for no available time slots */
+.no-time-slots {
+  text-align: center;
+  color: #888;
+}

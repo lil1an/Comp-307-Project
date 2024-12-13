@@ -17,7 +17,7 @@ import '../css/calendar.css'
 import { MdOutlineArrowBackIosNew } from 'react-icons/md'
 import { MdOutlineArrowForwardIos } from 'react-icons/md'
 
-const Calendar = ({ dateRange, availableDays }) => {
+const Calendar = ({ dateRange, availableDays, onDateSelect }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date())
   const [selectedDate, setSelectedDate] = useState(null)
 
@@ -37,8 +37,18 @@ const Calendar = ({ dateRange, availableDays }) => {
     const dayName = format(date, 'EEEE')
 
     return (
-      date >= startDate && date <= endDate && availableDays[dayName]?.length > 0
+      date >= startDate &&
+      date <= addDays(endDate, 1) &&
+      availableDays[dayName]?.length > 0
     )
+  }
+
+  // Clicking on date
+  const onDateClick = (day) => {
+    setSelectedDate(day) // Update the selected date
+    if (onDateSelect) {
+      onDateSelect(day) // Notify the parent component
+    }
   }
 
   const renderHeader = () => {
@@ -76,7 +86,6 @@ const Calendar = ({ dateRange, availableDays }) => {
     const rows = []
     let days = []
     let day = startDate
-    let formattedDate = ''
 
     while (day <= endDate) {
       for (let i = 0; i < 7; i++) {
@@ -93,7 +102,7 @@ const Calendar = ({ dateRange, availableDays }) => {
                 : isWithinRange(day)
                 ? 'in-range' // available dates
                 : 'current-month' // days part of the current month
-            }`}
+              }`}
             key={day}
             onClick={() => onDateClick(cloneDay)}
           >
@@ -110,12 +119,6 @@ const Calendar = ({ dateRange, availableDays }) => {
       days = []
     }
     return <div className="body">{rows}</div>
-  }
-
-  // Clicking on Date
-  const onDateClick = (day) => {
-    console.log(day)
-    setSelectedDate(day)
   }
 
   return (
