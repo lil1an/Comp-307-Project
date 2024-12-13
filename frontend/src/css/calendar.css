@@ -2,7 +2,6 @@
 
 .calendar {
   width: 400px;
-  /* margin: 0 auto; */
 }
 
 .calendar-wrapper {
@@ -75,10 +74,11 @@
 }
 
 .number.in-range {
-  background-color: #FCE9EB;
+  background-color: #fce9eb;
   color: var(--primaryRed);
   border-radius: 50%;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .number.out-of-range {
@@ -91,4 +91,5 @@
   color: white;
   border-radius: 50%;
   font-weight: bold;
+  cursor: pointer;
 }
