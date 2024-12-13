@@ -17,7 +17,7 @@ import '../css/calendar.css'
 import { MdOutlineArrowBackIosNew } from 'react-icons/md'
 import { MdOutlineArrowForwardIos } from 'react-icons/md'
 
-const Calendar = () => {
+const Calendar = ({ dateRange }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date())
   const [selectedDate, setSelectedDate] = useState(null)
 
@@ -27,6 +27,13 @@ const Calendar = () => {
 
   const prevMonth = () => {
     setCurrentMonth(subMonths(currentMonth, 1))
+  }
+
+  const isWithinRange = (date) => {
+    if (!dateRange.start || !dateRange.end) return false
+    const startDate = new Date(dateRange.start)
+    const endDate = new Date(dateRange.end)
+    return date >= startDate && date <= endDate
   }
 
   const renderHeader = () => {
@@ -68,27 +75,24 @@ const Calendar = () => {
 
     while (day <= endDate) {
       for (let i = 0; i < 7; i++) {
-        formattedDate = format(day, 'd')
+        const formattedDate = format(day, 'd')
         const cloneDay = day
+
         days.push(
           <div
-            className={`cell ${
-              !isSameMonth(day, monthStart) // not in curr month
-                ? 'disabled'
-                : isSameDay(day, selectedDate) // in curr month
-                ? 'selected'
-                : ''
+            className={`number ${
+              !isSameMonth(day, monthStart)
+                ? 'disabled' // dates outside the current month
+                : isSameDay(day, selectedDate)
+                ? 'selected' // selected date
+                : isWithinRange(day)
+                ? 'in-range' // available dates
+                : 'current-month' // days part of the current month
             }`}
             key={day}
             onClick={() => onDateClick(cloneDay)}
           >
-            <span
-              className={`number ${
-                isSameDay(day, selectedDate) ? 'selected' : ''
-              }`}
-            >
-              {formattedDate}
-            </span>
+            <span>{formattedDate}</span>
           </div>
         )
         day = addDays(day, 1)
@@ -103,6 +107,7 @@ const Calendar = () => {
     return <div className="body">{rows}</div>
   }
 
+  // Clicking on Date
   const onDateClick = (day) => {
     console.log(day)
     setSelectedDate(day)

@@ -20,6 +20,20 @@ const EditPage = () => {
     description: '',
   })
 
+  // State for schedule settings
+  const [scheduleSettings, setScheduleSettings] = useState({
+    dateRange: { start: '', end: '' },
+    availableHours: {
+      Monday: [],
+      Tuesday: [],
+      Wednesday: [],
+      Thursday: [],
+      Friday: [],
+      Saturday: [],
+      Sunday: [],
+    },
+  })
+
   // Tabs
   const [activeTab, setActiveTab] = useState('EventDetails')
 
@@ -32,7 +46,12 @@ const EditPage = () => {
         />
       )
     } else if (activeTab === 'ScheduleSettings') {
-      return <ScheduleSettings />
+      return (
+        <ScheduleSettings
+          scheduleSettings={scheduleSettings}
+          setScheduleSettings={setScheduleSettings}
+        />
+      )
     }
     return null
   }
@@ -44,7 +63,7 @@ const EditPage = () => {
         <div className="edit-wrapper">
           <h2>{apptId ? 'Edit Event' : 'Create New Event'}</h2>
 
-          {/* Navigation Tabs */}
+          {/* Edit Side (Tabs) */}
           <div className="tab-navigation">
             <button
               className={activeTab === 'EventDetails' ? 'active-tab' : ''}
@@ -59,16 +78,14 @@ const EditPage = () => {
               Schedule Settings
             </button>
           </div>
-
-          {/* Tab Content */}
           <div className="tab-content">{renderTabs()}</div>
         </div>
 
         {/* Preview Calendar Side */}
         <div className="preview-wrapper">
           <Preview eventDetails={eventDetails} />
-          <div className='calendar-preview'>
-            <Calendar />
+          <div className="calendar-preview">
+            <Calendar dateRange={scheduleSettings.dateRange} />
           </div>
         </div>
       </div>

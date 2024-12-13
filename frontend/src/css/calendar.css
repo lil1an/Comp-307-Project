@@ -21,14 +21,14 @@
 }
 
 .arrow {
-  background-color: #F9D7DB;
+  background-color: #f9d7db;
   border-radius: 50%;
   padding: 6px;
   color: var(--primaryRed);
 }
 
 .arrow:hover {
-  background-color: #F4B8C0;
+  background-color: #f4b8c0;
 }
 
 .weekday {
@@ -48,22 +48,7 @@
 .row {
   display: flex;
   width: 100%;
-}
-
-.cell {
-  flex: 1;
   padding: 5px;
-  text-align: center;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-}
-
-.cell.disabled {
-  color: #c0c0c0;
-  pointer-events: none;
 }
 
 .number {
@@ -76,10 +61,34 @@
   align-items: center;
   justify-content: center;
   margin: 0 auto;
+  color: black;
+}
+
+.number.current-month {
+  color: darkslategrey;
+  pointer-events: none;
+}
+
+.number.disabled {
+  color: #c0c0c0;
+  pointer-events: none;
+}
+
+.number.in-range {
+  background-color: #FCE9EB;
+  color: var(--primaryRed);
+  border-radius: 50%;
+  font-weight: bold;
+}
+
+.number.out-of-range {
+  color: #c0c0c0;
+  pointer-events: none;
 }
 
 .number.selected {
   background-color: var(--primaryRed);
   color: white;
   border-radius: 50%;
+  font-weight: bold;
 }

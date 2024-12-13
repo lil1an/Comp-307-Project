@@ -2,20 +2,7 @@ import React, { useState } from 'react'
 import '../css/schedule-settings.css'
 import Time, { generateTimeOptions } from './Time'
 
-const ScheduleSettings = () => {
-  const [scheduleSettings, setScheduleSettings] = useState({
-    dateRange: { start: '', end: '' },
-    availableHours: {
-      Monday: [],
-      Tuesday: [],
-      Wednesday: [],
-      Thursday: [],
-      Friday: [],
-      Saturday: [],
-      Sunday: [],
-    },
-  })
-
+const ScheduleSettings = ({scheduleSettings, setScheduleSettings}) => {
   const handleScheduleSettingsChange = (key, value) => {
     setScheduleSettings({ ...scheduleSettings, [key]: value })
   }
@@ -124,13 +111,19 @@ const ScheduleSettings = () => {
                           }
                           options={timeOptions}
                         />
-                        <button className='remove-interval' onClick={() => removeInterval(day, index)}>
+                        <button
+                          className="remove-interval"
+                          onClick={() => removeInterval(day, index)}
+                        >
                           ✖
                         </button>
                       </div>
                     )
                   )}
-                  <button className='add-interval' onClick={() => addInterval(day)}>
+                  <button
+                    className="add-interval"
+                    onClick={() => addInterval(day)}
+                  >
                     ＋ Add Interval
                   </button>
                 </div>
