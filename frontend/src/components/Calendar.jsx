@@ -33,7 +33,8 @@ const Calendar = ({ dateRange }) => {
     if (!dateRange.start || !dateRange.end) return false
     const startDate = new Date(dateRange.start)
     const endDate = new Date(dateRange.end)
-    return date >= startDate && date <= endDate
+    console.log(endDate)
+    return date >= startDate && date <= addDays(endDate, 1)
   }
 
   const renderHeader = () => {
