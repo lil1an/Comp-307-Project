@@ -9,7 +9,6 @@ const meeting = new Schema({
   linkOrLocation: { type: String, required: false },
   attachment: { type: String, required: false },
   bookings:  { type: Array, required: true }, // bookings is an array of [user, timeBooked]
-  attendee:  { type: Schema.Types.Mixed, required: true },
 })
 
 const Meeting = model('meetings', meeting)
