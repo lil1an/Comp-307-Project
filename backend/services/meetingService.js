@@ -53,9 +53,46 @@ export const updateMeetingInDatabase = async (meetingId, updatedData) => {
   }
 };
 
+export const getMeetingsAttendedByUserFromBackend = async (userId) => {
+  try {
+    const meetingsAttendedByUser = await Meeting.find({ attendees: { $in: [userId] } });
+    return meetingsAttendedByUser;
+
+  } catch (error) {
+    console.error('Error fetching meetings attended by user:', error);
+    throw new Error(`Unable to fetch meetings attended by user ID ${userId}`);
+  }
+}
+
+export const getMeetingsHostedByUserFromBackend = async (userId) => {
+  try {
+    const meetingsHostedByUser = await Meeting.find({ host: userId});
+    return meetingsHostedByUser;
+
+  } catch (error) {
+    console.error('Error fetching meetings hosted by user:', error);
+    throw new Error(`Unable to fetch meetings hosted by user ID ${userId}`);
+  }
+}
+
+export const getMeetingRequestsByUserFromBackend = async (userId) => {
+  try {
+    const meetingRequestsForUser = await Request.find({ userAnswering: userId});
+    return meetingRequestsForUser;
+
+  } catch (error) {
+    console.error('Error fetching meetings requests for user:', error);
+    throw new Error(`Unable to fetch meetings requests for user ID ${userId}`);
+  }
+}
+
+
 export default {
   getMeetingByIdFromDatabase,
   createNewMeetingInDatabase,
   deleteMeetingFromDatabase,
-  updateMeetingInDatabase
+  updateMeetingInDatabase,
+  getMeetingsAttendedByUserFromBackend,
+  getMeetingsHostedByUserFromBackend,
+  getMeetingRequestsByUserFromBackend
 };

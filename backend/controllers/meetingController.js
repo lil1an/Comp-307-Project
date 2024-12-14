@@ -53,9 +53,48 @@ export const updateMeeting = async (req, res) => {
   }
 };
 
+export const getMeetingsAttendedByUserId = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const attendedMeetings = await meetingService.getMeetingsAttendedByUserFromBackend(userId);
+
+    res.status(200).json(attendedMeetings);
+  } catch (error) {
+    console.error(`Error getting meetings attended by user ${req.params.id}:`, error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+export const getMeetingsHostedByUserId = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const hostedMeetings = await meetingService.getMeetingsHostedByUserFromBackend(userId);
+
+    res.status(200).json(hostedMeetings);
+  } catch (error) {
+    console.error(`Error getting meetings hosted by user ${req.params.id}:`, error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+export const getMeetingRequestsByUserId = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const meetingRequests = await meetingService.getMeetingRequestsByUserFromBackend(userId);
+
+    res.status(200).json(meetingRequests);
+  } catch (error) {
+    console.error(`Error getting meeting requests for user ${req.params.id}:`, error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 export default {
   getMeetingById,
   createNewMeeting,
   deleteMeeting,
-  updateMeeting
+  updateMeeting,
+  getMeetingsAttendedByUserId,
+  getMeetingsHostedByUserId,
+  getMeetingRequestsByUserId,
 };
