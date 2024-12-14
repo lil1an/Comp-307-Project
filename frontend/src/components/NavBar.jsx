@@ -11,13 +11,16 @@ import { IoPersonAdd } from 'react-icons/io5'
 import { FaPen } from 'react-icons/fa'
 import { IoPeople } from 'react-icons/io5'
 import { HiDocument } from 'react-icons/hi2'
-import { BsExclamation } from "react-icons/bs";
 
-function NavBar() {
+function NavBar({userId}) {
+
+  const location = useLocation();
+
   // Login Status
-  const [isLoggedIn, setIsLoggedIn] = useState(true) // change manually here
-
-  // To Do Later: Write login authenticator logic (manually change for now in the above line)
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    // These pages are before the user login
+    return !(location.pathname === '/' || location.pathname === '/login' || location.pathname === '/registration');
+  });
 
   // Notification Panel Toggle (Bell Icon)
   const [isNotifsOpen, setIsNotifsOpen] = useState(false)
@@ -46,11 +49,12 @@ function NavBar() {
   }
 
   // Function to set the user as not logged in when on the landing or login pages
-  const location = useLocation();
-
    useEffect(() => {
     if (location.pathname === '/' || location.pathname === "/login" || location.pathname === "/registration") {
       setIsLoggedIn(false);
+    }
+    else{
+      setIsLoggedIn(true);
     }
   }, [location.pathname]);
 

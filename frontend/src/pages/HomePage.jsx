@@ -20,13 +20,11 @@ function HomePage() {
           console.error('Error fetching user by ID:', err.response?.data || err.message);
         })
     }
-
-
-  })
+  }, [id])
 
   return (
     <>
-      <NavBar />
+      <NavBar userId={id} />
       <h1>Hello {firstName}!</h1>
       <h1>This is the Home Page After Users Login</h1>
     </>
