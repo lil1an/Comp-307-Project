@@ -9,11 +9,13 @@ import TimeSlot from '../components/TimeSlot'
 import SaveCancelButtons from '../components/SaveCancelButtons'
 import '../css/edit-page.css'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const EditPage = () => {
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
   const apptId = queryParams.get('id')
+  const navigate = useNavigate()
   const { id: hostId } = location.state || {}
 
   // State for event details
@@ -65,15 +67,15 @@ const EditPage = () => {
 
   // Handle save and cancel buttons
   const handleCancel = () => {
-    window.location.href = '/home'
+    navigate('/home', { state: { id: hostId } })
     console.log('Event details have been saved:', eventDetails)
   }
 
   const handleSave = async () => {
-      if (!hostId) {
-        alert('Host ID not found. Please log in.')
-        return
-      }
+    if (!hostId) {
+      alert('Host ID not found. Please log in.')
+      return
+    }
 
     const meetingdata = {
       host: hostId,
@@ -95,7 +97,7 @@ const EditPage = () => {
       window.location.href = '/home'
     } catch (error) {
       console.error('Error! Event not saved!', error)
-      alert('Failed to save event')
+      alert('Failed to save event. Enter all required fields!')
     }
   }
 
