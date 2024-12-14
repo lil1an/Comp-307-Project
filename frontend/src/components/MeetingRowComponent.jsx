@@ -27,7 +27,6 @@ const MeetingRowComponent = ({
     title, 
     starttime,
     date, 
-    isHostingMeeting,
   } = meeting;
 
   return (
@@ -57,7 +56,7 @@ const MeetingRowComponent = ({
           {title}
         </Link>
         <div className='subtitle'>
-          {isHostingMeeting ? attendeeName : hostName}
+          {userIsHostingMeeting ? attendeeName : hostName}
         </div>
       </div>
       <div className='meeting-row-button-container'>
