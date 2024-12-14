@@ -8,11 +8,13 @@ import { useLocation } from 'react-router-dom'
 import TimeSlot from '../components/TimeSlot'
 import SaveCancelButtons from '../components/SaveCancelButtons'
 import '../css/edit-page.css'
+import axios from 'axios'
 
 const EditPage = () => {
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
   const apptId = queryParams.get('id')
+  const { id: hostId } = location.state || {}
 
   // State for event details
   const [eventDetails, setEventDetails] = useState({
@@ -61,13 +63,39 @@ const EditPage = () => {
     return null
   }
 
-  const handleSave = () => {
+  // Handle save and cancel buttons
+  const handleCancel = () => {
     console.log('Event details have been saved:', eventDetails)
   }
 
-  const handleCancel = () => {
-    console.log('Changes have been canceled.')
-    window.location.href = '/home' // Redirect to home menu without saving
+  const handleSave = async () => {
+      if (!hostId) {
+        alert('Host ID not found. Please log in.')
+        return
+      }
+
+    const meetingdata = {
+      host: hostId,
+      title: eventDetails.name,
+      description: eventDetails.description,
+      availabilities: scheduleSettings.availableHours,
+      linkOrLocation: eventDetails.location,
+      bookings: [],
+    }
+
+    console.log('Outgoing meeting data', meetingdata)
+
+    try {
+      const response = await axios.post(
+        'http://localhost:8080/meetings/create',
+        meetingdata
+      )
+      console.log('Even has been saved!', response.data)
+      window.location.href = '/home'
+    } catch (error) {
+      console.error('Error! Event not saved!', error)
+      alert('Failed to save event')
+    }
   }
 
   return (
