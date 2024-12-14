@@ -6,6 +6,8 @@ dotenv.config()
 import express from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
+import http from 'http';
+import { initializeSocket } from './socket.js';
 import connectDB from './config/database.js';
 import userRoutes from './routes/userRoutes.js';
 import meetingRoutes from './routes/meetingRoutes.js';
@@ -19,7 +21,13 @@ import User from './models/User.js'
 connectDB();
 
 // Initialize express app
-const app = express()
+const app = express();
+
+// Initialize Server
+const server = http.createServer(app);
+
+// Socket.io functionalities
+initializeSocket(server);
 
 // middleware
 app.use(morgan('dev'))
@@ -33,11 +41,13 @@ app.use('/meetings', meetingRoutes);
 app.use('/requests', requestRoutes);
 app.use('/notifications', notificationRoutes);
 
-// Start server
-const port = process.env.PORT || 8080
+// Start the server
+function serverStart() {
+  const PORT = process.env.PORT || 8080;
+  server.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+  });
+}
 
-const server = app.listen(port, () =>
-  console.log(`Server is running on port ${port}`)
-)
 
 export default app;
