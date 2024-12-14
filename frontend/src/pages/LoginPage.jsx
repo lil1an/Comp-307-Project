@@ -6,9 +6,24 @@ import '../css/login-page.css';
 
 function LoginPage() {
 
+  // user fields for login
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+
   const navigate = useNavigate();
+
+  // Error popup for login
+  const [statusPopup, setStatusPopup] = useState(''); 
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+
+  const showStatusPopup = (status) => {
+    setStatusPopup(status); // Loading the appropriate error message!
+    setIsPopupVisible(true);
+  }
+
+  const hideStatusPopup = (status) => {
+    setIsPopupVisible(false);
+  }
 
   // Function to handle User Form Submission
   const SubmitForm = (event) => {
@@ -21,10 +36,10 @@ function LoginPage() {
     .catch((err) => {
       // Error catching for email not registered error from our backend
       if (err.response?.status === 404) {
-        alert("Error: Login Information Incorrect.");
+        showStatusPopup("Error: Login Information Incorrect.");
       }
       else {
-        alert('Something went wrong. Please try again later.');
+        showStatusPopup("Something went wrong. Please try again later.");
       }
     });
 
@@ -44,7 +59,7 @@ function LoginPage() {
           </form>
           <div className="login-links">
             <p>
-              Don’t have an account? <a href="#" className="login-link">Sign up here</a>
+              Don’t have an account? <Link to="/registration" className="login-link">Sign up here</Link>
             </p>
             <p>
               Forgot password? <a href="#" className="login-link">Click here</a>
@@ -52,6 +67,14 @@ function LoginPage() {
           </div>
         </div>
       </div>
+
+      {/* Status Popup message*/}
+      {isPopupVisible && (
+        <div className="status-popup">
+          <p>{statusPopup}</p>
+          <button className="popup-close" onClick={hideStatusPopup}>&times;</button>
+        </div>
+      )}
     </>
   );
 }
