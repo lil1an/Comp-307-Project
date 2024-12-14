@@ -8,62 +8,25 @@ import { IoMdShare } from "react-icons/io";
 import { IoMdClose } from "react-icons/io";
 import { FaCheck } from "react-icons/fa6";
 
-/* NOTE: meeting types are 'Upcoming', 'Requests', 'Past' or 'Declined'
-
-  Example Usage: meeting types are upcoming, requests, past or declined
-    import profilePic from './assets/testProfilePic.png';
-
-    const fakeMeeting = {
-      id: '1234',
-      hostName: 'Joseph Vybihal',
-      hostProfilePic: profilePic,
-      attendeeNames:'Harry Potter',
-      title: 'Professor Vybihal\'s Office Hours',
-      duration: 30,
-      starttime: '5:30pm',
-      endtime: '6:00pm',
-      date: 'December 16th, 2024',
-      link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley',
-      location: 'In person, Leacock 910',
-      description: 'Please come prepared with your project outline filled out. See attachment for required components.',
-      attachment: 'COMP_307_project_outline.pdf',
-      typeOfMeeting: 'Upcoming',
-    };
-
-    <MeetingRowComponent 
-      meeting={fakeMeeting} 
-      typeOfMeeting='Upcoming'
-      acceptCallback={() => console.log('accept button clicked')}
-      shareCallback={() => console.log('shared button clicked')}
-      declineCallback={() => console.log('declined button clicked')}
-    /> 
-*/
-
-/* TO DO:
-    - remove the consts at the top of the file, we should be able to calculate them based on the meeting
-*/
+// NOTE: meeting types are 'Upcoming', 'Hosting', 'Requests', 'Past' or 'Declined'
 
 const MeetingRowComponent = ({ 
   meeting, 
   typeOfMeeting, 
+  userIsHostingMeeting,
   shareCallback, 
   acceptCallback, 
   declineCallback, 
 }) => {
 
-  // to do: remove this once we figure out how info comes from backend and can compute ourselves
-  const userIsHostingMeeting = true;
-  const isInPerson = false;
-
   const { 
     id, 
     hostProfilePic = null, 
-    attendeeNames,
+    hostName,
+    attendee,
     title, 
-    starttime, 
-    endtime, 
+    starttime,
     date, 
-    link = null,
   } = meeting;
 
   return (
@@ -81,7 +44,7 @@ const MeetingRowComponent = ({
           }
         </span>
         <div>
-          {starttime}-{endtime}
+          {starttime}
           <div className='subtitle'>{date}</div>
         </div>
       </div>
@@ -93,25 +56,12 @@ const MeetingRowComponent = ({
           {title}
         </Link>
         <div className='subtitle'>
-          {attendeeNames.length > 0 &&
-          (attendeeNames.join(', ').length > 40
-            ? attendeeNames.join(', ').slice(0, 40) + '...'
-            : attendeeNames.join(', '))}
+          {attendee}
         </div>
       </div>
       <div className='meeting-row-button-container'>
         {typeOfMeeting === 'Upcoming' && (
           <>
-            {isInPerson ? 
-              <div className='meeting-row-button green-background no-hover'>In Person</div>
-              : 
-              <Link 
-                to={link}
-                className='meeting-row-button green-background'
-              >
-                  Join
-              </Link>
-            }
             {userIsHostingMeeting && (
               <>
                 <Link 
