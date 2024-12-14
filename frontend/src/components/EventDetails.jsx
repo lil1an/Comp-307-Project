@@ -17,12 +17,7 @@ const EventDetails = ({ eventDetails, setEventDetails }) => {
     window.location.href = '/home' // Redirect to home menu without saving
   }
 
-  const durationOptions = [
-    '15 minutes',
-    '30 minutes',
-    '45 minutes',
-    '60 minutes',
-  ]
+  const durationOptions = [15, 30, 45, 60]
 
   return (
     <div className="toggle-section">

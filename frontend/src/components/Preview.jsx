@@ -5,7 +5,7 @@ const Preview = ({ eventDetails }) => {
     <div className="preview-container">
       <h3 className="preview-header">{eventDetails.name || 'Event Name'}</h3>
       <p className="preview-duration">
-        {eventDetails.duration ? `${eventDetails.duration} min` : 'Duration'}
+        {eventDetails.duration ? `${eventDetails.duration} minutes` : 'Duration'}
       </p>
       <p className="preview-location">
         {eventDetails.location || 'Event Location'}
