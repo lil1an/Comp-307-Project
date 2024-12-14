@@ -1,7 +1,18 @@
+import React from 'react'
+import TimeDropdown from './DropDown'
+import '../css/time-dropdown.css'
+
 const EventDetails = ({ eventDetails, setEventDetails }) => {
   const handleEventDetailChange = (key, value) => {
     setEventDetails({ ...eventDetails, [key]: value })
   }
+
+  const durationOptions = [
+    '15 minutes',
+    '30 minutes',
+    '45 minutes',
+    '60 minutes',
+  ]
 
   return (
     <div className="toggle-section">
@@ -17,13 +28,11 @@ const EventDetails = ({ eventDetails, setEventDetails }) => {
         </div>
         <div className="input-field">
           Duration:
-          <input
-            type="number"
-            placeholder="Duration"
+          <TimeDropdown
+            options={durationOptions}
             value={eventDetails.duration}
-            onChange={(e) =>
-              handleEventDetailChange('duration', e.target.value)
-            }
+            onChange={(value) => handleEventDetailChange('duration', value)}
+            placeholder="Select Duration"
           />
         </div>
         <div className="input-field">
