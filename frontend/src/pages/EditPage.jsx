@@ -65,6 +65,7 @@ const EditPage = () => {
 
   // Handle save and cancel buttons
   const handleCancel = () => {
+    window.location.href = '/home'
     console.log('Event details have been saved:', eventDetails)
   }
 
