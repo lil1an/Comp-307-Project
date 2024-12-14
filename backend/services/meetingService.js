@@ -55,7 +55,7 @@ export const updateMeetingInDatabase = async (meetingId, updatedData) => {
 
 export const getMeetingsAttendedByUserFromBackend = async (userId) => {
   try {
-    const meetingsAttendedByUser = await Meeting.find({ attendees: { $in: [userId] } });
+    const meetingsAttendedByUser = await Meeting.find({ bookings: { $elemMatch: { $in: [userId] } } });
     return meetingsAttendedByUser;
 
   } catch (error) {
