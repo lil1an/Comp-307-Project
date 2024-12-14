@@ -62,21 +62,21 @@ function NavBar({userId}) {
     <div id="nav">
       {isLoggedIn ? (
         <>
-          <Link to="/home">
-            <img src={logo} alt="logo" id="logo" />
+          <Link to="/home" state={{id: userId}}>
+            <img src={logo} alt="logo" id="logo"/>
           </Link>
           <div id="login-options">
-            <Link to="/edit" className="user-button">
+            <Link to="/edit" className="user-button" state={{id: userId}}>
               <FaPen className="icon2" />
               Create
             </Link>
 
-            <Link to="/meetings" className="user-button">
+            <Link to="/meetings" className="user-button" state={{id: userId}}>
               <IoPeople className="icon2" />
               Meetings
             </Link>
 
-            <Link to="/documents" className="user-button">
+            <Link to="/documents" className="user-button" state={{id: userId}}>
               <HiDocument className="icon2" />
               Documents
             </Link>
