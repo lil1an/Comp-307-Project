@@ -89,7 +89,7 @@ function NavBar() {
 
             {/* Notification Panel Popup Test with List*/}
             {isNotifsOpen && (
-              <div id="notifs-panel" onMouseLeave={toggleNotifs}>
+              <div id="notifs-panel">  {/*removed onMouseLeave={toggleNotifs} for now*/}
                 <button id="close-notifs" onClick={toggleNotifs}> &times; </button>
                 <div className="notifs-container">
                   <div className="notifs-top-bar">

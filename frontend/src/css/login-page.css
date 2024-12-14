@@ -72,4 +72,41 @@
   .login-link:hover {
     text-decoration: underline;
   }
+
+  .status-popup {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #000000;
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .popup-close {
+    background: transparent;
+    border: none;
+    font-size: 20px; 
+    font-weight: bold;
+    color: white; 
+    cursor: pointer;
+    position: absolute; 
+    top: 10px; 
+    right: 10px; 
+    padding: 0;
+  }
+  
+  .popup-close:hover {
+    color: #ff0000; 
+    transform: scale(1.1); /* Slightly enlarge the button on hover */
+  }
+  
+  .popup-close:focus {
+    outline: none;
+  }
   

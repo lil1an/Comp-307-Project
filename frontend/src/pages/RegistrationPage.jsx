@@ -11,7 +11,21 @@ function RegistrationPage() {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
   const navigate = useNavigate() // Tool to utilize routes.
+
+  // Error popup for registration
+  const [statusPopup, setStatusPopup] = useState(''); 
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+
+  const showStatusPopup = (status) => {
+    setStatusPopup(status); // Loading the appropriate error message!
+    setIsPopupVisible(true);
+  }
+
+  const hideStatusPopup = (status) => {
+    setIsPopupVisible(false);
+  }
 
   // Function to handle User Form Submission.
   const SubmitForm = (event) => {
@@ -20,17 +34,17 @@ function RegistrationPage() {
     // Axios posting to our user route for registering user in the database
     axios.post( 'http://localhost:8080/users/create', {firstName, lastName, email, password})
     .then(result => {
-          alert("Registered successfully! Please login next.")
-          navigate('/login');
+          showStatusPopup("Registration Successful! Redirecting to Login Page...")
+          setTimeout(() => navigate('/login'), 3000);
     })
     .catch((err) => {
 
       // Error catching for User Already Exists error from our backend
       if (err.response?.status === 400 && err.response?.data?.error === "User already exists") {
-        alert("Error: E-mail already registered!");
+        showStatusPopup("Error: E-mail already registered!");
       }
       else {
-        alert('Something went wrong. Please try again later.');
+        showStatusPopup("Something went wrong. Please try again later.");
       }
     });
 
@@ -54,6 +68,15 @@ function RegistrationPage() {
           </form>
         </div>
       </div>
+
+      {/* Status Popup message*/}
+      {isPopupVisible && (
+        <div className="status-popup">
+          <p>{statusPopup}</p>
+          <button className="popup-close" onClick={hideStatusPopup}>&times;</button>
+        </div>
+      )}
+
     </>
   );
 }

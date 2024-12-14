@@ -33,9 +33,11 @@ app.use('/meetings', meetingRoutes);
 app.use('/requests', requestRoutes);
 app.use('/notifications', notificationRoutes);
 
-// Start servier
+// Start server
 const port = process.env.PORT || 8080
 
 const server = app.listen(port, () =>
   console.log(`Server is running on port ${port}`)
 )
+
+export default app;
