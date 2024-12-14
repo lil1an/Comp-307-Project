@@ -5,10 +5,10 @@ const meeting = new Schema({
   host: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   title: { type: String, required: true },
   description: { type: String, required: false },
-  availabilities: { type: Array, required: true }, // availabilities is an array of [date, times available]
+  availabilities: { type: Map, of: Array, required: true }, // Will store {key : [start: time, end: time]}
   linkOrLocation: { type: String, required: false },
   attachment: { type: String, required: false },
-  bookings:  { type: Array, required: true }, // bookings is an array of [user, timeBooked]
+  bookings: { type: Array, required: true }, // bookings is an array of [user, timeBooked]
 })
 
 const Meeting = model('meetings', meeting)
