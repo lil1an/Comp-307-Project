@@ -83,8 +83,8 @@
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   width: 100%;
   box-sizing: border-box;
-  min-height: 580px;
-  max-height: 580px;
+  min-height: 540px;
+  max-height: 540px;
   gap: 20px;
 }
 

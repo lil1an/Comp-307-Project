@@ -8,15 +8,6 @@ const ScheduleSettings = ({ scheduleSettings, setScheduleSettings }) => {
     setScheduleSettings({ ...scheduleSettings, [key]: value })
   }
 
-  // Saving inputs
-  const handleSave = () => {
-    console.log('Schedule Settings have been saved')
-  }
-
-  const handleCancel = () => {
-    window.location.href = '/home' // redirect to home
-  }
-
   // Schedule settings
   const handleAvailableHoursChange = (day, hours) => {
     setScheduleSettings({
@@ -142,9 +133,6 @@ const ScheduleSettings = ({ scheduleSettings, setScheduleSettings }) => {
             </div>
           ))}
         </div>
-
-        {/* Save and Cancel Buttons */}
-        <SaveCancelButtons onSave={handleSave} onCancel={handleCancel} />
       </div>
     </div>
   )

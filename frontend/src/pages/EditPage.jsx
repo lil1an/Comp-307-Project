@@ -6,6 +6,7 @@ import ScheduleSettings from '../components/ScheduleSettings'
 import Preview from '../components/Preview'
 import { useLocation } from 'react-router-dom'
 import TimeSlot from '../components/TimeSlot'
+import SaveCancelButtons from '../components/SaveCancelButtons'
 import '../css/edit-page.css'
 
 const EditPage = () => {
@@ -60,6 +61,15 @@ const EditPage = () => {
     return null
   }
 
+  const handleSave = () => {
+    console.log('Event details have been saved:', eventDetails)
+  }
+
+  const handleCancel = () => {
+    console.log('Changes have been canceled.')
+    window.location.href = '/home' // Redirect to home menu without saving
+  }
+
   return (
     <>
       <NavBar />
@@ -83,6 +93,9 @@ const EditPage = () => {
             </button>
           </div>
           <div className="tab-content">{renderTabs()}</div>
+
+          {/* Save and cancel buttons */}
+          <SaveCancelButtons onSave={handleSave} onCancel={handleCancel} />
         </div>
 
         {/* Preview Calendar Side */}

@@ -8,15 +8,6 @@ const EventDetails = ({ eventDetails, setEventDetails }) => {
     setEventDetails({ ...eventDetails, [key]: value })
   }
 
-  const handleSave = () => {
-    console.log('Event details have been saved:', eventDetails)
-  }
-
-  const handleCancel = () => {
-    console.log('Changes have been canceled.')
-    window.location.href = '/home' // Redirect to home menu without saving
-  }
-
   const durationOptions = [15, 30, 45, 60]
 
   return (
@@ -61,8 +52,6 @@ const EventDetails = ({ eventDetails, setEventDetails }) => {
           />
         </div>
 
-        {/* Save and cancel buttons */}
-        <SaveCancelButtons onSave={handleSave} onCancel={handleCancel} />
       </div>
     </div>
   )
