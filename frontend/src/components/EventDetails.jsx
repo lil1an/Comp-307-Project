@@ -1,10 +1,20 @@
 import React from 'react'
 import TimeDropdown from './DropDown'
+import SaveCancelButtons from './SaveCancelButtons'
 import '../css/time-dropdown.css'
 
 const EventDetails = ({ eventDetails, setEventDetails }) => {
   const handleEventDetailChange = (key, value) => {
     setEventDetails({ ...eventDetails, [key]: value })
+  }
+
+  const handleSave = () => {
+    console.log('Event details have been saved:', eventDetails)
+  }
+
+  const handleCancel = () => {
+    console.log('Changes have been canceled.')
+    window.location.href = '/home' // Redirect to home menu without saving
   }
 
   const durationOptions = [
@@ -55,6 +65,9 @@ const EventDetails = ({ eventDetails, setEventDetails }) => {
             }
           />
         </div>
+
+        {/* Save and cancel buttons */}
+        <SaveCancelButtons onSave={handleSave} onCancel={handleCancel} />
       </div>
     </div>
   )

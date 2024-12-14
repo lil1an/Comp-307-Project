@@ -1,12 +1,23 @@
 import React, { useState } from 'react'
 import '../css/schedule-settings.css'
+import SaveCancelButtons from './SaveCancelButtons'
 import Time, { generateTimeOptions } from './Time'
 
-const ScheduleSettings = ({scheduleSettings, setScheduleSettings}) => {
+const ScheduleSettings = ({ scheduleSettings, setScheduleSettings }) => {
   const handleScheduleSettingsChange = (key, value) => {
     setScheduleSettings({ ...scheduleSettings, [key]: value })
   }
 
+  // Saving inputs
+  const handleSave = () => {
+    console.log('Schedule Settings have been saved')
+  }
+
+  const handleCancel = () => {
+    window.location.href = '/home' // redirect to home
+  }
+
+  // Schedule settings
   const handleAvailableHoursChange = (day, hours) => {
     setScheduleSettings({
       ...scheduleSettings,
@@ -131,6 +142,9 @@ const ScheduleSettings = ({scheduleSettings, setScheduleSettings}) => {
             </div>
           ))}
         </div>
+
+        {/* Save and Cancel Buttons */}
+        <SaveCancelButtons onSave={handleSave} onCancel={handleCancel} />
       </div>
     </div>
   )
