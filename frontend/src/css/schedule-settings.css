@@ -2,7 +2,7 @@
 @import url(../index.css);
 
 .available-hours-wrapper {
-  max-height: 300px;
+  max-height: 260px;
   overflow-y: auto;
   border: 1px solid #fcefef;
   padding: 10px;
