@@ -10,6 +10,7 @@ import SaveCancelButtons from '../components/SaveCancelButtons'
 import '../css/edit-page.css'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { IoMdShare } from 'react-icons/io'
 
 const EditPage = () => {
   const location = useLocation()
@@ -94,7 +95,7 @@ const EditPage = () => {
         meetingdata
       )
       console.log('Even has been saved!', response.data)
-      window.location.href = '/home'
+      navigate('/home', { state: { id: hostId } })
     } catch (error) {
       console.error('Error! Event not saved!', error)
       alert('Failed to save event. Enter all required fields!')
@@ -121,6 +122,10 @@ const EditPage = () => {
               onClick={() => setActiveTab('ScheduleSettings')}
             >
               Schedule Settings
+            </button>
+
+            <button className="share">
+              <IoMdShare />
             </button>
           </div>
           <div className="tab-content">{renderTabs()}</div>
