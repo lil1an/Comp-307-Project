@@ -54,7 +54,7 @@ function HomePage() {
             <div className="dropdown-header" onClick={() => setShowMeetings(!showMeetings)}>
               <h2>Meetings</h2>
               {showMeetings && <p style={{ display: showMeetings ? "block" : "none" }}>
-                All the informations for your meetings is stored in this table. Contains all meetings your participate in, but also all participation requests you received.</p>}
+                All the information for your meetings is stored in this table. Contains all meetings your participate in, but also all participation requests you received.</p>}
             </div>
             <div className="dropdown-header" onClick={() => setShowDocuments(!showDocuments)}>
               <h2>Documents</h2>
