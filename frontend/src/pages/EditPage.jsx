@@ -121,6 +121,7 @@ const EditPage = () => {
       linkOrLocation: eventDetails.location,
       bookings: [],
       duration: eventDetails.duration,
+      dateRange: scheduleSettings.dateRange,
     }
 
     console.log('Outgoing meeting data', meetingdata)

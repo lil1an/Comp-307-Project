@@ -25,11 +25,10 @@ export const createNewMeeting = async (req, res) => {
 
     // Validation (ensure required fields are present)
     if (!meeting.host || !meeting.title || !meeting.availabilities) {
-      return res
-        .status(400)
-        .json({
-          message: 'Missing required fields: host, title, availabilities.',
-        })
+      return res.status(400).json({
+        message:
+          'Missing required fields: host, title, availabilities, dateRange.',
+      })
     }
 
     const meetingData = await meetingService.createNewMeetingInDatabase(meeting)
@@ -39,8 +38,6 @@ export const createNewMeeting = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' })
   }
 }
-
-
 
 export const deleteMeeting = async (req, res) => {
   try {
@@ -73,7 +70,8 @@ export const updateMeeting = async (req, res) => {
 export const getUpcomingMeetingsByUserId = async (req, res) => {
   try {
     const userId = req.params.id
-    const hostedMeetings = await meetingService.getUpcomingMeetingsByUserFromDatabase(userId)
+    const hostedMeetings =
+      await meetingService.getUpcomingMeetingsByUserFromDatabase(userId)
     res.status(200).json(hostedMeetings)
   } catch (error) {
     console.error(
@@ -87,7 +85,8 @@ export const getUpcomingMeetingsByUserId = async (req, res) => {
 export const getHostedMeetingsByUserId = async (req, res) => {
   try {
     const userId = req.params.id
-    const hostedMeetings = await meetingService.getMeetingsHostedByUserFromBackend(userId)
+    const hostedMeetings =
+      await meetingService.getMeetingsHostedByUserFromBackend(userId)
     res.status(200).json(hostedMeetings)
   } catch (error) {
     console.error(
@@ -101,7 +100,9 @@ export const getHostedMeetingsByUserId = async (req, res) => {
 export const getPastMeetingsByUserId = async (req, res) => {
   try {
     const userId = req.params.id
-    const pastMeetings = await meetingService.getPastMeetingsByUserFromBackend(userId)
+    const pastMeetings = await meetingService.getPastMeetingsByUserFromBackend(
+      userId
+    )
     res.status(200).json(pastMeetings)
   } catch (error) {
     console.error(
@@ -111,7 +112,6 @@ export const getPastMeetingsByUserId = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' })
   }
 }
-
 
 export default {
   getMeetingById,
