@@ -75,36 +75,61 @@ const EditPage = () => {
     console.log('Event details have been saved:', eventDetails)
   }
 
-  // Existing events
   const [showShareButton, setShowShareButton] = useState(false)
 
+  // Erases info for new meetings and stores gets and stores existing meetings
   useEffect(() => {
-    const fetchMeetingDetails = async () => {
-      if (apptId) {
+    if (!apptId) {
+      // Reset state when apptId is null (Create mode)
+      setEventDetails({
+        name: '',
+        duration: 30,
+        location: '',
+        description: '',
+      })
+      setScheduleSettings({
+        dateRange: { start: '', end: '' },
+        availableHours: {
+          Monday: [{ start: '09:00', end: '12:00' }],
+          Tuesday: [{ start: '09:00', end: '12:00' }],
+          Wednesday: [{ start: '09:00', end: '12:00' }],
+          Thursday: [{ start: '09:00', end: '12:00' }],
+          Friday: [{ start: '09:00', end: '12:00' }],
+          Saturday: [{ start: '09:00', end: '12:00' }],
+          Sunday: [{ start: '09:00', end: '12:00' }],
+        },
+      })
+      setShowShareButton(false) // Hide share button
+    } else {
+      // Fetch meeting details for editing
+      const fetchMeetingDetails = async () => {
         try {
           const response = await axios.get(
             `http://localhost:8080/meetings/${apptId}`
           )
           const meeting = response.data
+
           setEventDetails({
             name: meeting.title,
             description: meeting.description,
             location: meeting.linkOrLocation,
             duration: meeting.duration,
           })
-          setScheduleSettings((prevSettings) => ({
-            ...prevSettings,
-            availableHours: meeting.availabilities,
-          }))
-          setShowShareButton(true) // Show share button after saving/updating
+
+          setScheduleSettings({
+            dateRange: meeting.dateRange || { start: '', end: '' },
+            availableHours: meeting.availabilities || {},
+          })
+
+          setShowShareButton(true)
         } catch (error) {
           console.error('Failed to fetch meeting details:', error)
           alert('Error fetching meeting details.')
         }
       }
-    }
 
-    fetchMeetingDetails()
+      fetchMeetingDetails()
+    }
   }, [apptId])
 
   const handleSave = async () => {
@@ -148,7 +173,7 @@ const EditPage = () => {
       }
     } catch (error) {
       console.error('Error! Event not saved/updated!', error)
-      alert('Failed to save/update event. Enter all required fields!')
+      alert('Failed to save event. Enter all required fields!')
     }
   }
 
