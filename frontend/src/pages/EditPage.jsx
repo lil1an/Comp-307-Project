@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Calendar from '../components/Calendar'
 import NavBar from '../components/NavBar'
 import EventDetails from '../components/EventDetails'
@@ -9,8 +9,11 @@ import TimeSlot from '../components/TimeSlot'
 import SaveCancelButtons from '../components/SaveCancelButtons'
 import '../css/edit-page.css'
 import axios from 'axios'
+
+// Icons
 import { useNavigate } from 'react-router-dom'
 import { IoMdShare } from 'react-icons/io'
+import { RiShareBoxFill } from 'react-icons/ri'
 
 const EditPage = () => {
   const location = useLocation()
@@ -72,6 +75,38 @@ const EditPage = () => {
     console.log('Event details have been saved:', eventDetails)
   }
 
+  // Existing events
+  const [showShareButton, setShowShareButton] = useState(false)
+
+  useEffect(() => {
+    const fetchMeetingDetails = async () => {
+      if (apptId) {
+        try {
+          const response = await axios.get(
+            `http://localhost:8080/meetings/${apptId}`
+          )
+          const meeting = response.data
+          setEventDetails({
+            name: meeting.title,
+            description: meeting.description,
+            location: meeting.linkOrLocation,
+            duration: meeting.duration,
+          })
+          setScheduleSettings((prevSettings) => ({
+            ...prevSettings,
+            availableHours: meeting.availabilities,
+          }))
+          setShowShareButton(true) // Show share button after saving/updating
+        } catch (error) {
+          console.error('Failed to fetch meeting details:', error)
+          alert('Error fetching meeting details.')
+        }
+      }
+    }
+
+    fetchMeetingDetails()
+  }, [apptId])
+
   const handleSave = async () => {
     if (!hostId) {
       alert('Host ID not found. Please log in.')
@@ -97,7 +132,7 @@ const EditPage = () => {
           `http://localhost:8080/meetings/${apptId}`,
           meetingdata
         )
-        alert("Your meeting updates were saved.")
+        alert('Your meeting updates were saved.')
         console.log('Event has been updated!', response.data)
       } else {
         // Create new meeting
@@ -105,7 +140,7 @@ const EditPage = () => {
           'http://localhost:8080/meetings/create',
           meetingdata
         )
-        alert("Your meeting was created")
+        alert('Your meeting was created')
         console.log('Event has been saved!', response.data)
         // Redirect to edit page with the new meeting ID
         navigate(`/edit?id=${response.data._id}`, { state: { id: hostId } })
@@ -115,8 +150,6 @@ const EditPage = () => {
       alert('Failed to save/update event. Enter all required fields!')
     }
   }
-
-
 
   return (
     <>
@@ -139,10 +172,44 @@ const EditPage = () => {
             >
               Schedule Settings
             </button>
+            {showShareButton && (
+              <button
+                className="share"
+                onClick={() => {
+                  if (apptId) {
+                    const bookingPageUrl = `${window.location.origin}/meetings/${apptId}`
+                    navigator.clipboard
+                      .writeText(bookingPageUrl)
+                      .then(() => {
+                        alert('Link copied to clipboard!')
+                      })
+                      .catch((err) => {
+                        alert('Failed to copy link. Please try again.')
+                      })
+                  } else {
+                    alert('No meeting ID found. Please save the meeting first.') // just in case
+                  }
+                }}
+              >
+                <IoMdShare />
+              </button>
+            )}
 
-            <button className="share">
-              <IoMdShare />
-            </button>
+            {showShareButton && (
+              <button
+                className="share"
+                onClick={() => {
+                  if (apptId) {
+                    const bookingPageUrl = `${window.location.origin}/meetings/${apptId}`
+                    window.open(bookingPageUrl, '_blank')
+                  } else {
+                    alert('No meeting ID found. Please save the meeting first.') // just in case
+                  }
+                }}
+              >
+                <RiShareBoxFill />
+              </button>
+            )}
           </div>
           <div className="tab-content">{renderTabs()}</div>
 
