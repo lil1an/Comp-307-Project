@@ -1,0 +1,38 @@
+.public-page-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+}
+
+.display-wrapper {
+  display: flex;
+  gap: 100px;
+  background-color: white;
+  padding: 50px 50px;
+}
+
+.meeting-details {
+  margin-bottom: 20px;
+  text-align: center;
+  width: 300px;
+  text-align: left;
+}
+
+.preview-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.calendar-preview {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
