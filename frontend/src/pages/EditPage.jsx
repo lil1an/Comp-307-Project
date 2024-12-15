@@ -85,6 +85,7 @@ const EditPage = () => {
       availabilities: scheduleSettings.availableHours,
       linkOrLocation: eventDetails.location,
       bookings: [],
+      duration: eventDetails.duration,
     }
 
     console.log('Outgoing meeting data', meetingdata)

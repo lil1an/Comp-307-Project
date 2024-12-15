@@ -9,6 +9,7 @@ const meeting = new Schema({
   linkOrLocation: { type: String, required: false },
   attachment: { type: String, required: false },
   bookings: { type: Array, required: true }, // bookings is an array of [user, timeBooked]
+  duration: {type: Number, required: true},
 })
 
 const Meeting = model('meetings', meeting)
