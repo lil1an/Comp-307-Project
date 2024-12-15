@@ -13,7 +13,6 @@ import { FaCheck } from "react-icons/fa6";
 const MeetingRowComponent = ({ 
   meeting, 
   typeOfMeeting, 
-  userIsHostingMeeting,
   shareCallback, 
   acceptCallback, 
   declineCallback, 
@@ -27,6 +26,7 @@ const MeetingRowComponent = ({
     title, 
     starttime,
     date, 
+    userIsHostingMeeting
   } = meeting;
 
   return (
@@ -60,7 +60,7 @@ const MeetingRowComponent = ({
         </div>
       </div>
       <div className='meeting-row-button-container'>
-        {typeOfMeeting === 'Upcoming' || 'Hosting' && (
+        {(typeOfMeeting == 'Upcoming' || 'Hosting') && (
           <>
             {userIsHostingMeeting && (
               <>

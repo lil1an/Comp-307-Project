@@ -41,19 +41,17 @@ const MeetingTable = ({ upcomingMeetings, hostingMeetings, requestMeetings, decl
             className={`tab-button ${selectedTab === tab ? 'tab-button--selected' : ''}`}
           >
             {tab}
-            {console.log(tab === 'Requests')}
-            {tab == 'Requests' && requestMeetings.length > 0 && (
+            {tab == 'Requests' && requestMeetings?.length > 0 && (
               <GoDotFill className={`notification ${selectedTab == 'Requests' ? 'notification--selected' : ''}`}/>
             )}
           </div>
         ))}
       </div>
       <div id='meeting-table-meetings'>
-        {selectedMeetings.length > 0 ? 
+        {selectedMeetings?.length > 0 ? 
           (selectedMeetings.map((meeting) => (
-            <div style={{marginBottom: '7px'}}>
+            <div style={{marginBottom: '7px'}} key={meeting.id}>
               <MeetingRowComponent 
-                key={meeting.id}
                 meeting={meeting} 
                 typeOfMeeting={selectedTab}
                 acceptCallback={() => console.log('accept button clicked')}
