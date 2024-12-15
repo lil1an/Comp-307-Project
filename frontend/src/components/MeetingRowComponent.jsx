@@ -89,8 +89,9 @@ const MeetingRowComponent = ({
               <>
                 <Link 
                   to={{
-                    pathname: `/edit?id=${id}`,
-                    state: { userId: userId } 
+                    pathname: '/edit',
+                    search: `?id=${id}`,
+                    state: { userId: userId }
                   }}
                   className='meeting-row-button green-background'
                 >
