@@ -24,13 +24,6 @@ import { MdEdit } from "react-icons/md";
   <MeetingDetails meeting={fakeMeeting} showEditButton={true} /> 
 */
 
-/* TO DO:
-  - connect backend (will likely need to make changes depending on our entity format)
-  - after backend is set up, links should open actual attachments
-  - make sure duration is stored in mins or else make changes
-*/
-
-
 const MeetingDetails = ({ meeting, showEditButton=false }) => {
   const { id, hostName, hostProfilePic, title, duration, location, description, attachment } = meeting;
 
