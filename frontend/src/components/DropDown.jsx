@@ -18,7 +18,7 @@ const Dropdown = ({
 
   return (
     <div className="dropdown" onMouseLeave={() => setIsOpen(false)}>
-      <div className="dropdown-header" onClick={toggleDropdown}>
+      <div className="dropdown-header1" onClick={toggleDropdown}>
         {value || placeholder}
       </div>
       {isOpen && (
