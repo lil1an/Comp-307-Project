@@ -4,13 +4,14 @@ import Calendar from '../components/Calendar'
 import TimeSlot from '../components/TimeSlot'
 import axios from 'axios'
 import '../css/booking-page.css'
+import { format, addMinutes, parse } from 'date-fns'
 
 const BookingPage = () => {
   const { meetingId } = useParams()
   const [meetingData, setMeetingData] = useState(null)
   const [hostData, setHostData] = useState(null)
-  const [selectedDate, setSelectedDate] = useState(null) // Selected date for TimeSlot
-  const [selectedSlot, setSelectedSlot] = useState(null)
+  const [selectedDate, setSelectedDate] = useState(null)
+  const [selectedSlot, setSelectedSlot] = useState(null) // Store the selected time slot
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
@@ -41,17 +42,51 @@ const BookingPage = () => {
     fetchMeetingData()
   }, [meetingId])
 
+  // Handle booking a slot
   const handleBooking = async () => {
-    if (!selectedSlot) {
-      alert('Please select a time slot before booking.')
+    if (!selectedSlot || !selectedDate) {
+      alert('Please select a date and time slot before booking.') // just in case
       return
     }
 
     try {
-      await axios.post(`http://localhost:8080/meetings/${meetingId}/book`, {
-        slot: selectedSlot,
+      // Fetch current meeting data
+      const meetingResponse = await axios.get(
+        `http://localhost:8080/meetings/${meetingId}`
+      )
+      const meetingData = meetingResponse.data
+
+      if (!meetingData) {
+        alert('Meeting not found.')
+        return
+      }
+
+      // Create new booking Entry
+      console.log(selectedSlot)
+      console.log(
+        addMinutes(
+          parse(selectedSlot, 'HH:mm', new Date()),
+          meetingData.duration
+        )
+      )
+
+      const newBooking = {
+        userId: hostData._id,
+        date: format(selectedDate, 'yyyy-MM-dd'),
+        startTime: selectedSlot,
+        endTime: addMinutes(
+          parse(selectedSlot, 'HH:mm', new Date()),
+          meetingData.duration
+        ),
+      }
+
+      // Update booking array
+      const updatedBookings = [...meetingData.bookings, newBooking]
+
+      // Send updated bookings array back to the backend
+      await axios.put(`http://localhost:8080/meetings/${meetingId}`, {
+        bookings: updatedBookings,
       })
-      alert('Booking successful!')
     } catch (error) {
       console.error('Error booking meeting:', error)
       alert('Failed to book meeting. Please try again.')
@@ -86,17 +121,18 @@ const BookingPage = () => {
             <Calendar
               dateRange={meetingData.dateRange || { start: '', end: '' }}
               availableDays={meetingData.availabilities || {}}
-              onDateSelect={setSelectedDate} // Set the selected date
+              onDateSelect={setSelectedDate}
             />
           </div>
 
-          {/* TimeSlot Component */}
           <div className="time-slot">
             {selectedDate && (
               <TimeSlot
-                selectedDate={selectedDate} // Pass the selected date
+                selectedDate={selectedDate}
                 availableDays={meetingData.availabilities || {}}
                 duration={meetingData.duration}
+                clickable={true} // Enable interactivity
+                onSlotSelect={setSelectedSlot} // Pass selected slot to state
               />
             )}
           </div>

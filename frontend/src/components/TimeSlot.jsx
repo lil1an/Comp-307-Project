@@ -2,8 +2,14 @@ import React from 'react'
 import { format, addMinutes, parse } from 'date-fns'
 import '../css/time-slot.css'
 
-const TimeSlots = ({ selectedDate, availableDays, duration }) => {
-  if (!selectedDate) return null 
+const TimeSlots = ({
+  selectedDate,
+  availableDays,
+  duration,
+  onSlotSelect,
+  clickable = false,
+}) => {
+  if (!selectedDate) return null
 
   const dayName = format(selectedDate, 'EEEE')
   const intervals = availableDays[dayName] || []
@@ -26,12 +32,22 @@ const TimeSlots = ({ selectedDate, availableDays, duration }) => {
     generateTimeSlots(start, end)
   )
 
+  const handleSlotClick = (slot) => {
+    if (clickable && onSlotSelect) {
+      onSlotSelect(slot) // Notify parent about selected slot
+    }
+  }
+
   return (
     <div className="time-slots-wrapper">
       {timeSlots.length > 0 ? (
         <div className="time-slots-container">
           {timeSlots.map((slot, index) => (
-            <div className="time-slot-box" key={index}>
+            <div
+              className={`time-slot-box ${clickable ? 'clickable' : ''}`}
+              key={index}
+              onClick={() => handleSlotClick(slot)} // Handle click only if clickable
+            >
               {slot}
             </div>
           ))}
