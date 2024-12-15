@@ -3,6 +3,7 @@
   border-radius: 20px;
   padding: 10px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   min-height: 50px;
