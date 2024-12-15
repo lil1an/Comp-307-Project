@@ -91,17 +91,32 @@ const EditPage = () => {
     console.log('Outgoing meeting data', meetingdata)
 
     try {
-      const response = await axios.post(
-        'http://localhost:8080/meetings/create',
-        meetingdata
-      )
-      console.log('Even has been saved!', response.data)
-      navigate('/home', { state: { id: hostId } })
+      if (apptId) {
+        // Update existing meeting
+        const response = await axios.put(
+          `http://localhost:8080/meetings/${apptId}`,
+          meetingdata
+        )
+        alert("Your meeting updates were saved.")
+        console.log('Event has been updated!', response.data)
+      } else {
+        // Create new meeting
+        const response = await axios.post(
+          'http://localhost:8080/meetings/create',
+          meetingdata
+        )
+        alert("Your meeting was created")
+        console.log('Event has been saved!', response.data)
+        // Redirect to edit page with the new meeting ID
+        navigate(`/edit?id=${response.data._id}`, { state: { id: hostId } })
+      }
     } catch (error) {
-      console.error('Error! Event not saved!', error)
-      alert('Failed to save event. Enter all required fields!')
+      console.error('Error! Event not saved/updated!', error)
+      alert('Failed to save/update event. Enter all required fields!')
     }
   }
+
+
 
   return (
     <>
