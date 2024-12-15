@@ -18,7 +18,7 @@ import notificationRoutes from './routes/notificationRoutes.js';
 import User from './models/User.js'
 
 // Connect to the database
-connectDB();
+await connectDB();
 
 // Initialize express app
 const app = express();
