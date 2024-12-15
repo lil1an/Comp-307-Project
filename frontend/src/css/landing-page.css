@@ -1,0 +1,66 @@
+@import url(../index.css);
+
+.landing-page{
+    background-color: #F4F4F4;
+    height: calc(100vh - 65px); /* Nav bar height to fit gray background*/
+    display: flex;
+}
+
+.landing-page-content{
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-left: 4%;
+    margin-right: 4%;
+    width:100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.landing-page-text-box{
+    border: 2px solid #ED1B2F;
+    border-radius: 10px;
+    height: 25vh;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #ffffff;
+    display:flex;
+    overflow: hidden; 
+}
+
+.text-box-left{
+    width:70%;
+}
+
+.text-box-right{
+    width:30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.marty-image{
+    width: 50%;
+
+}
+
+.text-box-title{
+    font-size: 4vh;
+}
+
+.text-box-content{
+    font-size: 2vh;
+}
+
+.red-text{
+    color:#ED1B2F;
+}
+
+.preview-image{
+    display: block;
+    margin: 20px auto 0;
+    height: auto;
+    max-height: 55vh;
+    max-width: 100%;
+}
