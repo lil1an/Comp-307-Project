@@ -56,9 +56,11 @@ export const getUnansweredRequestsFromBackend = async (userId) => {
       userAnsweringResponse: null 
     })
     .populate('meeting')
-    .populate('userAsking')
+    .populate('userAskingAccount')
     .populate('userAnswering')
-    return unansweredRequests;
+
+    const normalizedUnansweredRequests = await normalizeRequestFormats(unansweredRequests);
+    return normalizedUnansweredRequests;
   } catch (error) {
     console.error('Error updating request:', error);
     throw new Error(`Unable to get unanswered requests for user with ID ${userId}`);
@@ -73,9 +75,11 @@ export const getDeclinedRequestsFromBackend = async (userId) => {
       userAnsweringResponse: false 
     })
     .populate('meeting')
-    .populate('userAsking')
+    .populate('userAskingAccount')
     .populate('userAnswering')
-    return declinedRequests;
+
+    const normalizedDeclinedRequests = await normalizeRequestFormats(declinedRequests);
+    return normalizedDeclinedRequests;
   } catch (error) {
     console.error('Error updating request:', error);
     throw new Error(`Unable to get declined requests for user with ID ${userId}`);
@@ -84,15 +88,22 @@ export const getDeclinedRequestsFromBackend = async (userId) => {
 
 export const normalizeRequestFormats = async (requests) => {
   return Promise.all(
-    requests.map(({ id, meetingId, userAnswering, userAsking, userAnsweringResponse, timeRequested }) => {
+    requests.map((request) => {
+      const { id, userAnswering, userAskingAccount, userAskingEmail, userAnsweringResponse, meeting, date, starttime, endtime } = request;
+      const hostName = userAskingAccount ? `${userAskingAccount?.firstName} ${userAskingAccount?.lastName}` : userAskingEmail;
+      const hostProfilePic = userAskingAccount?.profilePic || null;
+
       return {
-        meetingId: meetingId || null,
-        hostProfilePic: userAsking.profilePic || null,
-        hostName: `${userAsking.firstName} ${userAsking.lastName}`,
+        id: meeting._id,
+        meeting: meeting || null,
+        hostProfilePic: hostProfilePic,
+        hostName: hostName,
         attendeeId: userAnswering?._id || null,
         attendeeName: `${userAnswering.firstName} ${userAnswering.lastName}`,
-        title: title,
-        dateAndTime: timeRequested || null,
+        title: meeting.title,
+        date: date,
+        starttime: starttime,
+        endtime: endtime,
         userAnsweringResponse: userAnsweringResponse,
       };
     }) || []

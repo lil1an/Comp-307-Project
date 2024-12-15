@@ -38,11 +38,17 @@ function MeetingsPage() {
             axios.get(`http://localhost:8080/meetings/past/${id}`)
           ]);
 
-          setMeetingsUpcoming(meetingsUpcomingResponse.data);
-          setMeetingsHosting(meetingsHostedResponse.data);
-          setMeetingsRequested(unansweredRequestsResponse.data);
-          setMeetingsDeclined(declinedRequestsResponse.data);
-          setMeetingsPast(meetingsPastResponse.data);
+          console.log('frontend upcoming', meetingsUpcomingResponse?.data);
+          console.log('frontend hosting', meetingsHostedResponse?.data);
+          console.log('frontend unanswered', unansweredRequestsResponse?.data);
+          console.log('frontend declined', declinedRequestsResponse?.data);
+          console.log('frontend past', meetingsPastResponse?.data);
+
+          setMeetingsUpcoming(meetingsUpcomingResponse?.data);
+          setMeetingsHosting(meetingsHostedResponse?.data);
+          setMeetingsRequested(unansweredRequestsResponse?.data);
+          setMeetingsDeclined(declinedRequestsResponse?.data);
+          setMeetingsPast(meetingsPastResponse?.data);
         } catch (err) {
           console.error('Error fetching meetings data for user:', err.response?.data || err.message);
         }
