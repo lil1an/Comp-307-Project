@@ -60,7 +60,7 @@ const MeetingRowComponent = ({
         </div>
       </div>
       <div className='meeting-row-button-container'>
-        {(typeOfMeeting == 'Upcoming' || 'Hosting') && (
+        {(typeOfMeeting === 'Upcoming' || 'Hosting') && (
           <>
             {userIsHostingMeeting && (
               <>
