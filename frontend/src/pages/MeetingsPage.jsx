@@ -12,13 +12,7 @@ function MeetingsPage() {
   const [meetingsDeclined, setMeetingsDeclined] = useState([]);
   const [meetingsPast, setMeetingsPast] = useState([]);
 
-  const location = useLocation();
-  const { id } = location.state || {}; 
-
-  /*
-  To Do: 
-      - add logic for accept, share and decline callbacks
-  */
+  const id = localStorage.getItem('userId');
 
   useEffect(() => {
     if (id) {

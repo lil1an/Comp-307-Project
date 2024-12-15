@@ -31,6 +31,7 @@ function LoginPage() {
     
     axios.post( 'http://localhost:8080/users/login', {email, password})
     .then(result => {
+        localStorage.setItem('userId', result.data.id);
         navigate('/home', { state: {id : result.data.id}});
     })
     .catch((err) => {

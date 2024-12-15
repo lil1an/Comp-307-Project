@@ -8,8 +8,7 @@ import marty from '../assets/marty_happy 09.23.00 1.png';
 function HomePage() {
 
   const [firstName, setFirstName] = useState('');
-  const location = useLocation();
-  const { id } = location.state || {}; 
+  const id = localStorage.getItem('userId');
 
   // Dropdown text to describe navbar utilities!
   const [showCreate, setShowCreate] = useState(false);

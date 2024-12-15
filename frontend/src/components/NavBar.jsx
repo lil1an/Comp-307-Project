@@ -46,6 +46,9 @@ function NavBar({userId}) {
   // Function for toggling login/logout
   const toggleLoggedIn = () => {
     setIsLoggedIn((prev)=> !prev) // Flipping state
+    if (!isLoggedIn) {
+      localStorage.removeItem('userId');
+    }
   }
 
   // Function to set the user as not logged in when on the landing or login pages

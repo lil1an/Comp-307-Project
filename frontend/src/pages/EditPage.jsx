@@ -20,7 +20,7 @@ const EditPage = () => {
   const queryParams = new URLSearchParams(location.search)
   const apptId = queryParams.get('id')
   const navigate = useNavigate()
-  const { id: hostId } = location.state || {}
+  const hostId = localStorage.getItem('userId');
 
   // State for event details
   const [eventDetails, setEventDetails] = useState({
