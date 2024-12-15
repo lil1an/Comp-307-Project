@@ -61,7 +61,7 @@ export const getMeetingsAttendedByUserFromBackend = async (userId) => {
     const meetingsAttendedByUser = await Meeting.find({
       bookings: {
         $elemMatch: {
-          0: { $eq: userObjectId }
+          attendee: { $eq: userObjectId }
         }
       }
     }).populate('host');

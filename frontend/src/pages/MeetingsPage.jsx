@@ -73,6 +73,7 @@ function MeetingsPage() {
       <div style={styles["meeting-table-container"]}>
         <div style={{width: '80%'}}>
           <MeetingTable 
+            userId={id}
             upcomingMeetings={meetingsUpcoming} 
             hostingMeetings={meetingsHosting} 
             requestMeetings={meetingsRequested} 

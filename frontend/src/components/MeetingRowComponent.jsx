@@ -13,8 +13,10 @@ import { FaCheck } from "react-icons/fa6";
 const MeetingRowComponent = ({ 
   meeting, 
   typeOfMeeting, 
-  acceptCallback, 
-  declineCallback, 
+  meetingDeclineCallback, 
+  requestDeclineCallback, 
+  requestAcceptCallback,
+  meetingCancelCallback
 }) => {
 
   const { 
@@ -39,7 +41,7 @@ const MeetingRowComponent = ({
 
   function copyToClipboard(text) {
     navigator.clipboard.writeText(text).then(() => {
-      console.log('Text copied to clipboard!');
+      alert('Share link copied to clipboard!');
     }).catch((err) => {
       console.error('Failed to copy text: ', err);
     });
@@ -97,7 +99,7 @@ const MeetingRowComponent = ({
             )}
             <div 
               className='meeting-row-button yellow-background'
-              onClick={declineCallback}
+              onClick={() => userIsHostingMeeting ? meetingCancelCallback(id, date, starttime, endtime) : meetingDeclineCallback(id, date, starttime, endtime)}
             >
               <IoMdClose />
             </div>
@@ -107,7 +109,7 @@ const MeetingRowComponent = ({
           <>
             <div 
               className='meeting-row-button green-background'
-              onClick={acceptCallback}
+              onClick={() => requestAcceptCallback(id, date, starttime, endtime)}
             >
               <FaCheck className='icon-margin'/>
               Accept
@@ -115,7 +117,7 @@ const MeetingRowComponent = ({
 
             <div 
               className='meeting-row-button yellow-background'
-              onClick={declineCallback}
+              onClick={() => requestDeclineCallback(id, date, starttime, endtime)}
             >
               <IoMdClose className='icon-margin'/>
               Decline
@@ -125,7 +127,7 @@ const MeetingRowComponent = ({
         {typeOfMeeting === 'Declined' && (
            <div 
            className='meeting-row-button green-background'
-           onClick={acceptCallback}
+           onClick={() => requestAcceptCallback(id, date, starttime, endtime)}
          >
            <FaCheck className='icon-margin'/>
            Accept

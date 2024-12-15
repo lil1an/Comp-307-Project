@@ -3,8 +3,10 @@ import MeetingRowComponent from './MeetingRowComponent';
 import '../css/meeting-table.css'
 import '../index.css'
 import { GoDotFill } from "react-icons/go";
+import axios from 'axios';
+import Modal from './Modal.jsx'
 
-const MeetingTable = ({ upcomingMeetings, hostingMeetings, requestMeetings, declinedMeetings, pastMeetings }) => {
+const MeetingTable = ({ userId, upcomingMeetings, hostingMeetings, requestMeetings, declinedMeetings, pastMeetings }) => {
   const tabs = ['Upcoming', 'Hosting', 'Requests', 'Declined', 'Past'];
 
   const tabsToMeetings = {
@@ -25,11 +27,104 @@ const MeetingTable = ({ upcomingMeetings, hostingMeetings, requestMeetings, decl
 
   const [selectedTab, setSelectedTab] = useState('Upcoming');
   const [selectedMeetings, setSelectedMeetings] = useState(upcomingMeetings);
+  const [cancelMeetingModalVisible, setCancelMeetingModalVisible] = useState(false);
+  const [declineMeetingModalVisible, setDeclineMeetingModalVisible] = useState(false);
+  const [declineRequestModalVisible, setDeclineRequestModalVisible] = useState(false);
+  const [acceptRequestModalVisible, setAcceptRequestModalVisible] = useState(false);
+  const [responseSavedSuccessfullyModalVisible, setResponseSavedSuccessfullyModalVisible] = useState(false);
+  const [selectedMeetingOrRequest, setSelectedMeetingOrRequest] = useState(null);
+  const [selectedMeetingOrRequestTime, setSelectedMeetingOrRequestTime] = useState(null);
+
 
   const handleTabClick = (tab) => {
     setSelectedTab(tab);
     setSelectedMeetings(tabsToMeetings[tab]);
   };
+
+  const handleMeetingDecline = (meetingId, date, starttime, endtime) => {
+    setDeclineMeetingModalVisible(true);
+    setSelectedMeetingOrRequest(meetingId);
+    setSelectedMeetingOrRequestTime({date, starttime, endtime});
+  }
+
+  const handleMeetingDeclineConfirm = async () => {
+    try {
+      // get the meeting
+      const meeting = await axios.get(`http://localhost:8080/meetings/${selectedMeetingOrRequest}`);
+
+      // find the booking to remove
+      const bookingIndex = meeting.data.bookings.findIndex(
+        (booking) =>
+          booking.attendee === userId &&
+          booking.date === selectedMeetingOrRequestTime.date &&
+          booking.starttime === selectedMeetingOrRequestTime.starttime &&
+          booking.endtime === selectedMeetingOrRequestTime.endtime
+      );
+  
+      // if a matching booking is found, remove it
+      if (bookingIndex !== -1) {
+        meeting.data.bookings.splice(bookingIndex, 1);
+        console.log('Booking removed:', meeting.data.bookings);
+        
+        // send the updated meeting data back to backend
+        await axios.put(
+          `http://localhost:8080/meetings/${selectedMeetingOrRequest}`,
+          { bookings: meeting.data.bookings }
+        );
+  
+        console.log('Meeting updated');
+      } else {
+        console.log('Booking not found.');
+      }
+      
+    } catch (error) {
+      console.error('Error updating meeting:', error);
+    }
+  
+    // close the decline modal and show the success modal
+    setDeclineMeetingModalVisible(false);
+    setResponseSavedSuccessfullyModalVisible(true);
+  };
+
+  const handleMeetingCancel= (meetingId, date, starttime, endtime) => {
+    setCancelMeetingModalVisible(true);
+    setSelectedMeetingOrRequest(meetingId);
+    setSelectedMeetingOrRequestTime({date, starttime, endtime});
+  }
+
+  const handleMeetingCancelConfirm = async () => {
+    try {
+        await axios.delete(`http://localhost:8080/meetings/${selectedMeetingOrRequest}`);
+        console.log('Meeting cancelled');
+    } catch (error) {
+      console.error('Error updating meeting:', error);
+    }
+  
+    // close the cancel meeting modal and show the success modal
+    setCancelMeetingModalVisible(false);
+    setResponseSavedSuccessfullyModalVisible(true);
+  };
+
+  const handleRequestDecline = (meetingId, date, starttime, endtime) => {
+    setDeclineRequestModalVisible(true);
+    setSelectedMeetingOrRequest(meetingId);
+    setSelectedMeetingOrRequestTime({date, starttime, endtime});
+  }
+
+  const handleRequestDeclineConfirm = () => {
+    setDeclineMeetingModalVisible(false);
+  }
+
+  const handleRequestAccept = (meetingId, date, starttime, endtime) => {
+    setAcceptRequestModalVisible(true);
+    setSelectedMeetingOrRequest(meetingId);
+    setSelectedMeetingOrRequestTime({date, starttime, endtime});
+  }
+
+  const handleRequestAcceptConfirm = () => {
+    setDeclineMeetingModalVisible(false);
+  }
+
 
   return (
     <div id='meeting-table'>
@@ -54,14 +149,65 @@ const MeetingTable = ({ upcomingMeetings, hostingMeetings, requestMeetings, decl
               <MeetingRowComponent 
                 meeting={meeting} 
                 typeOfMeeting={selectedTab}
-                acceptCallback={() => console.log('accept button clicked')}
-                declineCallback={() => console.log('declined button clicked')}
+                requestAcceptCallback={handleRequestAccept}
+                requestDeclineCallback={handleRequestDecline}
+                meetingDeclineCallback={handleMeetingDecline}
+                meetingCancelCallback={handleMeetingCancel}
               /> 
             </div>
           ))) : <div className='centered' >{noMeetingsMessages[selectedTab]}</div> 
         }
-
       </div>
+      {/* Cancel Meeting Modal */}
+      <Modal
+        visible={cancelMeetingModalVisible}
+        title="Cancel Meeting?"
+        message="Are you sure you want to cancel this meeting?"
+        primaryButtonLabel="Yes"
+        primaryButtonCallback={() => handleMeetingCancelConfirm()}
+        secondaryButtonLabel="No"
+        secondaryButtonCallback={() => setCancelMeetingModalVisible(false)}
+      />
+
+      {/* Decline Meeting Modal */}
+      <Modal
+        visible={declineMeetingModalVisible}
+        title="Decline Meeting?"
+        message="Are you sure you don't want to attend this meeting?"
+        primaryButtonLabel="Yes"
+        primaryButtonCallback={() => handleMeetingDeclineConfirm()}
+        secondaryButtonLabel="No"
+        secondaryButtonCallback={() => setDeclineMeetingModalVisible(false)}
+      />
+
+      {/* Decline Request Modal */}
+      <Modal
+        visible={declineRequestModalVisible}
+        title="Decline Request?"
+        message="Are you sure you want to decline this request?"
+        primaryButtonLabel="Yes"
+        primaryButtonCallback={() => handleRequestDeclineConfirm()}
+        secondaryButtonLabel="No"
+        secondaryButtonCallback={() => setDeclineRequestModalVisible(false)}
+      />
+
+      {/* Accept Request Modal */}
+      <Modal
+        visible={acceptRequestModalVisible}
+        title="Accept Meeting Request?"
+        message="Are you sure you want to accept this request?"
+        primaryButtonLabel="Yes"
+        primaryButtonCallback={() => handleRequestAcceptConfirm()}
+        secondaryButtonLabel="No"
+        secondaryButtonCallback={() => setAcceptRequestModalVisible(false)}
+      />
+
+      {/* Response Saved Successfully Modal */}
+      <Modal
+        visible={responseSavedSuccessfullyModalVisible}
+        title="Your response has been saved successfully!"
+        closeButtonCallback={() => setResponseSavedSuccessfullyModalVisible(false)}
+      />
     </div>
   );
 };
