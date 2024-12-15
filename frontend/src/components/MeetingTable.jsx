@@ -105,24 +105,63 @@ const MeetingTable = ({ userId, upcomingMeetings, hostingMeetings, requestMeetin
     setResponseSavedSuccessfullyModalVisible(true);
   };
 
-  const handleRequestDecline = (meetingId, date, starttime, endtime) => {
+  const handleRequestDecline = (requestId, meetingId, date, starttime, endtime) => {
     setDeclineRequestModalVisible(true);
-    setSelectedMeetingOrRequest(meetingId);
+    setSelectedMeetingOrRequest(requestId);
     setSelectedMeetingOrRequestTime({date, starttime, endtime});
   }
 
-  const handleRequestDeclineConfirm = () => {
+  const handleRequestDeclineConfirm = async () => {
+    try {
+      await axios.put(
+        `http://localhost:8080/requests/${selectedMeetingOrRequest}`,
+        { userAnsweringResponse: false }
+      );
+    } catch (error) {
+      console.error('Error declining request:', error);
+    }
+   
     setDeclineMeetingModalVisible(false);
+    setResponseSavedSuccessfullyModalVisible(true);
   }
 
-  const handleRequestAccept = (meetingId, date, starttime, endtime) => {
+  const handleRequestAccept = (requestId, meetingId, date, starttime, endtime) => {
     setAcceptRequestModalVisible(true);
-    setSelectedMeetingOrRequest(meetingId);
+    setSelectedMeetingOrRequest(requestId);
     setSelectedMeetingOrRequestTime({date, starttime, endtime});
   }
 
-  const handleRequestAcceptConfirm = () => {
-    setDeclineMeetingModalVisible(false);
+  const handleRequestAcceptConfirm = async () => {
+    // first get the request object
+    const requestObject = await axios.get(`http://localhost:8080/requests/${selectedMeetingOrRequest}`);
+    if (!requestObject || !requestObject.data || !requestObject.data.meeting) {
+      throw new Error('Invalid request data.');
+    }
+
+    // next, create the new booking
+    const meetingObject = await axios.get(`http://localhost:8080/meetings/${requestObject.data.meeting}`);
+    
+    if (!meetingObject || !meetingObject.data) {
+      throw new Error('Meeting not found.');
+    }
+
+    const newBooking = {attendee: userId, date: selectedMeetingOrRequestTime.date, starttime: selectedMeetingOrRequestTime.starttime, endtime: selectedMeetingOrRequestTime.endtime}
+    const updatedBookings = [...meetingObject.data.bookings, newBooking];
+    
+    await axios.put(
+      `http://localhost:8080/meetings/${requestObject.data.meeting}`,
+      { bookings: updatedBookings }
+    );
+
+     // finally, delete the request
+    try {
+      await axios.delete(`http://localhost:8080/requests/${selectedMeetingOrRequest}`);
+    } catch (error) {
+      console.error('Error deleting request:', error);
+    }
+
+    setAcceptRequestModalVisible(false);
+    setResponseSavedSuccessfullyModalVisible(true);
   }
 
 

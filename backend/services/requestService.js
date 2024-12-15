@@ -94,6 +94,7 @@ export const normalizeRequestFormats = async (requests) => {
       const hostProfilePic = userAskingAccount?.profilePic || null;
 
       return {
+        requestId: request._id,
         id: meeting._id,
         meeting: meeting || null,
         hostProfilePic: hostProfilePic,

@@ -20,6 +20,7 @@ const MeetingRowComponent = ({
 }) => {
 
   const { 
+    requestId,
     id, 
     hostProfilePic = null, 
     hostName,
@@ -109,7 +110,7 @@ const MeetingRowComponent = ({
           <>
             <div 
               className='meeting-row-button green-background'
-              onClick={() => requestAcceptCallback(id, date, starttime, endtime)}
+              onClick={() => requestAcceptCallback(requestId, id, date, starttime, endtime)}
             >
               <FaCheck className='icon-margin'/>
               Accept
@@ -117,7 +118,7 @@ const MeetingRowComponent = ({
 
             <div 
               className='meeting-row-button yellow-background'
-              onClick={() => requestDeclineCallback(id, date, starttime, endtime)}
+              onClick={() => requestDeclineCallback(requestId, id, date, starttime, endtime)}
             >
               <IoMdClose className='icon-margin'/>
               Decline
@@ -127,7 +128,7 @@ const MeetingRowComponent = ({
         {typeOfMeeting === 'Declined' && (
            <div 
            className='meeting-row-button green-background'
-           onClick={() => requestAcceptCallback(id, date, starttime, endtime)}
+           onClick={() => requestAcceptCallback(requestId, id, date, starttime, endtime)}
          >
            <FaCheck className='icon-margin'/>
            Accept
