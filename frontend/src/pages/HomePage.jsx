@@ -37,13 +37,14 @@ function HomePage() {
           <div className="hello-box">
             <div className="hello-text">
               <h1>Hello {firstName}!</h1>
-              <p>Welcome back to Commit2Gather! Let's get your meetings setup! See below a list of the utilities accessible to you: </p>
+              <p>Welcome back to Commit2Gather! Let's get your meetings setup!</p>
             </div>
             <div className="marty-image-container">
               <img className="marty-image" src={marty}/>
             </div>
           </div>
 
+          <p className="dropdown-box-top-text">See below a list of the utilities accessible to you: </p>
           {/* Dropdowns are clicked on and off and change the display of the text on click*/}
           <div className="dropdown-box">
             <div className="dropdown-header" onClick={() => setShowCreate(!showCreate)}>

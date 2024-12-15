@@ -27,16 +27,20 @@
   }
   
   .hello-text {
-    width: 60%;
+    width: 65%;
     text-align: left;
   }
 
   .hello-text h1{
-    font-size:5vh;
+    font-size:6vh;
+  }
+
+  .hello-text p{
+    font-size: 4vh;
   }
   
   .marty-image-container {
-    width: 40%;
+    width: 35%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -46,6 +50,11 @@
     max-width: 100%;
     height: auto;
   }
+
+  .dropdown-box-top-text{
+    font-size: 3vh;
+  }
+
   
   .dropdown-box {
     width: 100%;
