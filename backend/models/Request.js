@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 const { Schema, model } = mongoose
 
 const request = new Schema({
-  meeting: { type: mongoose.Schema.Types.ObjectId, ref: 'Meeting', required: true },
+  meeting: { type: mongoose.Schema.Types.ObjectId, ref: 'meetings', required: true },
   availabilities: { type: Array, required: true },
   userAsking: { 
     type: Schema.Types.Mixed, 
@@ -14,7 +14,7 @@ const request = new Schema({
       message: 'userAsking must be either a string or an array of ObjectIds.',
     },
   },
-  userAnswering: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  userAnswering: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true },
   userAnsweringResponse: { type: Boolean, required: false },
 })
 

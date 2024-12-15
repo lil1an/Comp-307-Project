@@ -1,4 +1,5 @@
 import Request from '../models/Request.js';
+import mongoose from 'mongoose';
 
 export const getRequestByIdFromDatabase = async (requestId) => {
   try {
@@ -47,9 +48,62 @@ export const updateRequestInDatabase = async (requestId, updatedData) => {
   }
 };
 
+export const getUnansweredRequestsFromBackend = async (userId) => {
+  try {
+    const userObjectId = mongoose.Types.ObjectId.createFromHexString(userId)
+    const unansweredRequests = await Request.find({
+      userAnswering: { $eq: userObjectId },
+      userAnsweringResponse: null 
+    })
+    .populate('meeting')
+    .populate('userAsking')
+    .populate('userAnswering')
+    return unansweredRequests;
+  } catch (error) {
+    console.error('Error updating request:', error);
+    throw new Error(`Unable to get unanswered requests for user with ID ${userId}`);
+  }
+};
+
+export const getDeclinedRequestsFromBackend = async (userId) => {
+  try {
+    const userObjectId = mongoose.Types.ObjectId.createFromHexString(userId)
+    const declinedRequests = await Request.find({
+      userAnswering: { $eq: userObjectId },
+      userAnsweringResponse: false 
+    })
+    .populate('meeting')
+    .populate('userAsking')
+    .populate('userAnswering')
+    return declinedRequests;
+  } catch (error) {
+    console.error('Error updating request:', error);
+    throw new Error(`Unable to get declined requests for user with ID ${userId}`);
+  }
+};
+
+export const normalizeRequestFormats = async (requests) => {
+  return Promise.all(
+    requests.map(({ id, meetingId, userAnswering, userAsking, userAnsweringResponse, timeRequested }) => {
+      return {
+        meetingId: meetingId || null,
+        hostProfilePic: userAsking.profilePic || null,
+        hostName: `${userAsking.firstName} ${userAsking.lastName}`,
+        attendeeId: userAnswering?._id || null,
+        attendeeName: `${userAnswering.firstName} ${userAnswering.lastName}`,
+        title: title,
+        dateAndTime: timeRequested || null,
+        userAnsweringResponse: userAnsweringResponse,
+      };
+    }) || []
+  );
+};
+
 export default {
   getRequestByIdFromDatabase,
   createNewRequestInDatabase,
   deleteRequestFromDatabase,
-  updateRequestInDatabase
+  updateRequestInDatabase,
+  getUnansweredRequestsFromBackend,
+  getDeclinedRequestsFromBackend
 };
