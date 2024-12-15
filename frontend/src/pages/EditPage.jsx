@@ -20,7 +20,7 @@ const EditPage = () => {
   const queryParams = new URLSearchParams(location.search)
   const apptId = queryParams.get('id')
   const navigate = useNavigate()
-  const hostId = localStorage.getItem('userId');
+  const hostId = localStorage.getItem('userId')
 
   // State for event details
   const [eventDetails, setEventDetails] = useState({
@@ -144,7 +144,6 @@ const EditPage = () => {
       description: eventDetails.description,
       availabilities: scheduleSettings.availableHours,
       linkOrLocation: eventDetails.location,
-      bookings: [],
       duration: eventDetails.duration,
       dateRange: scheduleSettings.dateRange,
     }
@@ -256,6 +255,7 @@ const EditPage = () => {
               selectedDate={selectedDate}
               availableDays={scheduleSettings.availableHours}
               duration={eventDetails.duration}
+              clickable={false}
             />
           </div>
         </div>
