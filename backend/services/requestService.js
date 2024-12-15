@@ -1,4 +1,5 @@
 import Request from '../models/Request.js';
+import mongoose from 'mongoose';
 
 export const getRequestByIdFromDatabase = async (requestId) => {
   try {
@@ -47,33 +48,32 @@ export const updateRequestInDatabase = async (requestId, updatedData) => {
   }
 };
 
-export const getUnansweredRequestsFromBackend = async (req, res) => {
+export const getUnansweredRequestsFromBackend = async (userId) => {
   try {
-    const userId = req.params.id
-    const declinedRequests = await meetingService.getDeclinedRequestsByUserFromBackend(userId)
-    res.status(200).json(declinedRequests)
+    const userObjectId = mongoose.Types.ObjectId.createFromHexString(userId)
+    const unansweredRequests = await Request.find({
+      userAnswering: { $eq: userObjectId },
+      userAnsweringResponse: null 
+    });
+    return unansweredRequests;
   } catch (error) {
-    console.error(
-      `Error getting declined requests for user ${req.params.id}:`,
-      error
-    )
-    res.status(500).json({ message: 'Internal server error' })
+    console.error('Error updating request:', error);
+    throw new Error(`Unable to update request with ID ${requestId}`);
   }
-}
-
-export const getDeclinedRequestsFromBackend = async (req, res) => {
+};
+export const getDeclinedRequestsFromBackend = async (userId) => {
   try {
-    const userId = req.params.id
-    const declinedRequests = await meetingService.getDeclinedRequestsByUserFromBackend(userId)
-    res.status(200).json(declinedRequests)
+    const userObjectId = mongoose.Types.ObjectId.createFromHexString(userId)
+    const declinedRequests = await Request.find({
+      userAnswering: { $eq: userObjectId },
+      userAnsweringResponse: false 
+    });
+    return declinedRequests;
   } catch (error) {
-    console.error(
-      `Error getting declined requests for user ${req.params.id}:`,
-      error
-    )
-    res.status(500).json({ message: 'Internal server error' })
+    console.error('Error updating request:', error);
+    throw new Error(`Unable to update request with ID ${requestId}`);
   }
-}
+};
 
 
 export default {
