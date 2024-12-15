@@ -55,7 +55,6 @@ const MeetingTable = ({ upcomingMeetings, hostingMeetings, requestMeetings, decl
                 meeting={meeting} 
                 typeOfMeeting={selectedTab}
                 acceptCallback={() => console.log('accept button clicked')}
-                shareCallback={() => console.log('shared button clicked')}
                 declineCallback={() => console.log('declined button clicked')}
               /> 
             </div>

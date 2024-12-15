@@ -4,7 +4,7 @@ import '../index.css';
 import '../css/meeting-row-component.css';
 import { CgProfile } from "react-icons/cg";
 import { MdEdit } from "react-icons/md";
-import { IoMdShare } from "react-icons/io";
+import { FaCopy } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import { FaCheck } from "react-icons/fa6";
 
@@ -13,7 +13,6 @@ import { FaCheck } from "react-icons/fa6";
 const MeetingRowComponent = ({ 
   meeting, 
   typeOfMeeting, 
-  shareCallback, 
   acceptCallback, 
   declineCallback, 
 }) => {
@@ -38,6 +37,14 @@ const MeetingRowComponent = ({
     day: 'numeric'
   });
 
+  function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      console.log('Text copied to clipboard!');
+    }).catch((err) => {
+      console.error('Failed to copy text: ', err);
+    });
+  }
+
   return (
     <div className='meeting-row-container'>
       <div className='meeting-row-datetime-container'>
@@ -59,7 +66,7 @@ const MeetingRowComponent = ({
       </div>
       <div className='meeting-row-title-container'>
         <Link 
-          to={`/meetings?id=${id}`}
+          to={`/meetings/${id}`}
           style={{color:'black', textDecoration:'none'}}
         >
           {title}
@@ -82,9 +89,9 @@ const MeetingRowComponent = ({
 
                 <div 
                   className='meeting-row-button green-background'
-                  onClick={shareCallback}
+                  onClick={() => copyToClipboard(`${window.location.origin}/meetings/${id}`)}
                 >
-                  <IoMdShare />
+                  <FaCopy />
                 </div>
               </>
             )}
