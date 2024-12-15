@@ -84,7 +84,7 @@ export const getAllMeetingsByUserFromDatabase = async (userId) => {
     // functions already return flattened list
     const [attendedMeetings, hostedMeetings] = await Promise.all([
       getMeetingsAttendedByUserFromBackend(userId),
-      getMeetingsHostedByUserFromBackend(userId)
+      getAllMeetingsHostedByUserFromBackend(userId)
     ]);
 
     const allMeetings = [...attendedMeetings, ...hostedMeetings];
@@ -104,10 +104,8 @@ export const getUpcomingMeetingsByUserFromDatabase = async (userId) => {
     const currentDate = new Date();
 
     const futureMeetings = allMeetings.filter(meeting => {
-        // const meetingDate = new Date(meeting.bookings.dateAndTime);
-        // return meetingDate > currentDate;
-        // to do: return to this when we figure out saving
-        return true;
+        const meetingDate = new Date(meeting.date);
+        return meetingDate > currentDate;
     });
 
     return futureMeetings;
@@ -117,11 +115,30 @@ export const getUpcomingMeetingsByUserFromDatabase = async (userId) => {
   }
 }
 
-export const getMeetingsHostedByUserFromBackend = async (userId) => {
+export const getAllMeetingsHostedByUserFromBackend = async (userId) => {
   try {
     const meetingsHostedByUser = await Meeting.find({ host: userId}).populate('host');
     const flattenedMeetingsHostedByUser = flattenMeetingTimes(meetingsHostedByUser, true);
     return flattenedMeetingsHostedByUser;
+
+  } catch (error) {
+    console.error('Error fetching meetings hosted by user:', error);
+    throw new Error(`Unable to fetch meetings hosted by user ID ${userId}`);
+  }
+}
+
+export const getUpcomingMeetingsHostedByUserFromBackend = async (userId) => {
+  try {
+    const meetingsHostedByUser = await Meeting.find({ host: userId}).populate('host');
+    const flattenedMeetingsHostedByUser = await flattenMeetingTimes(meetingsHostedByUser, true);
+
+    const currentDate = new Date();
+    const futureHostedMeetings = flattenedMeetingsHostedByUser.filter(meeting => {
+      const meetingDate = new Date(meeting.date);
+      return meetingDate > currentDate;
+  });
+
+    return futureHostedMeetings;
 
   } catch (error) {
     console.error('Error fetching meetings hosted by user:', error);
@@ -158,10 +175,8 @@ export const getPastMeetingsByUserFromBackend = async (userId) => {
     const currentDate = new Date();
 
     const pastMeetings = allMeetings.filter(meeting => {
-        // const meetingDate = new Date(meeting.bookings.dateAndTime);
-        // return meetingDate < currentDate;
-        // to do: return to this when we figure out saving
-        return true;
+        const meetingDate = new Date(meeting.date);
+        return meetingDate < currentDate;
     });
     return pastMeetings;
   } catch (error) {
@@ -218,7 +233,8 @@ export default {
   getMeetingsAttendedByUserFromBackend,
   getAllMeetingsByUserFromDatabase,
   getUpcomingMeetingsByUserFromDatabase,
-  getMeetingsHostedByUserFromBackend,
+  getAllMeetingsHostedByUserFromBackend,
+  getUpcomingMeetingsHostedByUserFromBackend,
   getMeetingRequestsByUserFromBackend,
   getDeclinedMeetingsByUserFromBackend,
   getPastMeetingsByUserFromBackend
