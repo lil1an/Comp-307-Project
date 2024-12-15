@@ -15,6 +15,8 @@
   padding: 50px 50px;
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  min-height: 620px;
+  min-width: 900px;
 }
 
 .meeting-details {
@@ -29,6 +31,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
+  gap: 20px;
 }
 
 .calendar-preview {
@@ -37,4 +40,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.time-slot {
+  width: 100%; /* Match the width of the calendar-preview */
+  display: flex; /* Use flexbox for alignment */
+  flex-direction: column; /* Ensure contents are stacked vertically */
+  align-items: center; /* Center align contents horizontally */
+  justify-content: center; /* Center align contents vertically */
+  padding: 20px; /* Add some padding for spacing */
+  box-sizing: border-box; /* Ensure padding doesn't affect width */
+  border-radius: 8px; /* Optional: Add rounded corners */
 }
