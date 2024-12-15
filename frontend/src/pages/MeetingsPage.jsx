@@ -21,33 +21,33 @@ function MeetingsPage() {
   */
 
   useEffect(() => {
-    if (id){
+    if (id) {
       const fetchMeetingsData = async (id) => {
         try {
           const [
             meetingsUpcomingResponse,
             meetingsHostedResponse,
-            meetingsRequestedResponse,
-            meetingsDeclinedResponse,
+            unansweredRequestsResponse,
+            declinedRequestsResponse,
             meetingsPastResponse
           ] = await Promise.all([
-            axios.get(`http://localhost:8080/meetingsUpcoming/${id}`),
-            axios.get(`http://localhost:8080/meetingsHosted/${id}`),
-            axios.get(`http://localhost:8080/meetingsRequested/${id}`),
-            axios.get(`http://localhost:8080/meetingsDeclined/${id}`),
-            axios.get(`http://localhost:8080/meetingsPast/${id}`)
+            axios.get(`http://localhost:8080/meetings/upcoming/${id}`),
+            axios.get(`http://localhost:8080/meetings/hosted/${id}`),
+            axios.get(`http://localhost:8080/requests/unanswered/${id}`),
+            axios.get(`http://localhost:8080/requests/declined/${id}`),
+            axios.get(`http://localhost:8080/meetings/past/${id}`)
           ]);
-      
+
           setMeetingsUpcoming(meetingsUpcomingResponse.data);
           setMeetingsHosting(meetingsHostedResponse.data);
-          setMeetingsRequested(meetingsRequestedResponse.data);
-          setMeetingsDeclined(meetingsDeclinedResponse.data);
+          setMeetingsRequested(unansweredRequestsResponse.data);
+          setMeetingsDeclined(declinedRequestsResponse.data);
           setMeetingsPast(meetingsPastResponse.data);
         } catch (err) {
           console.error('Error fetching meetings data for user:', err.response?.data || err.message);
         }
       };
-      fetchMeetingsData();
+      fetchMeetingsData(id);
     }
   }, [id]);
 
