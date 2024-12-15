@@ -186,6 +186,7 @@ const MeetingTable = ({ userId, upcomingMeetings, hostingMeetings, requestMeetin
           (selectedMeetings.map((meeting) => (
             <div style={{marginBottom: '7px'}} key={meeting.id}>
               <MeetingRowComponent 
+                userId={userId}
                 meeting={meeting} 
                 typeOfMeeting={selectedTab}
                 requestAcceptCallback={handleRequestAccept}

@@ -11,6 +11,7 @@ import { FaCheck } from "react-icons/fa6";
 // NOTE: meeting types are 'Upcoming', 'Hosting', 'Requests', 'Past' or 'Declined'
 
 const MeetingRowComponent = ({ 
+  userId,
   meeting, 
   typeOfMeeting, 
   meetingDeclineCallback, 
@@ -69,7 +70,10 @@ const MeetingRowComponent = ({
       </div>
       <div className='meeting-row-title-container'>
         <Link 
-          to={`/meetings/${id}`}
+          to={{
+            pathname: `/meetings/${id}`,
+            state: { userId: userId } 
+          }}
           style={{color:'black', textDecoration:'none'}}
         >
           {title}
@@ -84,7 +88,10 @@ const MeetingRowComponent = ({
             {userIsHostingMeeting && (
               <>
                 <Link 
-                  to={`/edit?id=${id}`}
+                  to={{
+                    pathname: `/edit?id=${id}`,
+                    state: { userId: userId } 
+                  }}
                   className='meeting-row-button green-background'
                 >
                   <MdEdit />
