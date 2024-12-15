@@ -170,31 +170,35 @@ export const getPastMeetingsByUserFromBackend = async (userId) => {
 async function flattenMeetingTimes(meetings, userisHostingMeeting = false) {
   return Promise.all(
     meetings.flatMap(({ id, host, title, bookings }) => 
-      bookings?.map(([attendee, dateAndTime]) => {
+      bookings?.map(({ attendee, date, starttime, endtime }) => {
         return getUserByIdFromDatabase(attendee)
           .then(user => {
             const attendeeName = user ? `${user.firstName} ${user.lastName}` : attendee;
             return {
-              meetingId: id,
+              id: id,
               hostProfilePic: host.profilePic || null,
               hostName: `${host.firstName} ${host.lastName}`,
               attendeeId: user?._id || null,
               attendeeName: attendeeName,
               title: title,
-              dateAndTime: dateAndTime,
+              date: date,
+              starttime: starttime,
+              endtime: endtime,
               userIsHostingMeeting: userisHostingMeeting
             };
           })
           .catch(error => {
             console.error('Error fetching user:', error);
             return {
-              meetingId: id,
+              id: id,
               hostProfilePic: host.profilePic || null,
               hostName: `${host.firstName} ${host.lastName}`,
               attendeeId: user?._id || null,
               attendeeName: attendeeName,
               title: title,
-              dateAndTime: dateAndTime,
+              date: date,
+              starttime: starttime,
+              endtime: endtime,
               userIsHostingMeeting: userisHostingMeeting
             };
           });

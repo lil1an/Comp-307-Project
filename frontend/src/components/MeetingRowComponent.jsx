@@ -25,9 +25,18 @@ const MeetingRowComponent = ({
     attendeeName,
     title, 
     starttime,
+    endtime,
     date, 
     userIsHostingMeeting
   } = meeting;
+
+  const dateObject = new Date(date);
+
+  const formattedDate = dateObject.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
 
   return (
     <div className='meeting-row-container'>
@@ -44,8 +53,8 @@ const MeetingRowComponent = ({
           }
         </span>
         <div>
-          {starttime}
-          <div className='subtitle'>{date}</div>
+          {starttime}-{endtime}
+          <div className='subtitle'>{formattedDate}</div>
         </div>
       </div>
       <div className='meeting-row-title-container'>
