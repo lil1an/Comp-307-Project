@@ -47,6 +47,10 @@ const MeetingTable = ({ userId, upcomingMeetings, hostingMeetings, requestMeetin
     setSelectedMeetingOrRequestTime({date, starttime, endtime});
   }
 
+  useEffect(() => {
+    setSelectedMeetings(tabsToMeetings[selectedTab]);
+  }, [selectedTab, upcomingMeetings, hostingMeetings, requestMeetings, declinedMeetings, pastMeetings]);
+
   const handleMeetingDeclineConfirm = async () => {
     try {
       // get the meeting
