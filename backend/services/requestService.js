@@ -47,9 +47,40 @@ export const updateRequestInDatabase = async (requestId, updatedData) => {
   }
 };
 
+export const getUnansweredRequestsFromBackend = async (req, res) => {
+  try {
+    const userId = req.params.id
+    const declinedRequests = await meetingService.getDeclinedRequestsByUserFromBackend(userId)
+    res.status(200).json(declinedRequests)
+  } catch (error) {
+    console.error(
+      `Error getting declined requests for user ${req.params.id}:`,
+      error
+    )
+    res.status(500).json({ message: 'Internal server error' })
+  }
+}
+
+export const getDeclinedRequestsFromBackend = async (req, res) => {
+  try {
+    const userId = req.params.id
+    const declinedRequests = await meetingService.getDeclinedRequestsByUserFromBackend(userId)
+    res.status(200).json(declinedRequests)
+  } catch (error) {
+    console.error(
+      `Error getting declined requests for user ${req.params.id}:`,
+      error
+    )
+    res.status(500).json({ message: 'Internal server error' })
+  }
+}
+
+
 export default {
   getRequestByIdFromDatabase,
   createNewRequestInDatabase,
   deleteRequestFromDatabase,
-  updateRequestInDatabase
+  updateRequestInDatabase,
+  getUnansweredRequestsFromBackend,
+  getDeclinedRequestsFromBackend
 };

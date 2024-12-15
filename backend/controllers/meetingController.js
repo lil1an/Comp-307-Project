@@ -70,60 +70,55 @@ export const updateMeeting = async (req, res) => {
   }
 }
 
-export const getMeetingsAttendedByUserId = async (req, res) => {
+export const getUpcomingMeetingsByUserId = async (req, res) => {
   try {
     const userId = req.params.id
-    const attendedMeetings =
-      await meetingService.getMeetingsAttendedByUserFromBackend(userId)
-
-    res.status(200).json(attendedMeetings)
-  } catch (error) {
-    console.error(
-      `Error getting meetings attended by user ${req.params.id}:`,
-      error
-    )
-    res.status(500).json({ message: 'Internal server error' })
-  }
-}
-
-export const getMeetingsHostedByUserId = async (req, res) => {
-  try {
-    const userId = req.params.id
-    const hostedMeetings =
-      await meetingService.getMeetingsHostedByUserFromBackend(userId)
-
+    const hostedMeetings = await meetingService.getUpcomingMeetingsByUserFromDatabase(userId)
     res.status(200).json(hostedMeetings)
   } catch (error) {
     console.error(
-      `Error getting meetings hosted by user ${req.params.id}:`,
+      `Error getting upcoming meetings for user ${req.params.id}:`,
       error
     )
     res.status(500).json({ message: 'Internal server error' })
   }
 }
 
-export const getMeetingRequestsByUserId = async (req, res) => {
+export const getHostedMeetingsByUserId = async (req, res) => {
   try {
     const userId = req.params.id
-    const meetingRequests =
-      await meetingService.getMeetingRequestsByUserFromBackend(userId)
-
-    res.status(200).json(meetingRequests)
+    const hostedMeetings = await meetingService.getMeetingsHostedByUserFromBackend(userId)
+    res.status(200).json(hostedMeetings)
   } catch (error) {
     console.error(
-      `Error getting meeting requests for user ${req.params.id}:`,
+      `Error getting hosted meetings for user ${req.params.id}:`,
       error
     )
     res.status(500).json({ message: 'Internal server error' })
   }
 }
+
+export const getPastMeetingsByUserId = async (req, res) => {
+  try {
+    const userId = req.params.id
+    const pastMeetings = await meetingService.getPastMeetingsByUserFromBackend(userId)
+    res.status(200).json(pastMeetings)
+  } catch (error) {
+    console.error(
+      `Error getting past meetings for user ${req.params.id}:`,
+      error
+    )
+    res.status(500).json({ message: 'Internal server error' })
+  }
+}
+
 
 export default {
   getMeetingById,
   createNewMeeting,
   deleteMeeting,
   updateMeeting,
-  getMeetingsAttendedByUserId,
-  getMeetingsHostedByUserId,
-  getMeetingRequestsByUserId,
+  getUpcomingMeetingsByUserId,
+  getHostedMeetingsByUserId,
+  getPastMeetingsByUserId,
 }
