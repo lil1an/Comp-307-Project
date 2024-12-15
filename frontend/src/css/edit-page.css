@@ -48,6 +48,33 @@
 }
 
 /* Edit Section */
+.tab-navigation {
+  display: flex;
+  align-items: center;
+}
+
+/* Share button */
+.tab-navigation .share {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f5f5;
+  border-radius: 40px;
+  color: black;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.tab-navigation .share:hover {
+  background-color: #e0e0e0;
+}
+
+.tab-navigation .share:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Other naviagtion tabs */
 .tab-navigation button {
   background-color: var(--primaryRed);
   color: white;
