@@ -107,8 +107,20 @@ export const normalizeRequestFormats = async (requests) => {
         endtime: endtime,
         userAnsweringResponse: userAnsweringResponse,
       };
-    }) || []
-  );
+    })
+  ).then((normalizedRequests) => {
+    const currentDate = new Date();
+
+    return normalizedRequests.sort((a, b) => {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+
+      const diffA = dateA - currentDate;
+      const diffB = dateB - currentDate;
+
+      return diffA - diffB;
+    });
+  }) || [];
 };
 
 export default {
