@@ -85,7 +85,7 @@ const ScheduleSettings = ({ scheduleSettings, setScheduleSettings }) => {
                   onChange={(e) =>
                     handleAvailableHoursChange(
                       day,
-                      e.target.checked ? [{}] : []
+                      e.target.checked ? [{ start: '09:00', end: '12:00' }] : []
                     )
                   }
                 />

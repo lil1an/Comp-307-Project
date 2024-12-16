@@ -18,16 +18,25 @@ const TimeSlots = ({
   const intervals = availableDays[dayName] || []
 
   const generateTimeSlots = (start, end) => {
-    const slots = []
-    let currentTime = parse(start, 'HH:mm', new Date())
-    const endTime = parse(end, 'HH:mm', new Date())
-
-    while (currentTime < endTime) {
-      slots.push(format(currentTime, 'HH:mm'))
-      currentTime = addMinutes(currentTime, duration)
+    if (!start || !end) {
+      return [] // Skip this interval if start or end is missing
     }
 
-    return slots
+    try {
+      const slots = []
+      let currentTime = parse(start, 'HH:mm', new Date())
+      const endTime = parse(end, 'HH:mm', new Date())
+
+      while (currentTime < endTime) {
+        slots.push(format(currentTime, 'HH:mm'))
+        currentTime = addMinutes(currentTime, duration)
+      }
+
+      return slots
+    } catch (error) {
+      console.error('Error generating time slots:', { start, end }, error)
+      return [] // Skip this interval if parsing fails
+    }
   }
 
   // Generate time slots for all intervals of the selected day

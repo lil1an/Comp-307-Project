@@ -5,7 +5,7 @@ import EventDetails from '../components/EventDetails'
 import ScheduleSettings from '../components/ScheduleSettings'
 import Preview from '../components/Preview'
 import { useLocation } from 'react-router-dom'
-import TimeSlot from '../components/TimeSlot'
+import TimeSlot from '../components/TimeSlots'
 import SaveCancelButtons from '../components/SaveCancelButtons'
 import '../css/edit-page.css'
 import axios from 'axios'
@@ -281,7 +281,7 @@ const EditPage = () => {
         </div>
 
         {/* Preview Calendar Side */}
-        <div className="preview-wrapper">
+        <div className="preview-wrapper-from-edit">
           <Preview eventDetails={eventDetails} />
           <div className="calendar-preview">
             <Calendar
