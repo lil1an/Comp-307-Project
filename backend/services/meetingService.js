@@ -70,7 +70,7 @@ export const getMeetingsAttendedByUserFromBackend = async (userId) => {
     }).populate('host');
 
      const flattenedMeetings = await flattenMeetingTimes(meetingsAttendedByUser, false);
-     const filteredMeetings = flattenedMeetings.filter(meeting => meeting.attendeeId.toString() === userObjectId.toString());
+     const filteredMeetings = flattenedMeetings.filter(meeting => meeting.attendeeId?.toString() === userObjectId?.toString());
      return filteredMeetings;
 
   } catch (error) {
