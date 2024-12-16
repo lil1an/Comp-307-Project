@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Calendar from '../components/Calendar'
-import TimeSlot from '../components/TimeSlot'
+import TimeSlot from '../components/TimeSlots'
 import axios from 'axios'
 import '../css/booking-page.css'
 import { format, addMinutes, parse } from 'date-fns'
