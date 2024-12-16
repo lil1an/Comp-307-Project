@@ -109,8 +109,6 @@
 
 #notifs-panel {
   position: absolute;
-  display:flex;
-  flex-wrap: wrap;
   top: 65px;
   right: 1px;
   width: 500px;

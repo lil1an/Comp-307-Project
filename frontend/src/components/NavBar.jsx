@@ -51,7 +51,6 @@ function NavBar() {
   // Function for toggling login/logout
   const toggleLoggedIn = () => {
     if (isLoggedIn) {
-      console.log("removed userId global");
       localStorage.removeItem('userId');
     }
 
@@ -79,7 +78,8 @@ function NavBar() {
         const updatedNotifications = await Promise.all(
           sortedNotifications.map(async (notif) => {
           try {
-            const meetingResponse = await axios.get(`http://localhost:8080/meetings/${notif.meeting}`);
+            const meetingResponse = await axios.get(`http://localhost:8080/meetings/${notif.Meeting}`);
+            console.log(meetingResponse.data.title);
             return { ...notif, meetingTitle: meetingResponse.data.title };
           } catch (error) {
             console.error('Error fetching meeting title:', error);
@@ -87,7 +87,7 @@ function NavBar() {
           }
           })
           );
-          setUserNotifications(sortedNotifications);
+          setUserNotifications(updatedNotifications);
       }
     }
     catch(error)
@@ -139,30 +139,24 @@ function NavBar() {
               <div id="notifs-panel">  {/*removed onMouseLeave={toggleNotifs} for now*/}
                 <button id="close-notifs" onClick={toggleNotifs}> &times; </button>
                 
+                {console.log(userNotifications)}
                 {/* This will be the template we use for each user notifications*/}
                 {userNotifications.length > 0 ? (
                   userNotifications.map((notif, index) => (
-                    <div className="notifs-container" key={index}>
-                      <div className="notifs-top-bar">
-                        <HiDocument className="notifs-logo" />
-                        <a href="#" className="notifs-title"><b><u>{notif.meetingTitle}</u></b></a>
+                    notif && notif.content && (
+                      <div className="notifs-container" key={index}>
+                        <div className="notifs-top-bar">
+                          <HiDocument className="notifs-logo" />
+                          <a href="#" className="notifs-title"><b><u>{notif.meetingTitle}</u></b></a>
+                        </div>
+                        <p className="notifs-desc">{notif.content}</p>
+                        <p className="notifs-desc">{new Date(notif.time).toLocaleString()}</p>
                       </div>
-                      <p className="notifs-desc">{notif.content}</p>
-                      <p className="notifs-desc">{new Date(notif.time).toLocaleString()}</p>
-                    </div>
+                    )
                   ))
                 ) : (
                   <p>No new notifications.</p>
                 )}
-
-                <div className="notifs-container">
-                  <div className="notifs-top-bar">
-                    <HiDocument className="notifs-logo" />
-                    <a href="#" className="notifs-title"><b><u>Professor's Vyhibal Office Hours</u></b></a>
-                  </div>
-                  <p className="notifs-desc">A document was attached to this meeting you are attending.</p>
-                  <p className="notifs-desc">Sunday, November 24, 2024, 8:19pm, by Joseph Vyhibal</p>
-                </div>
                 
               </div>
             )}
