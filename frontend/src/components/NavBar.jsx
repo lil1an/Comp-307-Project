@@ -79,7 +79,6 @@ function NavBar() {
           sortedNotifications.map(async (notif) => {
           try {
             const meetingResponse = await axios.get(`http://localhost:8080/meetings/${notif.Meeting}`);
-            console.log(meetingResponse.data.title);
             return { ...notif, meetingTitle: meetingResponse.data.title };
           } catch (error) {
             console.error('Error fetching meeting title:', error);
@@ -136,10 +135,9 @@ function NavBar() {
 
             {/* Notification Panel Popup Test with List*/}
             {isNotifsOpen && (
-              <div id="notifs-panel">  {/*removed onMouseLeave={toggleNotifs} for now*/}
+              <div id="notifs-panel" onMouseLeave={toggleNotifs}>
                 <button id="close-notifs" onClick={toggleNotifs}> &times; </button>
                 
-                {console.log(userNotifications)}
                 {/* This will be the template we use for each user notifications*/}
                 {userNotifications.length > 0 ? (
                   userNotifications.map((notif, index) => (
