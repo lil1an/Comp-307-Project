@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react'
-import { useParams, useLocation, useNavigate } from 'react-router-dom'
+import { useParams, useLocation } from 'react-router-dom'
 import Calendar from '../components/Calendar'
 import TimeSlot from '../components/TimeSlots'
 import axios from 'axios'
 import '../css/booking-page.css'
 import { format, addMinutes, parse } from 'date-fns'
 
-const BookingPage = () => {
+const RequestBookingPage = () => {
   const location = useLocation()
-  const navigate = useNavigate();
 
   // Retrieve userId from localStorage or state passed via location
   const userId = location.state?.userId || localStorage.getItem('userId')
@@ -17,9 +16,54 @@ const BookingPage = () => {
   const [meetingData, setMeetingData] = useState(null)
   const [hostData, setHostData] = useState(null)
   const [selectedDate, setSelectedDate] = useState(null)
-  const [selectedSlot, setSelectedSlot] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [selectedSlot, setSelectedSlot] = useState(null) 
+  const [loading, setLoading] = useState(true) 
   const [error, setError] = useState(null)
+
+  const fullTimeAvailabilites = {
+    "Monday": [
+      {
+        "start": "09:00",
+        "end": "17:00"
+      }
+    ],
+    "Tuesday": [
+      {
+        "start": "09:00",
+        "end": "17:00"
+      }
+    ],
+    "Wednesday": [
+      {
+        "start": "09:00",
+        "end": "17:00"
+      }
+    ],
+    "Thursday": [
+      {
+        "start": "09:00",
+        "end": "17:00"
+      }
+    ],
+    "Friday": [
+      {
+        "start": "09:00",
+        "end": "17:00"
+      }
+    ],
+    "Saturday": [
+      {
+        "start": "09:00",
+        "end": "17:00"
+      }
+    ],
+    "Sunday": [
+      {
+        "start": "09:00",
+        "end": "17:00"
+      }
+    ]
+}
 
   // Function to fetch meeting data
   const fetchMeetingData = async () => {
@@ -28,13 +72,6 @@ const BookingPage = () => {
         `http://localhost:8080/meetings/${meetingId}`
       )
       const meeting = response.data
-      const currentDate = format(new Date(), 'yyyy-MM-dd')
-      const isSameDate = currentDate === meeting.dateRange['start']
-
-      if (!isSameDate) {
-        meeting.dateRange['start'] = currentDate
-      }
-
       setMeetingData(meeting)
 
       console.log('Fetching meeting: ', meeting)
@@ -50,7 +87,7 @@ const BookingPage = () => {
     } catch (err) {
       console.error('Error fetching meeting data:', err)
       setError('Failed to load meeting details.')
-      setLoading(false)
+      setLoading(false) 
     }
   }
 
@@ -58,8 +95,48 @@ const BookingPage = () => {
     fetchMeetingData()
   }, [meetingId])
 
+
+  const handleBooking = async() => {
+    // create a request even if inside availabilities
+    createRequest()
+  }
+
+  const createRequest = async () => {
+    if (!selectedSlot || !selectedDate) {
+      alert('Please select a date and time slot before booking.')
+      return
+    }
+
+    try {
+      const newRequest = {
+        meeting: meetingId,
+        userAskingAccount: userId || null,
+        userAnswering: meetingData.host,
+        userAnsweringResponse: null,
+        date: format(new Date(selectedDate), 'yyyy-MM-dd'),
+        starttime: format(parse(selectedSlot, 'HH:mm', new Date()), 'HH:mm'),
+        endtime: format(
+          addMinutes(
+            parse(selectedSlot, 'HH:mm', new Date()), 
+            meetingData.duration
+          ), 
+          'HH:mm'
+        )
+      };
+      
+      const response = await axios.post('http://localhost:8080/requests/create', newRequest);
+      console.log('Response:', response.data);
+      alert('Your request to meet was sent successfully!')
+      return response.data;
+    } catch (error) {
+      console.error('Error creating request:', error);
+      throw error;
+    }
+  }
+
+
   // Handle booking a slot
-  const handleBooking = async () => {
+  const createBooking = async () => {
     if (!selectedSlot || !selectedDate) {
       alert('Please select a date and time slot before booking.')
       return
@@ -97,6 +174,8 @@ const BookingPage = () => {
   if (error) return <p>{error}</p>
 
   return (
+    <>
+    <div style={{ }}><h2>Requesting Alternative Time For Meeting</h2></div>
     <div className="public-page-wrapper">
       <div className="display-wrapper">
         <div className="meeting-details">
@@ -114,20 +193,13 @@ const BookingPage = () => {
             <strong>Duration:</strong> {meetingData.duration} minutes
           </p>
           <p>{meetingData.description}</p>
-            <button
-              onClick={() => navigate(`${location.pathname}/request`)}
-              className="book-slot-button"
-              style={{ backgroundColor: '#FFD400', color: 'black'}}
-            >
-              Request Alternative Time
-            </button>
         </div>
 
         <div className="preview-wrapper">
           <div className="calendar-preview">
             <Calendar
               dateRange={meetingData.dateRange || { start: '', end: '' }}
-              availableDays={meetingData.availabilities || {}}
+              availableDays={fullTimeAvailabilites || {}}
               onDateSelect={setSelectedDate}
             />
           </div>
@@ -136,7 +208,7 @@ const BookingPage = () => {
             {selectedDate && (
               <TimeSlot
                 selectedDate={selectedDate}
-                availableDays={meetingData.availabilities || {}}
+                availableDays={fullTimeAvailabilites || {}}
                 bookings={meetingData.bookings} // Pass bookings to TimeSlots
                 duration={meetingData.duration}
                 clickable={true} // Enable interactivity
@@ -152,17 +224,18 @@ const BookingPage = () => {
               disabled={!selectedSlot}
               className="book-slot-button"
             >
-              Book Slot
+              Request Slot
             </button>
           ) : (
             <p className="host-warning">
-              You are the host for this meeting. You cannot book a slot.
+              You are the host for this meeting. You cannot book a slot. 
             </p>
           )}
         </div>
       </div>
     </div>
+    </>
   )
 }
 
-export default BookingPage
+export default RequestBookingPage

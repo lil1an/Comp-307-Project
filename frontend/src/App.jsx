@@ -7,6 +7,7 @@ import DocumentsPage from './pages/DocumentsPage'
 import RegistrationPage from './pages/RegistrationPage'
 import LoginPage from './pages/LoginPage'
 import BookingPage from './pages/BookingPage'
+import RequestBookingPage from './pages/RequestBookingPage'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/registration" element={<RegistrationPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/meetings/:meetingId" element={<BookingPage />} />
+        <Route path="/meetings/:meetingId/request" element={<RequestBookingPage />} />
       </Routes>
     </Router>
   )
