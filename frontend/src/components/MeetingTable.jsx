@@ -152,7 +152,7 @@ const MeetingTable = ({ userId, upcomingMeetings, hostingMeetings, requestMeetin
       alert('Error declining request:', error);
     }
     fetchMeetingsData(userId);
-    setDeclineMeetingModalVisible(false);
+    setDeclineRequestModalVisible(false);
     setResponseSavedSuccessfullyModalVisible(true);
   }
 
