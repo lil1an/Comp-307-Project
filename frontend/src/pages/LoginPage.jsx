@@ -32,7 +32,7 @@ function LoginPage() {
     axios.post( 'http://localhost:8080/users/login', {email, password})
     .then(result => {
         localStorage.setItem('userId', result.data.id);
-        navigate('/home', { state: {id : result.data.id}});
+        navigate('/home');
     })
     .catch((err) => {
       // Error catching for email not registered error from our backend

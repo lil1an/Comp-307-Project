@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import NavBar from '../components/NavBar';
-import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import '../css/home-page.css';
 import marty from '../assets/marty_happy 09.23.00 1.png';
