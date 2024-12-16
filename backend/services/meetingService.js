@@ -135,7 +135,28 @@ export const getAllMeetingsHostedByUserFromBackendFlattened = async (userId) => 
 
 export const getAllMeetingsHostedByUserFromBackend = async (userId) => {
   try {
-    return await Meeting.find({ host: userId}).populate('host');
+    const hostedMeetings = await Meeting.find({ host: userId }).populate('host');
+
+    const currentDate = new Date();
+
+    try {
+      const sortedHostedMeetings = hostedMeetings.sort((a, b) => {
+        const dateA = new Date(a.dateRange.start);
+        const dateB = new Date(b.dateRange.start);
+
+        const diffA = Math.abs(dateA - currentDate);
+        const diffB = Math.abs(dateB - currentDate);
+
+        return diffA - diffB;
+      });
+
+      return sortedHostedMeetings;
+    } catch (sortError) {
+      console.error('Error sorting meetings:', sortError);
+    }
+
+    return hostedMeetings;
+
   } catch (error) {
     console.error('Error fetching meetings hosted by user:', error);
     throw new Error(`Unable to fetch meetings hosted by user ID ${userId}`);

@@ -9,6 +9,7 @@ import TimeSlot from '../components/TimeSlots'
 import SaveCancelButtons from '../components/SaveCancelButtons'
 import '../css/edit-page.css'
 import axios from 'axios'
+import Modal from '../components/Modal'
 
 // Icons
 import { useNavigate } from 'react-router-dom'
@@ -47,6 +48,9 @@ const EditPage = () => {
 
   // State for selected date
   const [selectedDate, setSelectedDate] = useState(null)
+
+  // State for modals
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 
   // Tabs
   const [activeTab, setActiveTab] = useState('EventDetails')
@@ -126,7 +130,7 @@ const EditPage = () => {
   }, [apptId])
 
   // Handle delete a meeting
-  const handleDeleteMeeting = async (meetingId) => {
+  const handleMeetingDeleteConfirm = async (meetingId) => {
     try {
       await axios.delete(`http://localhost:8080/meetings/${meetingId}`)
       alert('Meeting successfully deleted.')
@@ -222,7 +226,7 @@ const EditPage = () => {
                       className="share"
                       onClick={() => {
                         if (apptId) {
-                          handleDeleteMeeting(apptId)
+                          setDeleteModalVisible(true);
                         } else {
                           alert(
                             'No meeting ID found. Please save the meeting first.'
@@ -301,6 +305,16 @@ const EditPage = () => {
                 />
               </div>
             </div>
+            {/* Delete Meeting Modal */}
+            <Modal
+              visible={deleteModalVisible}
+              title="Delete Meeting?"
+              message="Are you sure you want to delete this meeting? This will also delete all bookings associated with the meeting."
+              primaryButtonLabel="Yes"
+              primaryButtonCallback={() => handleMeetingDeleteConfirm(apptId)}
+              secondaryButtonLabel="No"
+              secondaryButtonCallback={() => setDeleteModalVisible(false)}
+            />
           </div>
         </>
       ) : (
