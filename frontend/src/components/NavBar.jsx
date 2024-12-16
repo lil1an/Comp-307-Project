@@ -28,7 +28,7 @@ function NavBar() {
   const [isNotifsOpen, setIsNotifsOpen] = useState(false)
 
   // Notification Bell with new notifications
-  const [isNewNotifs, setIsNewNotifs] = useState(true)
+  const [hasUnreadNotification, setHasUnreadNotification] = useState(false);
 
   // Notifications content
   const [userNotifications, setUserNotifications] = useState([]);
@@ -38,15 +38,46 @@ function NavBar() {
     setIsNotifsOpen((prev) => !prev) // Flipping state
     
     // Removing new notification dot if applicable
-    if(isNewNotifs){
-      toggleNewNotifs()
+    if(hasUnreadNotification){
+      updateUnreadNotification();
     }
   }
 
   // Function for toggling new notification symbol
-  const toggleNewNotifs = () => {
-    setIsNewNotifs((prev) => !prev) // Flipping state
-  }
+  const updateUnreadNotification = async () => {
+    try {
+      if (id) {
+
+        const userResponse = await axios.get(`http://localhost:8080/users/${id}`);
+        const userData = userResponse.data;
+
+        // Notifications have been read.
+        const updatedUserData = {...userData,hasUnreadNotification: false,};
+        await axios.put(`http://localhost:8080/users/${id}`, updatedUserData);
+        setHasUnreadNotification(false); // Update state
+      }
+    } catch (error) {
+      console.error('Error marking notifications as read:', error);
+    }
+  };
+
+  const checkUnreadNotification = async () => {
+    try {
+      if (id) {
+        const response = await axios.get(`http://localhost:8080/users/${id}`);
+        setHasUnreadNotification(response.data.hasUnreadNotification);
+      }
+    } catch (error) {
+      console.error('Error fetching unread notifications status:', error);
+    }
+  };
+
+  // We want on page load to set hasUnreadNotification with the user!
+  useEffect(() => {
+    if (id) {
+      checkUnreadNotification();
+    }
+  }, [id]);
 
   // Function for toggling login/logout
   const toggleLoggedIn = () => {
@@ -124,7 +155,7 @@ function NavBar() {
             </Link>
 
             {/* Notification Icon with dot for new notifications*/}
-            {isNewNotifs ? (<VscBellDot className="bell-icon" onClick={toggleNotifs} />
+            {hasUnreadNotification ? (<VscBellDot className="bell-icon" onClick={toggleNotifs} />
             ) : (<VscBell className="bell-icon" onClick={toggleNotifs} />)
             }
 
@@ -135,7 +166,7 @@ function NavBar() {
 
             {/* Notification Panel Popup Test with List*/}
             {isNotifsOpen && (
-              <div id="notifs-panel" onMouseLeave={toggleNotifs}>
+              <div id="notifs-panel">
                 <button id="close-notifs" onClick={toggleNotifs}> &times; </button>
                 
                 {/* This will be the template we use for each user notifications*/}
