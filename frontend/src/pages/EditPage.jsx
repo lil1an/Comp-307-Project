@@ -281,7 +281,7 @@ const EditPage = () => {
         </div>
 
         {/* Preview Calendar Side */}
-        <div className="preview-wrapper-from-edit">
+        <div className="preview-wrapper">
           <Preview eventDetails={eventDetails} />
           <div className="calendar-preview">
             <Calendar
