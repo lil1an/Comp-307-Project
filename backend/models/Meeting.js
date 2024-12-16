@@ -8,7 +8,14 @@ const meeting = new Schema({
   availabilities: { type: Map, of: Array, required: true }, // Will store {key : [start: time, end: time]}
   linkOrLocation: { type: String, required: false },
   attachment: { type: String, required: false },
-  bookings: { type: Array, required: true }, // bookings is an array of [user, timeBooked]
+  bookings: [
+    {
+      attendee: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
+      date: { type: String, required: true }, // Store as ISO date string (e.g., '2024-12-15')
+      starttime: { type: String, required: true }, // Store as ISO time string (e.g., '14:00')
+      endtime: { type: String, required: true }, // Store as ISO time string (e.g., '14:30')
+    },
+  ],
   duration: { type: Number, required: true },
   dateRange: {
     start: { type: Date, required: true },

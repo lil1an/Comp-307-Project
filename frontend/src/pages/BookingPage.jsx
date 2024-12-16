@@ -72,12 +72,15 @@ const BookingPage = () => {
 
       const newBooking = {
         userId: hostData._id,
-        date: format(selectedDate, 'yyyy-MM-dd'),
-        startTime: selectedSlot,
-        endTime: addMinutes(
-          parse(selectedSlot, 'HH:mm', new Date()),
-          meetingData.duration
-        ),
+        date: format(selectedDate, 'yyyy-MM-dd'), // Store date as 'YYYY-MM-DD'
+        starttime: format(parse(selectedSlot, 'HH:mm', new Date()), 'HH:mm'), // Store time as 'HH:mm'
+        endtime: format( // Store time as 'HH:mm'
+          addMinutes(
+            parse(selectedSlot, 'HH:mm', new Date()),
+            meetingData.duration
+          ),
+          'HH:mm'
+        ), 
       }
 
       // Update booking array
