@@ -6,7 +6,7 @@ import { GoDotFill } from "react-icons/go";
 import axios from 'axios';
 import Modal from './Modal.jsx'
 
-const MeetingTable = ({ userId, upcomingMeetings, hostingMeetings, requestMeetings, declinedMeetings, pastMeetings }) => {
+const MeetingTable = ({ userId, upcomingMeetings, hostingMeetings, requestMeetings, declinedMeetings, pastMeetings, loading }) => {
   const tabs = ['Upcoming', 'Hosting', 'Requests', 'Declined', 'Past'];
 
   const tabsToMeetings = {
@@ -225,7 +225,7 @@ const MeetingTable = ({ userId, upcomingMeetings, hostingMeetings, requestMeetin
                   meetingCancelCallback={handleMeetingCancel}
                 /> 
               </div>
-            )) : <div className='centered' >{noMeetingsMessages[selectedTab]}</div> 
+            )) : <div className='centered' >{loading ? 'Loading meetings...' : noMeetingsMessages[selectedTab]}</div> 
           }
         </div>
       </div>

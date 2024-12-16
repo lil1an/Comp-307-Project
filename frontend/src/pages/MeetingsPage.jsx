@@ -11,10 +11,13 @@ function MeetingsPage() {
   const [meetingsRequested, setMeetingsRequested] = useState([]);
   const [meetingsDeclined, setMeetingsDeclined] = useState([]);
   const [meetingsPast, setMeetingsPast] = useState([]);
+  const [loadingMeetings, setLoadingMeetings] = useState(false);
 
   const userId = localStorage.getItem('userId');
 
   const fetchMeetingsData = async (userId) => {
+    setLoadingMeetings(true);
+
     try {
       const [
         meetingsUpcomingResponse,
@@ -44,6 +47,8 @@ function MeetingsPage() {
     } catch (err) {
       console.error('Error fetching meetings data for user:', err.response?.data || err.message);
     }
+
+    setLoadingMeetings(false);
   };
 
   useEffect(() => {
@@ -73,6 +78,7 @@ function MeetingsPage() {
         <div style={{width: '80%'}}>
           <MeetingTable 
             userId={userId}
+            loading={loadingMeetings}
             upcomingMeetings={meetingsUpcoming} 
             hostingMeetings={meetingsHosting} 
             requestMeetings={meetingsRequested} 
