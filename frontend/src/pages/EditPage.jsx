@@ -191,114 +191,126 @@ const EditPage = () => {
 
   return (
     <>
-      <NavBar />
-      <div className="create-page-wrapper">
-        <div className="edit-wrapper">
-          <h2>{apptId ? 'Edit Event' : 'Create New Event'}</h2>
+      {hostId ? (
 
-          {/* Edit Side (Tabs) */}
-          <div className="tab-navigation">
-            <button
-              className={activeTab === 'EventDetails' ? 'active-tab' : ''}
-              onClick={() => setActiveTab('EventDetails')}
-            >
-              Event Details
-            </button>
-            <button
-              className={activeTab === 'ScheduleSettings' ? 'active-tab' : ''}
-              onClick={() => setActiveTab('ScheduleSettings')}
-            >
-              Schedule Settings
-            </button>
+        <>
+          <NavBar />
+          <div className="create-page-wrapper">
+            <div className="edit-wrapper">
+              <h2>{apptId ? 'Edit Event' : 'Create New Event'}</h2>
 
-            {/* Utility Buttons */}
-            <div className="utility-tools">
-              {showShareButton && (
+              {/* Edit Side (Tabs) */}
+              <div className="tab-navigation">
                 <button
-                  className="share"
-                  onClick={() => {
-                    if (apptId) {
-                      handleDeleteMeeting(apptId)
-                    } else {
-                      alert(
-                        'No meeting ID found. Please save the meeting first.'
-                      )
-                    }
-                  }}
+                  className={activeTab === 'EventDetails' ? 'active-tab' : ''}
+                  onClick={() => setActiveTab('EventDetails')}
                 >
-                  <IoTrash />
+                  Event Details
                 </button>
-              )}
-
-              {showShareButton && (
                 <button
-                  className="share"
-                  onClick={() => {
-                    if (apptId) {
-                      const bookingPageUrl = `${window.location.origin}/meetings/${apptId}`
-                      navigator.clipboard
-                        .writeText(bookingPageUrl)
-                        .then(() => {
-                          alert('Booking link copied to clipboard!')
-                        })
-                        .catch((err) => {
-                          alert('Failed to copy link. Please try again.')
-                        })
-                    } else {
-                      alert(
-                        'No meeting ID found. Please save the meeting first.'
-                      ) // just in case
-                    }
-                  }}
+                  className={activeTab === 'ScheduleSettings' ? 'active-tab' : ''}
+                  onClick={() => setActiveTab('ScheduleSettings')}
                 >
-                  <IoMdShare />
+                  Schedule Settings
                 </button>
-              )}
 
-              {showShareButton && (
-                <button
-                  className="share"
-                  onClick={() => {
-                    if (apptId) {
-                      const bookingPageUrl = `${window.location.origin}/meetings/${apptId}`
-                      window.open(bookingPageUrl, '_blank')
-                    } else {
-                      alert(
-                        'No meeting ID found. Please save the meeting first.'
-                      ) // just in case
-                    }
-                  }}
-                >
-                  <RiShareBoxFill />
-                </button>
-              )}
+                {/* Utility Buttons */}
+                <div className="utility-tools">
+                  {showShareButton && (
+                    <button
+                      className="share"
+                      onClick={() => {
+                        if (apptId) {
+                          handleDeleteMeeting(apptId)
+                        } else {
+                          alert(
+                            'No meeting ID found. Please save the meeting first.'
+                          )
+                        }
+                      }}
+                    >
+                      <IoTrash />
+                    </button>
+                  )}
+
+                  {showShareButton && (
+                    <button
+                      className="share"
+                      onClick={() => {
+                        if (apptId) {
+                          const bookingPageUrl = `${window.location.origin}/meetings/${apptId}`
+                          navigator.clipboard
+                            .writeText(bookingPageUrl)
+                            .then(() => {
+                              alert('Booking link copied to clipboard!')
+                            })
+                            .catch((err) => {
+                              alert('Failed to copy link. Please try again.')
+                            })
+                        } else {
+                          alert(
+                            'No meeting ID found. Please save the meeting first.'
+                          ) // just in case
+                        }
+                      }}
+                    >
+                      <IoMdShare />
+                    </button>
+                  )}
+
+                  {showShareButton && (
+                    <button
+                      className="share"
+                      onClick={() => {
+                        if (apptId) {
+                          const bookingPageUrl = `${window.location.origin}/meetings/${apptId}`
+                          window.open(bookingPageUrl, '_blank')
+                        } else {
+                          alert(
+                            'No meeting ID found. Please save the meeting first.'
+                          ) // just in case
+                        }
+                      }}
+                    >
+                      <RiShareBoxFill />
+                    </button>
+                  )}
+                </div>
+              </div>
+              <div className="tab-content">{renderTabs()}</div>
+
+              {/* Save and cancel buttons */}
+              <SaveCancelButtons onSave={handleSave} onCancel={handleCancel} />
+            </div>
+
+            {/* Preview Calendar Side */}
+            <div className="preview-wrapper">
+              <Preview eventDetails={eventDetails} />
+              <div className="calendar-preview">
+                <Calendar
+                  dateRange={scheduleSettings.dateRange}
+                  availableDays={scheduleSettings.availableHours}
+                  onDateSelect={setSelectedDate}
+                />
+                <TimeSlot
+                  selectedDate={selectedDate}
+                  availableDays={scheduleSettings.availableHours}
+                  duration={eventDetails.duration}
+                  clickable={false}
+                />
+              </div>
             </div>
           </div>
-          <div className="tab-content">{renderTabs()}</div>
-
-          {/* Save and cancel buttons */}
-          <SaveCancelButtons onSave={handleSave} onCancel={handleCancel} />
-        </div>
-
-        {/* Preview Calendar Side */}
-        <div className="preview-wrapper">
-          <Preview eventDetails={eventDetails} />
-          <div className="calendar-preview">
-            <Calendar
-              dateRange={scheduleSettings.dateRange}
-              availableDays={scheduleSettings.availableHours}
-              onDateSelect={setSelectedDate}
-            />
-            <TimeSlot
-              selectedDate={selectedDate}
-              availableDays={scheduleSettings.availableHours}
-              duration={eventDetails.duration}
-              clickable={false}
-            />
+        </>
+      ):(
+        <>
+          <div style={{ textAlign: 'center', marginTop: '50px', fontSize: '20px', color: 'red' }}>
+            User must be logged in to see this page.
           </div>
-        </div>
-      </div>
-    </>
+        </>
+      )
+      }
+    </>  
   )
 }
 
