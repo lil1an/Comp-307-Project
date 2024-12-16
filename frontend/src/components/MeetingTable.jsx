@@ -187,8 +187,8 @@ const MeetingTable = ({ userId, upcomingMeetings, hostingMeetings, requestMeetin
       </div>
       <div id='meeting-table-meetings'>
         {selectedMeetings?.length > 0 ? 
-          (selectedMeetings.map((meeting) => (
-            <div style={{marginBottom: '7px'}} key={meeting.id}>
+          selectedMeetings.map((meeting, index) => (
+            <div style={{ marginBottom: '7px' }} key={index}>
               <MeetingRowComponent 
                 userId={userId}
                 meeting={meeting} 
@@ -199,7 +199,7 @@ const MeetingTable = ({ userId, upcomingMeetings, hostingMeetings, requestMeetin
                 meetingCancelCallback={handleMeetingCancel}
               /> 
             </div>
-          ))) : <div className='centered' >{noMeetingsMessages[selectedTab]}</div> 
+          )) : <div className='centered' >{noMeetingsMessages[selectedTab]}</div> 
         }
       </div>
       {/* Cancel Meeting Modal */}
