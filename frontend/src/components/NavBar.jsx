@@ -109,7 +109,7 @@ function NavBar() {
         const updatedNotifications = await Promise.all(
           sortedNotifications.map(async (notif) => {
           try {
-            const meetingResponse = await axios.get(`http://localhost:8080/meetings/${notif.Meeting}`);
+            const meetingResponse = await axios.get(`http://localhost:8080/meetings/${notif.meeting}`);
             return { ...notif, meetingTitle: meetingResponse.data.title };
           } catch (error) {
             console.error('Error fetching meeting title:', error);

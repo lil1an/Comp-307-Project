@@ -190,6 +190,30 @@ const MeetingTable = ({ userId, upcomingMeetings, hostingMeetings, requestMeetin
     } catch (error) {
       throw new Error('Error deleting request.');
     }
+
+    // Creating a notification for the attendee
+    try {
+      const attendeeData = await axios.get(`http://localhost:8080/users/${requestObject.data.userAskingAccount}`);
+      const currentUserData = await axios.get(`http://localhost:8080/users/${userId}`);
+      
+      const notificationData = {
+        time: new Date(),
+        users: [`${requestObject.data.userAskingAccount}`],
+        content: `Meeting Host ${currentUserData.data.firstName} ${currentUserData.data.lastName} has accepted your request for ${meetingObject.data.title}.`,
+        meeting: `${meetingObject.data._id}`,
+        type: 'Request Update',
+      };
+      await axios.post("http://localhost:8080/notifications/create", notificationData);
+
+      // New notification for attendee toggle.
+      const updatedUserData = {...currentUserData,hasUnreadNotification: true,};
+      await axios.put(`http://localhost:8080/users/${userId}`, updatedUserData);
+    }
+    catch (error) {
+      console.log(error);
+      throw new Error('Error creating notification');
+    }
+    
     fetchMeetingsData(userId);
     setAcceptRequestModalVisible(false);
     setResponseSavedSuccessfullyModalVisible(true);
