@@ -185,22 +185,24 @@ const MeetingTable = ({ userId, upcomingMeetings, hostingMeetings, requestMeetin
           </div>
         ))}
       </div>
-      <div id='meeting-table-meetings'>
-        {selectedMeetings?.length > 0 ? 
-          selectedMeetings.map((meeting, index) => (
-            <div style={{ marginBottom: '7px' }} key={index}>
-              <MeetingRowComponent 
-                userId={userId}
-                meeting={meeting} 
-                typeOfMeeting={selectedTab}
-                requestAcceptCallback={handleRequestAccept}
-                requestDeclineCallback={handleRequestDecline}
-                meetingDeclineCallback={handleMeetingDecline}
-                meetingCancelCallback={handleMeetingCancel}
-              /> 
-            </div>
-          )) : <div className='centered' >{noMeetingsMessages[selectedTab]}</div> 
-        }
+      <div style={{ paddingBottom: '10px', backgroundColor: 'white' }}>
+        <div id='meeting-table-meetings'>
+          {selectedMeetings?.length > 0 ? 
+            selectedMeetings.map((meeting, index) => (
+              <div style={{ marginBottom: '7px' }} key={index}>
+                <MeetingRowComponent 
+                  userId={userId}
+                  meeting={meeting} 
+                  typeOfMeeting={selectedTab}
+                  requestAcceptCallback={handleRequestAccept}
+                  requestDeclineCallback={handleRequestDecline}
+                  meetingDeclineCallback={handleMeetingDecline}
+                  meetingCancelCallback={handleMeetingCancel}
+                /> 
+              </div>
+            )) : <div className='centered' >{noMeetingsMessages[selectedTab]}</div> 
+          }
+        </div>
       </div>
       {/* Cancel Meeting Modal */}
       <Modal

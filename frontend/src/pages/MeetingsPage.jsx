@@ -55,7 +55,7 @@ function MeetingsPage() {
     'meeting-table-container': {
       display: 'flex',
       justifyContent: 'center',
-      height: 'calc(100vh - 65px)',
+      height: 'calc(100vh - 145px)',
       backgroundColor: '#f4f4f4',
       paddingTop: '80px'
     },
