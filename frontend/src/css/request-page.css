@@ -1,0 +1,156 @@
+@import url(../index.css);
+
+/* Calendar Request */
+.calendar {
+  width: 400px;
+}
+
+.calendar-wrapper {
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* padding: 8px; */
+  width: 60%;
+  margin: 0 auto;
+  margin-bottom: 15px;
+  font-size: medium;
+}
+
+.arrow {
+  background-color: #fff5cc;
+  border-radius: 50%;
+  padding: 6px;
+  color: #808080;
+}
+
+.arrow:hover {
+  background-color: #fffadf;
+}
+
+.weekday {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  width: 100%;
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+.weekday div {
+  flex: 1;
+  text-align: center;
+}
+
+.row {
+  display: flex;
+  width: 100%;
+  padding: 2px;
+}
+
+.number {
+  font-size: 14px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  color: black;
+}
+
+.number.current-month {
+  color: darkslategrey;
+  pointer-events: none;
+}
+
+.number.disabled {
+  color: #c0c0c0;
+  pointer-events: none;
+}
+
+.number.in-range {
+  background-color: #fff0b3;
+  color: #808080;
+  border-radius: 50%;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.number.out-of-range {
+  color: #c0c0c0;
+  pointer-events: none;
+}
+
+.number.selected {
+  background-color: var(--primaryYellow);
+  color: #333333;
+  border-radius: 50%;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Time Slot Request */
+.time-slots-wrapper {
+  width: 100%;
+  max-width: 100%;
+  padding: 10px;
+  border: 1px solid #fcefef;
+  border-radius: 5px;
+  background-color: #fbfafa;
+  overflow-y: auto;
+}
+
+.time-slots-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  max-width: 100%;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.time-slot-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 40px;
+  background-color: white;
+  border: 1px solid #fce9eb;
+  border-radius: 5px;
+  color: #808080;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: bold;
+}
+
+.time-slot-box:hover {
+  border: 1px solid var(--primaryYellow);
+  /* color: white; */
+}
+
+.time-slot-box.selected {
+  background-color: var(--primaryYellow);
+  color: #333333;
+  border: 1px solid var(--primaryYellow);
+}
+
+/* Text for no available time slots */
+.no-time-slots {
+  text-align: center;
+  color: #888;
+}
+
+.alternative-slot-button {
+  background-color: #ffd400;
+  color: #333333;
+}

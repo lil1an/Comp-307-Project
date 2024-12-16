@@ -50,17 +50,18 @@
 }
 
 .time-slot {
-  width: 100%; /* Match the width of the calendar-preview */
-  display: flex; /* Use flexbox for alignment */
-  flex-direction: column; /* Ensure contents are stacked vertically */
-  align-items: center; /* Center align contents horizontally */
-  justify-content: center; /* Center align contents vertically */
-  padding: 20px; /* Add some padding for spacing */
-  box-sizing: border-box; /* Ensure padding doesn't affect width */
-  border-radius: 8px; /* Optional: Add rounded corners */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 8px;
 }
 
-.book-slot-button {
+.book-slot-button,
+.alternative-slot-button {
   padding: 10px 40px;
   font-size: 14px;
   font-weight: bold;
@@ -70,8 +71,18 @@
   background-color: var(--primaryRed);
   color: white;
   border-radius: 20px;
+  width: 70%;
 }
 
 .book-slot-button:hover {
   background-color: #ff3247;
+}
+
+.alternative-slot-button {
+  background-color: #ffd400;
+  color: #333333;
+}
+
+.alternative-slot-button:hover {
+  background-color: #fae05e;
 }

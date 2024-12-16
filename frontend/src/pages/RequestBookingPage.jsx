@@ -5,6 +5,7 @@ import TimeSlot from '../components/TimeSlots'
 import axios from 'axios'
 import '../css/booking-page.css'
 import { format, addMinutes, parse } from 'date-fns'
+import '../css/request-page.css'
 
 const RequestBookingPage = () => {
   const location = useLocation()
@@ -197,7 +198,6 @@ const RequestBookingPage = () => {
 
   return (
     <>
-    <div style={{ }}><h2>Requesting Alternative Time For Meeting</h2></div>
     <div className="public-page-wrapper">
       <div className="display-wrapper">
         <div className="meeting-details">
@@ -244,7 +244,7 @@ const RequestBookingPage = () => {
             <button
               onClick={handleBooking}
               disabled={!selectedSlot}
-              className="book-slot-button"
+              className="alternative-slot-button"
             >
               Request Slot
             </button>

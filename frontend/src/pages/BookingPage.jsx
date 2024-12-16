@@ -8,7 +8,7 @@ import { format, addMinutes, parse } from 'date-fns'
 
 const BookingPage = () => {
   const location = useLocation()
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   // Retrieve userId from localStorage or state passed via location
   const userId = location.state?.userId || localStorage.getItem('userId')
@@ -114,13 +114,6 @@ const BookingPage = () => {
             <strong>Duration:</strong> {meetingData.duration} minutes
           </p>
           <p>{meetingData.description}</p>
-            <button
-              onClick={() => navigate(`${location.pathname}/request`)}
-              className="book-slot-button"
-              style={{ backgroundColor: '#FFD400', color: 'black'}}
-            >
-              Request Alternative Time
-            </button>
         </div>
 
         <div className="preview-wrapper">
@@ -147,13 +140,22 @@ const BookingPage = () => {
 
           {/* Conditionally render the "Book Slot" button */}
           {meetingData.host !== userId ? (
-            <button
-              onClick={handleBooking}
-              disabled={!selectedSlot}
-              className="book-slot-button"
-            >
-              Book Slot
-            </button>
+            <>
+              <button
+                onClick={handleBooking}
+                disabled={!selectedSlot}
+                className="book-slot-button"
+              >
+                Book Slot
+              </button>
+
+              <button
+                onClick={() => navigate(`${location.pathname}/request`)}
+                className="alternative-slot-button"
+              >
+                Request Alternative Time
+              </button>
+            </>
           ) : (
             <p className="host-warning">
               You are the host for this meeting. You cannot book a slot.

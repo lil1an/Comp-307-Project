@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import {
   format,
   startOfMonth,
@@ -11,15 +12,44 @@ import {
   isSameMonth,
   isSameDay,
 } from 'date-fns'
-import '../css/calendar.css'
-
 // Icons
-import { MdOutlineArrowBackIosNew } from 'react-icons/md'
-import { MdOutlineArrowForwardIos } from 'react-icons/md'
+import {
+  MdOutlineArrowBackIosNew,
+  MdOutlineArrowForwardIos,
+} from 'react-icons/md'
 
 const Calendar = ({ dateRange, availableDays, onDateSelect }) => {
+  const location = useLocation() // Get the current route
   const [currentMonth, setCurrentMonth] = useState(new Date())
   const [selectedDate, setSelectedDate] = useState(null)
+  const [cssLoaded, setCssLoaded] = useState(false) // Track if CSS is loaded
+
+  // Dynamically import CSS based on route
+  useEffect(() => {
+    const path = location.pathname
+    setCssLoaded(false) // Temporarily disable rendering while loading
+
+    const loadCSS = async () => {
+      if (path === '/edit' || /^\/meetings\/[a-zA-Z0-9]+$/.test(path)) {
+        // Matches /edit or /meetings/:meetingId
+        await import('../css/calendar.css')
+      } else if (/^\/meetings\/[a-zA-Z0-9]+\/request$/.test(path)) {
+        // Matches /meetings/:meetingId/request
+        await import('../css/request-page.css')
+      } else {
+        // Fallback to calendar.css
+        await import('../css/calendar.css')
+      }
+
+      setCssLoaded(true) // Enable rendering after loading
+    }
+
+    loadCSS()
+  }, [location.pathname])
+
+  if (!cssLoaded) {
+    return null // Prevent rendering until CSS is applied
+  }
 
   const nextMonth = () => {
     setCurrentMonth(addMonths(currentMonth, 1))
@@ -43,7 +73,6 @@ const Calendar = ({ dateRange, availableDays, onDateSelect }) => {
     )
   }
 
-  // Clicking on date
   const onDateClick = (day) => {
     setSelectedDate(day) // Update the selected date
     if (onDateSelect) {
@@ -102,7 +131,7 @@ const Calendar = ({ dateRange, availableDays, onDateSelect }) => {
                 : isWithinRange(day)
                 ? 'in-range' // available dates
                 : 'current-month' // days part of the current month
-              }`}
+            }`}
             key={day}
             onClick={() => onDateClick(cloneDay)}
           >
