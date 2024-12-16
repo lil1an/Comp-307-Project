@@ -68,24 +68,28 @@ const MeetingRowComponent = ({
             <CgProfile style={{ height: '50px', width: '50px' }} />
           )}
         </span>
-        <div>
-          {starttime}-{endtime}
-          <div className="subtitle">{formattedDate}</div>
-        </div>
+        {typeOfMeeting !== 'Hosting' && 
+          <div>
+            {starttime}-{endtime}
+            <div className="subtitle">{formattedDate}</div>
+          </div>
+        }
       </div>
       <div className="meeting-row-title-container">
         <Link
           to={{
-            pathname: `/meetings/${id}`,
+            pathname: `/meetings/${id || meeting._id}`,
             state: { userId: userId },
           }}
           style={{ color: 'black', textDecoration: 'none' }}
         >
           {title}
         </Link>
-        <div className="subtitle">
-          {userIsHostingMeeting ? `Attendee: ${attendeeName}` : `Host: ${hostName}`}
-        </div>
+        {typeOfMeeting !== 'Hosting' &&
+          <div className="subtitle">
+            {userIsHostingMeeting ? `Attendee: ${attendeeName}` : `Host: ${hostName}`}
+          </div>
+        }
       </div>
       <div className="meeting-row-button-container">
         {(typeOfMeeting === 'Upcoming' || typeOfMeeting === 'Hosting') && (

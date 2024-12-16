@@ -86,7 +86,7 @@ export const getHostedMeetingsByUserId = async (req, res) => {
   try {
     const userId = req.params.id
     const hostedMeetings =
-      await meetingService.getUpcomingMeetingsHostedByUserFromBackend(userId)
+      await meetingService.getAllMeetingsHostedByUserFromBackend(userId)
     res.status(200).json(hostedMeetings)
   } catch (error) {
     console.error(

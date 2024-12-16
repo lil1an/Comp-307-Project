@@ -84,7 +84,7 @@ export const getAllMeetingsByUserFromDatabase = async (userId) => {
     // functions already return flattened list
     const [attendedMeetings, hostedMeetings] = await Promise.all([
       getMeetingsAttendedByUserFromBackend(userId),
-      getAllMeetingsHostedByUserFromBackend(userId)
+      getAllMeetingsHostedByUserFromBackendFlattened(userId)
     ]);
 
     const allMeetings = [...attendedMeetings, ...hostedMeetings];
@@ -115,7 +115,7 @@ export const getUpcomingMeetingsByUserFromDatabase = async (userId) => {
   }
 }
 
-export const getAllMeetingsHostedByUserFromBackend = async (userId) => {
+export const getAllMeetingsHostedByUserFromBackendFlattened = async (userId) => {
   try {
     const meetingsHostedByUser = await Meeting.find({ host: userId}).populate('host');
     const flattenedMeetingsHostedByUser = flattenMeetingTimes(meetingsHostedByUser, true);
@@ -127,19 +127,9 @@ export const getAllMeetingsHostedByUserFromBackend = async (userId) => {
   }
 }
 
-export const getUpcomingMeetingsHostedByUserFromBackend = async (userId) => {
+export const getAllMeetingsHostedByUserFromBackend = async (userId) => {
   try {
-    const meetingsHostedByUser = await Meeting.find({ host: userId}).populate('host');
-    const flattenedMeetingsHostedByUser = await flattenMeetingTimes(meetingsHostedByUser, true);
-
-    const currentDate = new Date();
-    const futureHostedMeetings = flattenedMeetingsHostedByUser.filter(meeting => {
-      const meetingDate = new Date(meeting.date);
-      return meetingDate > currentDate;
-  });
-
-    return futureHostedMeetings;
-
+    return await Meeting.find({ host: userId}).populate('host');
   } catch (error) {
     console.error('Error fetching meetings hosted by user:', error);
     throw new Error(`Unable to fetch meetings hosted by user ID ${userId}`);
@@ -234,7 +224,7 @@ export default {
   getAllMeetingsByUserFromDatabase,
   getUpcomingMeetingsByUserFromDatabase,
   getAllMeetingsHostedByUserFromBackend,
-  getUpcomingMeetingsHostedByUserFromBackend,
+  getAllMeetingsHostedByUserFromBackendFlattened,
   getMeetingRequestsByUserFromBackend,
   getDeclinedMeetingsByUserFromBackend,
   getPastMeetingsByUserFromBackend
