@@ -14,6 +14,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { IoMdShare } from 'react-icons/io'
 import { RiShareBoxFill } from 'react-icons/ri'
+import { IoTrash } from 'react-icons/io5'
 
 const EditPage = () => {
   const location = useLocation()
@@ -69,14 +70,6 @@ const EditPage = () => {
     return null
   }
 
-  // Handle save and cancel buttons
-  const handleCancel = () => {
-    navigate('/home', { state: { id: hostId } })
-    console.log('Event details have been saved:', eventDetails)
-  }
-
-  const [showShareButton, setShowShareButton] = useState(false)
-
   // Erases info for new meetings and stores gets and stores existing meetings
   useEffect(() => {
     if (!apptId) {
@@ -131,6 +124,26 @@ const EditPage = () => {
       fetchMeetingDetails()
     }
   }, [apptId])
+
+  // Handle delete a meeting
+  const handleDeleteMeeting = async (meetingId) => {
+    try {
+      await axios.delete(`http://localhost:8080/meetings/${meetingId}`)
+      alert('Meeting successfully deleted.')
+      navigate('/meetings', { state: { id: hostId } })
+    } catch (error) {
+      console.error('Error cancelling meeting:', error)
+      alert('Failed to delete the meeting. Please try again.')
+    }
+  }
+
+  // Handle cancel
+  const handleCancel = () => {
+    navigate('/home', { state: { id: hostId } })
+    console.log('Event details have been saved:', eventDetails)
+  }
+
+  const [showShareButton, setShowShareButton] = useState(false)
 
   const handleSave = async () => {
     if (!hostId) {
@@ -197,44 +210,69 @@ const EditPage = () => {
             >
               Schedule Settings
             </button>
-            {showShareButton && (
-              <button
-                className="share"
-                onClick={() => {
-                  if (apptId) {
-                    const bookingPageUrl = `${window.location.origin}/meetings/${apptId}`
-                    navigator.clipboard
-                      .writeText(bookingPageUrl)
-                      .then(() => {
-                        alert('Booking link copied to clipboard!')
-                      })
-                      .catch((err) => {
-                        alert('Failed to copy link. Please try again.')
-                      })
-                  } else {
-                    alert('No meeting ID found. Please save the meeting first.') // just in case
-                  }
-                }}
-              >
-                <IoMdShare />
-              </button>
-            )}
 
-            {showShareButton && (
-              <button
-                className="share"
-                onClick={() => {
-                  if (apptId) {
-                    const bookingPageUrl = `${window.location.origin}/meetings/${apptId}`
-                    window.open(bookingPageUrl, '_blank')
-                  } else {
-                    alert('No meeting ID found. Please save the meeting first.') // just in case
-                  }
-                }}
-              >
-                <RiShareBoxFill />
-              </button>
-            )}
+            {/* Utility Buttons */}
+            <div className="utility-tools">
+              {showShareButton && (
+                <button
+                  className="share"
+                  onClick={() => {
+                    if (apptId) {
+                      handleDeleteMeeting(apptId)
+                    } else {
+                      alert(
+                        'No meeting ID found. Please save the meeting first.'
+                      )
+                    }
+                  }}
+                >
+                  <IoTrash />
+                </button>
+              )}
+
+              {showShareButton && (
+                <button
+                  className="share"
+                  onClick={() => {
+                    if (apptId) {
+                      const bookingPageUrl = `${window.location.origin}/meetings/${apptId}`
+                      navigator.clipboard
+                        .writeText(bookingPageUrl)
+                        .then(() => {
+                          alert('Booking link copied to clipboard!')
+                        })
+                        .catch((err) => {
+                          alert('Failed to copy link. Please try again.')
+                        })
+                    } else {
+                      alert(
+                        'No meeting ID found. Please save the meeting first.'
+                      ) // just in case
+                    }
+                  }}
+                >
+                  <IoMdShare />
+                </button>
+              )}
+
+              {showShareButton && (
+                <button
+                  className="share"
+                  onClick={() => {
+                    if (apptId) {
+                      const bookingPageUrl = `${window.location.origin}/meetings/${apptId}`
+                      window.open(bookingPageUrl, '_blank')
+                    } else {
+                      alert(
+                        'No meeting ID found. Please save the meeting first.'
+                      ) // just in case
+                    }
+                  }}
+                >
+                  <RiShareBoxFill />
+                </button>
+              )}
+            </div>
           </div>
           <div className="tab-content">{renderTabs()}</div>
 

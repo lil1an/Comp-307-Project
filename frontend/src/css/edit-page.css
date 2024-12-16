@@ -94,6 +94,15 @@
   text-decoration: underline;
 }
 
+/* Utility Tools */
+.utility-tools {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+  gap: 10px;
+}
+
 /* Text area */
 .input-field textarea {
   height: 150px;
