@@ -84,7 +84,7 @@ const MeetingRowComponent = ({
           {title}
         </Link>
         <div className="subtitle">
-          {userIsHostingMeeting ? attendeeName : hostName}
+          {userIsHostingMeeting ? `Attendee: ${attendeeName}` : `Host: ${hostName}`}
         </div>
       </div>
       <div className="meeting-row-button-container">
