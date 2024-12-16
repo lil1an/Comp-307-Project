@@ -1,5 +1,6 @@
 import { format, addMinutes, parse } from 'date-fns'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import '../css/time-slot.css'
 
 const TimeSlots = ({
@@ -11,6 +12,22 @@ const TimeSlots = ({
   clickable = false,
 }) => {
   const [selectedSlot, setSelectedSlot] = useState(null)
+  const location = useLocation() // Assign useLocation() to a variable
+
+  // Dynamically import CSS based on route
+  useEffect(() => {
+    const path = location.pathname // Use the assigned variable
+
+    if (path === '/edit' || /^\/meetings\/[a-zA-Z0-9]+$/.test(path)) {
+      // Matches /edit or /meetings/:meetingId
+      import('../css/time-slot.css')
+    } else if (/^\/meetings\/[a-zA-Z0-9]+\/request$/.test(path)) {
+      // Matches /meetings/:meetingId/request
+      import('../css/request-page.css')
+    } else {
+      import('../css/time-slot.css')
+    }
+  }, [location.pathname]) // Dependency updated correctly
 
   // Return null if no date selected
   if (!selectedDate) return null
