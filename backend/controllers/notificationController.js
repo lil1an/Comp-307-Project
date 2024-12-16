@@ -56,7 +56,7 @@ export const updateNotification = async (req, res) => {
 
 export const getNotificationListByUserId = async (req, res) => {
   try {
-    const userId = req.body.id;
+    const userId = req.params.id;
 
     if(!userId){
       return res.status(400).json({ message: 'No user ID!' });

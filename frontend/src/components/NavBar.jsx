@@ -1,19 +1,21 @@
-import { Link, useLocation } from 'react-router-dom'
-import logo from '../assets/logo.png'
-import '../css/nav-bar.css'
-import { useState, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom';
+import logo from '../assets/logo.png';
+import '../css/nav-bar.css';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 // Icon Imports
-import { FiLogIn } from 'react-icons/fi'
+import { FiLogIn } from 'react-icons/fi';
 import { VscBell } from "react-icons/vsc";
 import { VscBellDot } from "react-icons/vsc";
-import { IoPersonAdd } from 'react-icons/io5'
-import { FaPen } from 'react-icons/fa'
-import { IoPeople } from 'react-icons/io5'
-import { HiDocument } from 'react-icons/hi2'
+import { IoPersonAdd } from 'react-icons/io5';
+import { FaPen } from 'react-icons/fa';
+import { IoPeople } from 'react-icons/io5';
+import { HiDocument } from 'react-icons/hi2';
 
 function NavBar({userId}) {
 
+  const id = localStorage.getItem('userId');
   const location = useLocation();
 
   // Login Status
@@ -27,6 +29,9 @@ function NavBar({userId}) {
 
   // Notification Bell with new notifications
   const [isNewNotifs, setIsNewNotifs] = useState(true)
+
+  // Notifications content
+  const [userNotifications, setUserNotifications] = useState([]);
 
   // Function for toggling notifications
   const toggleNotifs = () => {
@@ -45,10 +50,12 @@ function NavBar({userId}) {
 
   // Function for toggling login/logout
   const toggleLoggedIn = () => {
-    setIsLoggedIn((prev)=> !prev) // Flipping state
-    if (!isLoggedIn) {
+    if (isLoggedIn) {
+      console.log("removed userId global");
       localStorage.removeItem('userId');
     }
+
+    setIsLoggedIn((prev)=> !prev) // Flipping state
   }
 
   // Function to set the user as not logged in when on the landing or login pages
@@ -61,25 +68,58 @@ function NavBar({userId}) {
     }
   }, [location.pathname]);
 
+  // Function to fetch notifications for the current user.
+  const getUserNotifications = async () => {
+    try{
+      if (id) {
+        const userResponse = await axios.get(`http://localhost:8080/notifications/userId/${id}`);
+
+        const sortedNotifications = userResponse.data.sort((a, b) => new Date(b.time) - new Date(a.time)); // Sorting by time
+
+        const updatedNotifications = await Promise.all(
+          sortedNotifications.map(async (notif) => {
+          try {
+            const meetingResponse = await axios.get(`http://localhost:8080/meetings/${notif.meeting}`);
+            return { ...notif, meetingTitle: meetingResponse.data.title };
+          } catch (error) {
+            console.error('Error fetching meeting title:', error);
+            return { ...notif, meetingTitle: 'Unknown Meeting' };
+          }
+          })
+          );
+          setUserNotifications(sortedNotifications);
+      }
+    }
+    catch(error)
+    {
+      console.error('Error fetching notifications:', error);
+    }
+  }
+
+  // Render notifications!
+  useEffect(() => {
+    if (id) getUserNotifications();
+  }, [id]);
+
   return (
     <div id="nav">
       {isLoggedIn ? (
         <>
-          <Link to="/home" state={{id: userId}}>
+          <Link to="/home">
             <img src={logo} alt="logo" id="logo"/>
           </Link>
           <div id="login-options">
-            <Link to="/edit" className="user-button" state={{id: userId}}>
+            <Link to="/edit" className="user-button">
               <FaPen className="icon2" />
               Create
             </Link>
 
-            <Link to="/meetings" className="user-button" state={{id: userId}}>
+            <Link to="/meetings" className="user-button">
               <IoPeople className="icon2" />
               Meetings
             </Link>
 
-            <Link to="/documents" className="user-button" state={{id: userId}}>
+            <Link to="/documents" className="user-button">
               <HiDocument className="icon2" />
               Documents
             </Link>
@@ -98,14 +138,22 @@ function NavBar({userId}) {
             {isNotifsOpen && (
               <div id="notifs-panel">  {/*removed onMouseLeave={toggleNotifs} for now*/}
                 <button id="close-notifs" onClick={toggleNotifs}> &times; </button>
-                <div className="notifs-container">
-                  <div className="notifs-top-bar">
-                    <HiDocument className="notifs-logo" />
-                    <a href="#" className="notifs-title"><b><u>Professor's Vyhibal Office Hours</u></b></a>
-                  </div>
-                  <p className="notifs-desc">A document was attached to this meeting you are attending.</p>
-                  <p className="notifs-desc">Sunday, November 24, 2024, 8:19pm, by Joseph Vyhibal</p>
-                </div>
+                
+                {/* This will be the template we use for each user notifications*/}
+                {userNotifications.length > 0 ? (
+                  userNotifications.map((notif, index) => (
+                    <div className="notifs-container" key={index}>
+                      <div className="notifs-top-bar">
+                        <HiDocument className="notifs-logo" />
+                        <a href="#" className="notifs-title"><b><u>{notif.meetingTitle}</u></b></a>
+                      </div>
+                      <p className="notifs-desc">{notif.content}</p>
+                      <p className="notifs-desc">{new Date(notif.time).toLocaleString()}</p>
+                    </div>
+                  ))
+                ) : (
+                  <p>No new notifications.</p>
+                )}
 
                 <div className="notifs-container">
                   <div className="notifs-top-bar">
@@ -115,43 +163,6 @@ function NavBar({userId}) {
                   <p className="notifs-desc">A document was attached to this meeting you are attending.</p>
                   <p className="notifs-desc">Sunday, November 24, 2024, 8:19pm, by Joseph Vyhibal</p>
                 </div>
-
-                <div className="notifs-container">
-                  <div className="notifs-top-bar">
-                    <HiDocument className="notifs-logo" />
-                    <a href="#" className="notifs-title"><b><u>Professor's Vyhibal Office Hours</u></b></a>
-                  </div>
-                  <p className="notifs-desc">A document was attached to this meeting you are attending.</p>
-                  <p className="notifs-desc">Sunday, November 24, 2024, 8:19pm, by Joseph Vyhibal</p>
-                </div>
-
-                <div className="notifs-container">
-                  <div className="notifs-top-bar">
-                    <HiDocument className="notifs-logo" />
-                    <a href="#" className="notifs-title"><b><u>Professor's Vyhibal Office Hours</u></b></a>
-                  </div>
-                  <p className="notifs-desc">A document was attached to this meeting you are attending.</p>
-                  <p className="notifs-desc">Sunday, November 24, 2024, 8:19pm, by Joseph Vyhibal</p>
-                </div>
-
-                <div className="notifs-container">
-                  <div className="notifs-top-bar">
-                    <HiDocument className="notifs-logo" />
-                    <a href="#" className="notifs-title"><b><u>Professor's Vyhibal Office Hours</u></b></a>
-                  </div>
-                  <p className="notifs-desc">A document was attached to this meeting you are attending.</p>
-                  <p className="notifs-desc">Sunday, November 24, 2024, 8:19pm, by Joseph Vyhibal</p>
-                </div>
-
-                <div className="notifs-container">
-                  <div className="notifs-top-bar">
-                    <HiDocument className="notifs-logo" />
-                    <a href="#" className="notifs-title"><b><u>Professor's Vyhibal Office Hours</u></b></a>
-                  </div>
-                  <p className="notifs-desc">A document was attached to this meeting you are attending.</p>
-                  <p className="notifs-desc">Sunday, November 24, 2024, 8:19pm, by Joseph Vyhibal</p>
-                </div>
-              
                 
               </div>
             )}
