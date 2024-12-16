@@ -101,13 +101,13 @@ const MeetingRowComponent = ({
                     search: `?id=${id || meeting._id}`,
                     state: { userId: userId },
                   }}
-                  className="meeting-row-button green-background"
+                  className="meeting-row-button"
                 >
                   <MdEdit />
                 </Link>
 
                 <div
-                  className="meeting-row-button green-background"
+                  className="meeting-row-button"
                   onClick={() =>
                     copyToClipboard(`${window.location.origin}/meetings/${id || meeting._id}`)
                   }
@@ -117,7 +117,7 @@ const MeetingRowComponent = ({
               </>
             )}
             <div
-              className="meeting-row-button yellow-background"
+              className="meeting-row-button red-background"
               onClick={() =>
                 userIsHostingMeeting
                   ? meetingCancelCallback(id, date, starttime, endtime)
@@ -131,7 +131,7 @@ const MeetingRowComponent = ({
         {typeOfMeeting === 'Requests' && (
           <>
             <div
-              className="meeting-row-button green-background"
+              className="meeting-row-button"
               onClick={() =>
                 requestAcceptCallback(requestId, id, date, starttime, endtime)
               }
@@ -141,7 +141,7 @@ const MeetingRowComponent = ({
             </div>
 
             <div
-              className="meeting-row-button yellow-background"
+              className="meeting-row-button red-background"
               onClick={() =>
                 requestDeclineCallback(requestId, id, date, starttime, endtime)
               }
@@ -153,7 +153,7 @@ const MeetingRowComponent = ({
         )}
         {typeOfMeeting === 'Declined' && (
           <div
-            className="meeting-row-button green-background"
+            className="meeting-row-button"
             onClick={() =>
               requestAcceptCallback(requestId, id, date, starttime, endtime)
             }
