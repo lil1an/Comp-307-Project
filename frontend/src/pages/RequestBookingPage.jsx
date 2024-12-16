@@ -5,7 +5,7 @@ import TimeSlot from '../components/TimeSlots'
 import axios from 'axios'
 import '../css/booking-page.css'
 import { format, addMinutes, parse } from 'date-fns'
-import '../css/request-page.css'
+// import '../css/request-page.css'
 
 const RequestBookingPage = () => {
   const location = useLocation()
