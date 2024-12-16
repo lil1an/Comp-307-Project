@@ -16,8 +16,8 @@ const BookingPage = () => {
   const [meetingData, setMeetingData] = useState(null)
   const [hostData, setHostData] = useState(null)
   const [selectedDate, setSelectedDate] = useState(null)
-  const [selectedSlot, setSelectedSlot] = useState(null) // Store the selected time slot
-  const [loading, setLoading] = useState(true) // Add loading state for meeting data
+  const [selectedSlot, setSelectedSlot] = useState(null) 
+  const [loading, setLoading] = useState(true) 
   const [error, setError] = useState(null)
 
   // Function to fetch meeting data
@@ -38,11 +38,11 @@ const BookingPage = () => {
         setHostData(hostResponse.data)
       }
 
-      setLoading(false) // Set loading to false when data is fetched
+      setLoading(false)
     } catch (err) {
       console.error('Error fetching meeting data:', err)
       setError('Failed to load meeting details.')
-      setLoading(false) // Ensure loading is false even if there's an error
+      setLoading(false) 
     }
   }
 
@@ -129,13 +129,21 @@ const BookingPage = () => {
               />
             )}
           </div>
-          <button
-            onClick={handleBooking}
-            disabled={!selectedSlot}
-            className="book-slot-button"
-          >
-            Book Slot
-          </button>
+
+          {/* Conditionally render the "Book Slot" button */}
+          {meetingData.host !== userId ? (
+            <button
+              onClick={handleBooking}
+              disabled={!selectedSlot}
+              className="book-slot-button"
+            >
+              Book Slot
+            </button>
+          ) : (
+            <p className="host-warning">
+              You are the host for this meeting. You cannot book a slot. 
+            </p>
+          )}
         </div>
       </div>
     </div>
