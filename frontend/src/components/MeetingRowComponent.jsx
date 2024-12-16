@@ -94,12 +94,12 @@ const MeetingRowComponent = ({
       <div className="meeting-row-button-container">
         {(typeOfMeeting === 'Upcoming' || typeOfMeeting === 'Hosting') && (
           <>
-            {userIsHostingMeeting && (
+            {(userIsHostingMeeting || typeOfMeeting === 'Hosting') && (
               <>
                 <Link
                   to={{
                     pathname: '/edit',
-                    search: `?id=${id}`,
+                    search: `?id=${id || meeting._id}`,
                     state: { userId: userId },
                   }}
                   className="meeting-row-button green-background"
@@ -110,7 +110,7 @@ const MeetingRowComponent = ({
                 <div
                   className="meeting-row-button green-background"
                   onClick={() =>
-                    copyToClipboard(`${window.location.origin}/meetings/${id}`)
+                    copyToClipboard(`${window.location.origin}/meetings/${id || meeting._id}`)
                   }
                 >
                   <FaCopy />
