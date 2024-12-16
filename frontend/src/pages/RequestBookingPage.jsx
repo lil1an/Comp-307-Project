@@ -184,7 +184,7 @@ const RequestBookingPage = () => {
         bookings: updatedBookings,
       })
 
-      alert('Meeting Booked!')
+      alert('Your requested time was available! Meeting Booked!')
       fetchMeetingData() // Re-fetch meeting data after booking
     } catch (error) {
       console.error('Error booking meeting:', error)
