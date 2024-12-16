@@ -76,15 +76,14 @@ const MeetingRowComponent = ({
         }
       </div>
       <div className="meeting-row-title-container">
-        <Link
-          to={{
-            pathname: `/meetings/${id || meeting._id}`,
-            state: { userId: userId },
-          }}
+        <a 
+          href={`/meetings/${id || meeting._id}`} 
+          target="_blank" 
+          rel="noopener noreferrer" 
           style={{ color: 'black', textDecoration: 'none' }}
         >
           {title}
-        </Link>
+        </a>
         {typeOfMeeting !== 'Hosting' &&
           <div className="subtitle">
             {userIsHostingMeeting ? `Attendee: ${attendeeName}` : `Host: ${hostName}`}
