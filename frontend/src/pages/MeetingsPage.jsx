@@ -12,44 +12,45 @@ function MeetingsPage() {
   const [meetingsDeclined, setMeetingsDeclined] = useState([]);
   const [meetingsPast, setMeetingsPast] = useState([]);
 
-  const id = localStorage.getItem('userId');
+  const userId = localStorage.getItem('userId');
+
+  const fetchMeetingsData = async (userId) => {
+    try {
+      const [
+        meetingsUpcomingResponse,
+        meetingsHostedResponse,
+        unansweredRequestsResponse,
+        declinedRequestsResponse,
+        meetingsPastResponse
+      ] = await Promise.all([
+        axios.get(`http://localhost:8080/meetings/upcoming/${userId}`),
+        axios.get(`http://localhost:8080/meetings/hosted/${userId}`),
+        axios.get(`http://localhost:8080/requests/unanswered/${userId}`),
+        axios.get(`http://localhost:8080/requests/declined/${userId}`),
+        axios.get(`http://localhost:8080/meetings/past/${userId}`)
+      ]);
+
+      // console.log('frontend upcoming', meetingsUpcomingResponse?.data);
+      // console.log('frontend hosting', meetingsHostedResponse?.data);
+      // console.log('frontend unanswered', unansweredRequestsResponse?.data);
+      // console.log('frontend declined', declinedRequestsResponse?.data);
+      // console.log('frontend past', meetingsPastResponse?.data);
+
+      setMeetingsUpcoming(meetingsUpcomingResponse?.data);
+      setMeetingsHosting(meetingsHostedResponse?.data);
+      setMeetingsRequested(unansweredRequestsResponse?.data);
+      setMeetingsDeclined(declinedRequestsResponse?.data);
+      setMeetingsPast(meetingsPastResponse?.data);
+    } catch (err) {
+      console.error('Error fetching meetings data for user:', err.response?.data || err.message);
+    }
+  };
 
   useEffect(() => {
-    if (id) {
-      const fetchMeetingsData = async (id) => {
-        try {
-          const [
-            meetingsUpcomingResponse,
-            meetingsHostedResponse,
-            unansweredRequestsResponse,
-            declinedRequestsResponse,
-            meetingsPastResponse
-          ] = await Promise.all([
-            axios.get(`http://localhost:8080/meetings/upcoming/${id}`),
-            axios.get(`http://localhost:8080/meetings/hosted/${id}`),
-            axios.get(`http://localhost:8080/requests/unanswered/${id}`),
-            axios.get(`http://localhost:8080/requests/declined/${id}`),
-            axios.get(`http://localhost:8080/meetings/past/${id}`)
-          ]);
-
-          // console.log('frontend upcoming', meetingsUpcomingResponse?.data);
-          // console.log('frontend hosting', meetingsHostedResponse?.data);
-          // console.log('frontend unanswered', unansweredRequestsResponse?.data);
-          // console.log('frontend declined', declinedRequestsResponse?.data);
-          // console.log('frontend past', meetingsPastResponse?.data);
-
-          setMeetingsUpcoming(meetingsUpcomingResponse?.data);
-          setMeetingsHosting(meetingsHostedResponse?.data);
-          setMeetingsRequested(unansweredRequestsResponse?.data);
-          setMeetingsDeclined(declinedRequestsResponse?.data);
-          setMeetingsPast(meetingsPastResponse?.data);
-        } catch (err) {
-          console.error('Error fetching meetings data for user:', err.response?.data || err.message);
-        }
-      };
-      fetchMeetingsData(id);
+    if (userId) {
+      fetchMeetingsData(userId);
     }
-  }, [id]);
+  }, [userId]);
 
   const styles = {
     'meeting-table-container': {
@@ -62,12 +63,16 @@ function MeetingsPage() {
   };
 
   return (
-    <>
+    !userId ? (
+        <div style={{ textAlign: 'center', marginTop: '50px', fontSize: '20px', color: 'red' }}>
+          User must be logged in to see this page.
+        </div>
+    ) : <>
       <NavBar />
       <div style={styles["meeting-table-container"]}>
         <div style={{width: '80%'}}>
           <MeetingTable 
-            userId={id}
+            userId={userId}
             upcomingMeetings={meetingsUpcoming} 
             hostingMeetings={meetingsHosting} 
             requestMeetings={meetingsRequested} 
