@@ -6,7 +6,7 @@ import { GoDotFill } from "react-icons/go";
 import axios from 'axios';
 import Modal from './Modal.jsx'
 
-const MeetingTable = ({ userId, upcomingMeetings, hostingMeetings, requestMeetings, declinedMeetings, pastMeetings, loading }) => {
+const MeetingTable = ({ userId, upcomingMeetings, hostingMeetings, requestMeetings, declinedMeetings, pastMeetings, loading, fetchMeetingsData }) => {
   const tabs = ['Upcoming', 'Hosting', 'Requests', 'Declined', 'Past'];
 
   const tabsToMeetings = {

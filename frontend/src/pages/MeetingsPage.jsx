@@ -83,7 +83,9 @@ function MeetingsPage() {
             hostingMeetings={meetingsHosting} 
             requestMeetings={meetingsRequested} 
             declinedMeetings={meetingsDeclined} 
-            pastMeetings={meetingsPast} />
+            pastMeetings={meetingsPast} 
+            fetchMeetingsData={fetchMeetingsData}
+          />
         </div>
       </div>
     </>
