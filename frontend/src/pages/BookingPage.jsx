@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useLocation } from 'react-router-dom'
 import Calendar from '../components/Calendar'
 import TimeSlot from '../components/TimeSlots'
 import axios from 'axios'
 import '../css/booking-page.css'
 import { format, addMinutes, parse } from 'date-fns'
-import { useLocation } from 'react-router-dom'
 
 const BookingPage = () => {
   const location = useLocation()
@@ -18,62 +17,52 @@ const BookingPage = () => {
   const [hostData, setHostData] = useState(null)
   const [selectedDate, setSelectedDate] = useState(null)
   const [selectedSlot, setSelectedSlot] = useState(null) // Store the selected time slot
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true) // Add loading state for meeting data
   const [error, setError] = useState(null)
 
-  useEffect(() => {
-    const fetchMeetingData = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8080/meetings/${meetingId}`
+  // Function to fetch meeting data
+  const fetchMeetingData = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/meetings/${meetingId}`
+      )
+      const meeting = response.data
+      setMeetingData(meeting)
+
+      console.log('Fetching meeting: ', meeting)
+
+      if (meeting.host) {
+        const hostResponse = await axios.get(
+          `http://localhost:8080/users/${meeting.host}`
         )
-        const meeting = response.data
-        setMeetingData(meeting)
-
-        if (meeting.host) {
-          const hostResponse = await axios.get(
-            `http://localhost:8080/users/${meeting.host}`
-          )
-          setHostData(hostResponse.data)
-        }
-
-        setLoading(false)
-      } catch (err) {
-        console.error('Error fetching meeting data:', err)
-        setError('Failed to load meeting details.')
-        setLoading(false)
+        setHostData(hostResponse.data)
       }
-    }
 
+      setLoading(false) // Set loading to false when data is fetched
+    } catch (err) {
+      console.error('Error fetching meeting data:', err)
+      setError('Failed to load meeting details.')
+      setLoading(false) // Ensure loading is false even if there's an error
+    }
+  }
+
+  useEffect(() => {
     fetchMeetingData()
   }, [meetingId])
 
   // Handle booking a slot
   const handleBooking = async () => {
     if (!selectedSlot || !selectedDate) {
-      alert('Please select a date and time slot before booking.') // just in case
+      alert('Please select a date and time slot before booking.')
       return
     }
 
     try {
-      // Fetch current meeting data
-      const meetingResponse = await axios.get(
-        `http://localhost:8080/meetings/${meetingId}`
-      )
-      const meetingData = meetingResponse.data
-
-      if (!meetingData) {
-        alert('Meeting not found.')
-        return
-      }
-
-      // Create new booking Entry
       const newBooking = {
         attendee: userId,
         date: format(selectedDate, 'yyyy-MM-dd'), // Store date as 'YYYY-MM-DD'
         starttime: format(parse(selectedSlot, 'HH:mm', new Date()), 'HH:mm'), // Store time as 'HH:mm'
         endtime: format(
-          // Store time as 'HH:mm'
           addMinutes(
             parse(selectedSlot, 'HH:mm', new Date()),
             meetingData.duration
@@ -82,24 +71,21 @@ const BookingPage = () => {
         ),
       }
 
-      console.log('This is the new booking array: ', newBooking)
-
-      // Update booking array
       const updatedBookings = [...meetingData.bookings, newBooking]
 
-      // Send updated bookings array back to the backend
       await axios.put(`http://localhost:8080/meetings/${meetingId}`, {
         bookings: updatedBookings,
       })
 
       alert('Meeting Booked!')
+      fetchMeetingData() // Re-fetch meeting data after booking
     } catch (error) {
       console.error('Error booking meeting:', error)
       alert('Failed to book meeting. Please try again.')
     }
   }
 
-  if (loading) return <p>Loading...</p>
+  if (loading) return <p>Loading...</p> // Render a loading message until data is fetched
   if (error) return <p>{error}</p>
 
   return (
@@ -136,6 +122,7 @@ const BookingPage = () => {
               <TimeSlot
                 selectedDate={selectedDate}
                 availableDays={meetingData.availabilities || {}}
+                bookings={meetingData.bookings} // Pass bookings to TimeSlots
                 duration={meetingData.duration}
                 clickable={true} // Enable interactivity
                 onSlotSelect={setSelectedSlot} // Pass selected slot to state
