@@ -206,7 +206,7 @@ const EditPage = () => {
                     navigator.clipboard
                       .writeText(bookingPageUrl)
                       .then(() => {
-                        alert('Link copied to clipboard!')
+                        alert('Booking link copied to clipboard!')
                       })
                       .catch((err) => {
                         alert('Failed to copy link. Please try again.')

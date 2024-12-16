@@ -5,8 +5,14 @@ import TimeSlot from '../components/TimeSlot'
 import axios from 'axios'
 import '../css/booking-page.css'
 import { format, addMinutes, parse } from 'date-fns'
+import { useLocation } from 'react-router-dom'
 
 const BookingPage = () => {
+  const location = useLocation()
+
+  // Retrieve userId from localStorage or state passed via location
+  const userId = location.state?.userId || localStorage.getItem('userId')
+
   const { meetingId } = useParams()
   const [meetingData, setMeetingData] = useState(null)
   const [hostData, setHostData] = useState(null)
@@ -63,7 +69,7 @@ const BookingPage = () => {
 
       // Create new booking Entry
       const newBooking = {
-        attendee: hostData._id,
+        attendee: userId,
         date: format(selectedDate, 'yyyy-MM-dd'), // Store date as 'YYYY-MM-DD'
         starttime: format(parse(selectedSlot, 'HH:mm', new Date()), 'HH:mm'), // Store time as 'HH:mm'
         endtime: format(
