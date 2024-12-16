@@ -119,7 +119,7 @@ const MeetingRowComponent = ({
             <div
               className="meeting-row-button red-background"
               onClick={() =>
-                userIsHostingMeeting
+                (userIsHostingMeeting || typeOfMeeting === 'Hosting')
                   ? meetingCancelCallback(id, date, starttime, endtime)
                   : meetingDeclineCallback(id, date, starttime, endtime)
               }
