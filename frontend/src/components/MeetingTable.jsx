@@ -21,7 +21,7 @@ const MeetingTable = ({ userId, upcomingMeetings, hostingMeetings, requestMeetin
     'Upcoming': 'No upcoming meetings to display', 
     'Hosting': 'You are not hosting any meetings',
     'Requests': 'No pending meeting requests', 
-    'Declined': 'No declined meetings', 
+    'Declined': 'No declined requests', 
     'Past': 'No past meetings to display',
   }
 
