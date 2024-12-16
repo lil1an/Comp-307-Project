@@ -150,7 +150,7 @@ const BookingPage = () => {
               </button>
 
               <button
-                onClick={() => navigate(`${location.pathname}/request`)}
+                onClick={() => window.open(`${location.pathname}/request`, '_blank')}
                 className="alternative-slot-button"
               >
                 Request Alternative Time
