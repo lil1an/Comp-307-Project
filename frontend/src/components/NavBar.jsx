@@ -13,7 +13,7 @@ import { FaPen } from 'react-icons/fa';
 import { IoPeople } from 'react-icons/io5';
 import { HiDocument } from 'react-icons/hi2';
 
-function NavBar({userId}) {
+function NavBar() {
 
   const id = localStorage.getItem('userId');
   const location = useLocation();
