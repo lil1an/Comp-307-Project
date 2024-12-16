@@ -16,8 +16,8 @@ const BookingPage = () => {
   const [meetingData, setMeetingData] = useState(null)
   const [hostData, setHostData] = useState(null)
   const [selectedDate, setSelectedDate] = useState(null)
-  const [selectedSlot, setSelectedSlot] = useState(null) 
-  const [loading, setLoading] = useState(true) 
+  const [selectedSlot, setSelectedSlot] = useState(null)
+  const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
   // Function to fetch meeting data
@@ -27,6 +27,13 @@ const BookingPage = () => {
         `http://localhost:8080/meetings/${meetingId}`
       )
       const meeting = response.data
+      const currentDate = format(new Date(), 'yyyy-MM-dd')
+      const isSameDate = currentDate === meeting.dateRange['start']
+
+      if (!isSameDate) {
+        meeting.dateRange['start'] = currentDate
+      }
+
       setMeetingData(meeting)
 
       console.log('Fetching meeting: ', meeting)
@@ -42,7 +49,7 @@ const BookingPage = () => {
     } catch (err) {
       console.error('Error fetching meeting data:', err)
       setError('Failed to load meeting details.')
-      setLoading(false) 
+      setLoading(false)
     }
   }
 
@@ -141,7 +148,7 @@ const BookingPage = () => {
             </button>
           ) : (
             <p className="host-warning">
-              You are the host for this meeting. You cannot book a slot. 
+              You are the host for this meeting. You cannot book a slot.
             </p>
           )}
         </div>

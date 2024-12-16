@@ -50,7 +50,7 @@ const EditPage = () => {
   const [selectedDate, setSelectedDate] = useState(null)
 
   // State for modals
-  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false)
 
   // Tabs
   const [activeTab, setActiveTab] = useState('EventDetails')
@@ -226,7 +226,7 @@ const EditPage = () => {
                       className="share"
                       onClick={() => {
                         if (apptId) {
-                          setDeleteModalVisible(true);
+                          setDeleteModalVisible(true)
                         } else {
                           alert(
                             'No meeting ID found. Please save the meeting first.'
@@ -300,6 +300,7 @@ const EditPage = () => {
                 <TimeSlot
                   selectedDate={selectedDate}
                   availableDays={scheduleSettings.availableHours}
+                  bookings={[]}
                   duration={eventDetails.duration}
                   clickable={false}
                 />

@@ -1,12 +1,4 @@
-import {
-  format,
-  addMinutes,
-  parse,
-  isEqual,
-  isAfter,
-  isBefore,
-  startOfDay,
-} from 'date-fns'
+import { format, addMinutes, parse } from 'date-fns'
 import { useState } from 'react'
 import '../css/time-slot.css'
 
