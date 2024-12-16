@@ -95,10 +95,32 @@ const RequestBookingPage = () => {
     fetchMeetingData()
   }, [meetingId])
 
+  function isTimeSlotAvailable(starttime, endtime) {
+    // get availabilities for the selected day
+    const dayOfWeek = format(new Date(selectedDate), 'EEEE');
+    const dayAvailabilities = meetingData?.availabilities[dayOfWeek] || [];
+  
+    // check if starttime and endtime fall within any of the available time slots
+    const isWithinAvailability = dayAvailabilities.some(({ start, end }) => {
+      return starttime >= start && endtime <= end;
+    });
+  
+    return isWithinAvailability;
+  }
+
 
   const handleBooking = async() => {
-    // create a request even if inside availabilities
-    createRequest()
+    // determine if requested slot is inside availabilities
+    const starttime = format(parse(selectedSlot, 'HH:mm', new Date()), 'HH:mm')
+    const endtime = format(
+      addMinutes(
+        parse(selectedSlot, 'HH:mm', new Date()), 
+        meetingData.duration
+      ), 
+      'HH:mm'
+    )
+
+    isTimeSlotAvailable(starttime, endtime) ? createBooking() : createRequest();
   }
 
   const createRequest = async () => {
