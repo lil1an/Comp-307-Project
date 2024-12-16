@@ -42,6 +42,12 @@
   /* color: white; */
 }
 
+.time-slot-box.selected {
+  background-color: var(--primaryRed);
+  color: white;
+  border: 1px solid var(--primaryRed);
+}
+
 /* Text for no available time slots */
 .no-time-slots {
   text-align: center;

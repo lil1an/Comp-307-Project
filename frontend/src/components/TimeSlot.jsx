@@ -1,5 +1,5 @@
-import React from 'react'
 import { format, addMinutes, parse } from 'date-fns'
+import { useState } from 'react'
 import '../css/time-slot.css'
 
 const TimeSlots = ({
@@ -9,6 +9,9 @@ const TimeSlots = ({
   onSlotSelect,
   clickable = false,
 }) => {
+  const [selectedSlot, setSelectedSlot] = useState(null)
+
+  // Return null if no date selected
   if (!selectedDate) return null
 
   const dayName = format(selectedDate, 'EEEE')
@@ -33,8 +36,11 @@ const TimeSlots = ({
   )
 
   const handleSlotClick = (slot) => {
-    if (clickable && onSlotSelect) {
-      onSlotSelect(slot) // Notify parent about selected slot
+    if (clickable) {
+      setSelectedSlot(slot)
+      if (onSlotSelect) {
+        onSlotSelect(slot) // Notify parent about selected slot
+      }
     }
   }
 
@@ -44,7 +50,9 @@ const TimeSlots = ({
         <div className="time-slots-container">
           {timeSlots.map((slot, index) => (
             <div
-              className={`time-slot-box ${clickable ? 'clickable' : ''}`}
+              className={`time-slot-box ${
+                selectedSlot === slot ? 'selected' : ''
+              } ${clickable ? 'clickable' : ''}`}
               key={index}
               onClick={() => handleSlotClick(slot)} // Handle click only if clickable
             >

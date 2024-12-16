@@ -87,6 +87,8 @@ const BookingPage = () => {
       await axios.put(`http://localhost:8080/meetings/${meetingId}`, {
         bookings: updatedBookings,
       })
+
+      alert("Meeting Booked!")
     } catch (error) {
       console.error('Error booking meeting:', error)
       alert('Failed to book meeting. Please try again.')
@@ -136,7 +138,7 @@ const BookingPage = () => {
               />
             )}
           </div>
-          <button onClick={handleBooking} disabled={!selectedSlot}>
+          <button onClick={handleBooking} disabled={!selectedSlot} className='book-slot-button'>
             Book Slot
           </button>
         </div>
