@@ -176,7 +176,7 @@ const MeetingTable = ({ userId, upcomingMeetings, hostingMeetings, requestMeetin
       throw new Error('Meeting not found.');
     }
 
-    const newBooking = {attendee: requestObject.userAskingAccount, date: selectedMeetingOrRequestTime.date, starttime: selectedMeetingOrRequestTime.starttime, endtime: selectedMeetingOrRequestTime.endtime}
+    const newBooking = {attendee: requestObject.data.userAskingAccount, date: selectedMeetingOrRequestTime.date, starttime: selectedMeetingOrRequestTime.starttime, endtime: selectedMeetingOrRequestTime.endtime}
     const updatedBookings = [...meetingObject.data.bookings, newBooking];
     
     await axios.put(
