@@ -240,15 +240,7 @@ const RequestBookingPage = () => {
           </div>
 
           {/* Conditionally render the "Book Slot" button */}
-          {meetingData.host !== userId ? (<>
-            <button
-              onClick={handleBooking}
-              disabled={!selectedSlot}
-              className="book-slot-button"
-            >
-              Bac
-          </button>
-          
+          {meetingData.host !== userId ? (
             <button
               onClick={handleBooking}
               disabled={!selectedSlot}
@@ -256,7 +248,7 @@ const RequestBookingPage = () => {
             >
               Request Slot
             </button>
-          </>) : (
+          ) : (
             <p className="host-warning">
               You are the host for this meeting. You cannot book a slot. 
             </p>
