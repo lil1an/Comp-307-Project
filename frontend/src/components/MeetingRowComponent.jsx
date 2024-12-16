@@ -86,7 +86,13 @@ const MeetingRowComponent = ({
         </a>
         {typeOfMeeting !== 'Hosting' &&
           <div className="subtitle">
-            {userIsHostingMeeting ? `Attendee: ${attendeeName}` : `Host: ${hostName}`}
+            { 
+              userIsHostingMeeting 
+                ? `Attendee: ${attendeeName}` 
+                : (typeOfMeeting === 'Requests' || typeOfMeeting === 'Declined') 
+                  ? `Requested by: ${hostName}` 
+                  : `Host: ${hostName}`
+            }
           </div>
         }
       </div>
