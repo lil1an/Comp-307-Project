@@ -53,4 +53,5 @@
   color: var(--primaryRed);
   height: auto;
   width: 40px;
+  cursor: pointer;
 }
