@@ -154,7 +154,7 @@ function DocumentsPage() {
                     </div>
                 </div>
 
-                <div className="document-row">
+                {/* <div className="document-row">
                     <div className="document-name">COMP307 - Final Project Guidelines</div>
                     <div className="meeting-title">Joseph Vyhibal's Office Hours</div>
                     <div className="upload-date">2024-11-30</div>
@@ -162,7 +162,7 @@ function DocumentsPage() {
                     <div className="download-icon">
                         <FaDownload />
                     </div>
-                </div>
+                </div> */}
 
 
             </div>
