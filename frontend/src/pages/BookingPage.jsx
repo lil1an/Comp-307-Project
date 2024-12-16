@@ -62,26 +62,21 @@ const BookingPage = () => {
       }
 
       // Create new booking Entry
-      console.log(selectedSlot)
-      console.log(
-        addMinutes(
-          parse(selectedSlot, 'HH:mm', new Date()),
-          meetingData.duration
-        )
-      )
-
       const newBooking = {
-        userId: hostData._id,
+        attendee: hostData._id,
         date: format(selectedDate, 'yyyy-MM-dd'), // Store date as 'YYYY-MM-DD'
         starttime: format(parse(selectedSlot, 'HH:mm', new Date()), 'HH:mm'), // Store time as 'HH:mm'
-        endtime: format( // Store time as 'HH:mm'
+        endtime: format(
+          // Store time as 'HH:mm'
           addMinutes(
             parse(selectedSlot, 'HH:mm', new Date()),
             meetingData.duration
           ),
           'HH:mm'
-        ), 
+        ),
       }
+
+      console.log('This is the new booking array: ', newBooking)
 
       // Update booking array
       const updatedBookings = [...meetingData.bookings, newBooking]
@@ -91,7 +86,7 @@ const BookingPage = () => {
         bookings: updatedBookings,
       })
 
-      alert("Meeting Booked!")
+      alert('Meeting Booked!')
     } catch (error) {
       console.error('Error booking meeting:', error)
       alert('Failed to book meeting. Please try again.')
@@ -141,7 +136,11 @@ const BookingPage = () => {
               />
             )}
           </div>
-          <button onClick={handleBooking} disabled={!selectedSlot} className='book-slot-button'>
+          <button
+            onClick={handleBooking}
+            disabled={!selectedSlot}
+            className="book-slot-button"
+          >
             Book Slot
           </button>
         </div>
