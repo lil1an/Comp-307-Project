@@ -103,9 +103,15 @@ export const getUpcomingMeetingsByUserFromDatabase = async (userId) => {
     const allMeetings = await getAllMeetingsByUserFromDatabase(userId);
     const currentDate = new Date();
 
-    const futureMeetings = allMeetings.filter(meeting => {
-        const meetingDate = new Date(meeting.date);
-        return meetingDate > currentDate;
+    const futureMeetings = allMeetings
+    .filter(meeting => {
+      const meetingDate = new Date(meeting.date);
+      return meetingDate > currentDate;
+    })
+    .sort((a, b) => {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      return dateA - dateB;
     });
 
     return futureMeetings;
@@ -164,10 +170,17 @@ export const getPastMeetingsByUserFromBackend = async (userId) => {
     const allMeetings = await getAllMeetingsByUserFromDatabase(userId);
     const currentDate = new Date();
 
-    const pastMeetings = allMeetings.filter(meeting => {
-        const meetingDate = new Date(meeting.date);
-        return meetingDate < currentDate;
+    const pastMeetings = allMeetings
+    .filter(meeting => {
+      const meetingDate = new Date(meeting.date);
+      return meetingDate < currentDate;
+    })
+    .sort((a, b) => {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      return dateB - dateA;
     });
+
     return pastMeetings;
   } catch (error) {
     console.error('Error fetching past meetings for user:', error);
