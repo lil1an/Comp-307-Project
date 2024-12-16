@@ -82,10 +82,11 @@ const MeetingTable = ({ userId, upcomingMeetings, hostingMeetings, requestMeetin
       }
       
     } catch (error) {
-      console.error('Error updating meeting:', error);
+      alert('Error updating meeting:', error);
     }
   
     // close the decline modal and show the success modal
+    fetchMeetingsData(userId);
     setDeclineMeetingModalVisible(false);
     setResponseSavedSuccessfullyModalVisible(true);
   };
@@ -126,10 +127,11 @@ const MeetingTable = ({ userId, upcomingMeetings, hostingMeetings, requestMeetin
       }
       
     } catch (error) {
-      console.error('Error updating meeting:', error);
+      alert('Error updating meeting:', error);
     }
   
     // close the cancel meeting modal and show the success modal
+    fetchMeetingsData(userId);
     setCancelMeetingModalVisible(false);
     setResponseSavedSuccessfullyModalVisible(true);
   };
@@ -147,9 +149,9 @@ const MeetingTable = ({ userId, upcomingMeetings, hostingMeetings, requestMeetin
         { userAnsweringResponse: false }
       );
     } catch (error) {
-      console.error('Error declining request:', error);
+      alert('Error declining request:', error);
     }
-   
+    fetchMeetingsData(userId);
     setDeclineMeetingModalVisible(false);
     setResponseSavedSuccessfullyModalVisible(true);
   }
@@ -164,7 +166,7 @@ const MeetingTable = ({ userId, upcomingMeetings, hostingMeetings, requestMeetin
     // first get the request object
     const requestObject = await axios.get(`http://localhost:8080/requests/${selectedMeetingOrRequest}`);
     if (!requestObject || !requestObject.data || !requestObject.data.meeting) {
-      throw new Error('Invalid request data.');
+      throw new Error('Request not found.');
     }
 
     // next, create the new booking
@@ -186,9 +188,9 @@ const MeetingTable = ({ userId, upcomingMeetings, hostingMeetings, requestMeetin
     try {
       await axios.delete(`http://localhost:8080/requests/${selectedMeetingOrRequest}`);
     } catch (error) {
-      console.error('Error deleting request:', error);
+      throw new Error('Error deleting request.');
     }
-
+    fetchMeetingsData(userId);
     setAcceptRequestModalVisible(false);
     setResponseSavedSuccessfullyModalVisible(true);
   }
