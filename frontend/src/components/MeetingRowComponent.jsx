@@ -116,16 +116,18 @@ const MeetingRowComponent = ({
                 </div>
               </>
             )}
-            <div
-              className="meeting-row-button red-background"
-              onClick={() =>
-                (userIsHostingMeeting || typeOfMeeting === 'Hosting')
-                  ? meetingCancelCallback(id || meeting._id, date, starttime, endtime)
-                  : meetingDeclineCallback(id, date, starttime, endtime)
-              }
-            >
+            {(typeOfMeeting !== 'Hosting') && (
+              <div
+                className="meeting-row-button red-background"
+                onClick={() =>
+                  userIsHostingMeeting
+                    ? meetingCancelCallback(id || meeting._id, date, starttime, endtime)
+                    : meetingDeclineCallback(id, date, starttime, endtime)
+                }
+              >
               <IoMdClose />
-            </div>
+              </div>
+            )}
           </>
         )}
         {typeOfMeeting === 'Requests' && (
