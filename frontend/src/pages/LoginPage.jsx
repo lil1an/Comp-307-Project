@@ -62,9 +62,9 @@ function LoginPage() {
             <p>
               Don’t have an account? <Link to="/registration" className="login-link">Sign up here</Link>
             </p>
-            <p>
+            {/* <p>
               Forgot password? <a href="#" className="login-link">Click here</a>
-            </p>
+            </p> */}
           </div>
         </div>
       </div>
