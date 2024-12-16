@@ -61,11 +61,11 @@ const MeetingRowComponent = ({
             <img
               src={hostProfilePic}
               className="profile-circle"
-              style={{ height: '70px', width: '70px' }}
+              style={{ height: '50px', width: '50px' }}
               alt="host profile"
             />
           ) : (
-            <CgProfile style={{ height: '70px', width: '70px' }} />
+            <CgProfile style={{ height: '50px', width: '50px' }} />
           )}
         </span>
         <div>

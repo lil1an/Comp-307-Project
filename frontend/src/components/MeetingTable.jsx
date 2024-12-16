@@ -98,8 +98,33 @@ const MeetingTable = ({ userId, upcomingMeetings, hostingMeetings, requestMeetin
 
   const handleMeetingCancelConfirm = async () => {
     try {
-        await axios.delete(`http://localhost:8080/meetings/${selectedMeetingOrRequest}`);
-        console.log('Meeting cancelled');
+      // get the meeting/attendee
+      const meeting = await axios.get(`http://localhost:8080/meetings/${selectedMeetingOrRequest}`);
+
+      // find the booking to remove
+      const bookingIndex = meeting.data.bookings.findIndex(
+        (booking) =>
+          booking.date === selectedMeetingOrRequestTime.date &&
+          booking.starttime === selectedMeetingOrRequestTime.starttime &&
+          booking.endtime === selectedMeetingOrRequestTime.endtime
+      );
+  
+      // if a matching booking is found, remove it
+      if (bookingIndex !== -1) {
+        meeting.data.bookings.splice(bookingIndex, 1);
+        console.log('Booking removed:', meeting.data.bookings);
+        
+        // send the updated meeting data back to backend
+        await axios.put(
+          `http://localhost:8080/meetings/${selectedMeetingOrRequest}`,
+          { bookings: meeting.data.bookings }
+        );
+  
+        console.log('Meeting updated');
+      } else {
+        console.log('Booking not found.');
+      }
+      
     } catch (error) {
       console.error('Error updating meeting:', error);
     }

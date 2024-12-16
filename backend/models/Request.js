@@ -5,7 +5,6 @@ const { Schema, model } = mongoose
 
 const request = new Schema({
   meeting: { type: mongoose.Schema.Types.ObjectId, ref: 'meetings', required: true },
-  availabilities: { type: Array, required: true },
   userAskingAccount: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required: false },
   userAskingEmail: { type: String, required: false },
   userAnswering: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true },
