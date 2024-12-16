@@ -1,5 +1,6 @@
 #meeting-table {
   position: relative;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 #meeting-table-header {
@@ -39,6 +40,7 @@
 .tab-button--selected {
   color: white;
   background-color: var(--primaryRed);
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .tab-button:hover {
