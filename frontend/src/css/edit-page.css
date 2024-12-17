@@ -163,3 +163,23 @@
   border: 1px solid #007bff;
   outline: none;
 }
+
+
+@media (max-width: 1000px) { 
+  .create-page-wrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 85vh;
+    padding: 20px;
+    gap: 25px;
+  }  
+  .preview-wrapper-from-edit {
+    order: 1;
+  }
+
+  .edit-wrapper {
+    order: 2;
+    width: 100%;
+  }
+}
