@@ -68,17 +68,14 @@
   padding-top: 80px;
 }
 
-/* Tablets */
-@media (max-width: 1200px) { 
-  #meeting-table-container {
-    padding-top: 0px;
-  }
-}
-
 /* Small devices like phones */
-@media (max-width: 576px) { 
+@media (max-width: 700px) { 
   #meeting-table {
     width: 100%;
+  }
+  
+  #meeting-table-container {
+    padding-top: 0px;
   }
 
   #meeting-table-header {
