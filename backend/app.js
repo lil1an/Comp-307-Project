@@ -16,6 +16,7 @@ import notificationRoutes from './routes/notificationRoutes.js'
 
 // Import models
 import User from './models/User.js'
+import { hostname } from 'os'
 
 // Connect to the database
 await connectDB()
@@ -51,8 +52,9 @@ app.get('*', (req, res) => {
 })
 
 // Start the server
-const PORT = process.env.PORT || 8080
-server.listen(PORT, () => {
+const PORT = process.env.PORT || 3000
+const HOST = '0.0.0.0'
+server.listen(PORT, HOST, () => {
   console.log(`Server is running on port ${PORT}`)
 })
 
