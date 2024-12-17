@@ -17,54 +17,54 @@ const RequestBookingPage = () => {
   const [meetingData, setMeetingData] = useState(null)
   const [hostData, setHostData] = useState(null)
   const [selectedDate, setSelectedDate] = useState(null)
-  const [selectedSlot, setSelectedSlot] = useState(null) 
-  const [loading, setLoading] = useState(true) 
+  const [selectedSlot, setSelectedSlot] = useState(null)
+  const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
   const fullTimeAvailabilites = {
-    "Monday": [
+    Monday: [
       {
-        "start": "09:00",
-        "end": "17:00"
-      }
+        start: '09:00',
+        end: '17:00',
+      },
     ],
-    "Tuesday": [
+    Tuesday: [
       {
-        "start": "09:00",
-        "end": "17:00"
-      }
+        start: '09:00',
+        end: '17:00',
+      },
     ],
-    "Wednesday": [
+    Wednesday: [
       {
-        "start": "09:00",
-        "end": "17:00"
-      }
+        start: '09:00',
+        end: '17:00',
+      },
     ],
-    "Thursday": [
+    Thursday: [
       {
-        "start": "09:00",
-        "end": "17:00"
-      }
+        start: '09:00',
+        end: '17:00',
+      },
     ],
-    "Friday": [
+    Friday: [
       {
-        "start": "09:00",
-        "end": "17:00"
-      }
+        start: '09:00',
+        end: '17:00',
+      },
     ],
-    "Saturday": [
+    Saturday: [
       {
-        "start": "09:00",
-        "end": "17:00"
-      }
+        start: '09:00',
+        end: '17:00',
+      },
     ],
-    "Sunday": [
+    Sunday: [
       {
-        "start": "09:00",
-        "end": "17:00"
-      }
-    ]
-}
+        start: '09:00',
+        end: '17:00',
+      },
+    ],
+  }
 
   // Function to fetch meeting data
   const fetchMeetingData = async () => {
@@ -74,8 +74,12 @@ const RequestBookingPage = () => {
       )
       const meeting = response.data
       setMeetingData(meeting)
+      const currentDate = format(new Date(), 'yyyy-MM-dd')
+      const isSameDate = currentDate === meeting.dateRange['start']
 
-      console.log('Fetching meeting: ', meeting)
+      if (!isSameDate) {
+        meeting.dateRange['start'] = currentDate
+      }
 
       if (meeting.host) {
         const hostResponse = await axios.get(
@@ -88,7 +92,7 @@ const RequestBookingPage = () => {
     } catch (err) {
       console.error('Error fetching meeting data:', err)
       setError('Failed to load meeting details.')
-      setLoading(false) 
+      setLoading(false)
     }
   }
 
@@ -98,30 +102,29 @@ const RequestBookingPage = () => {
 
   function isTimeSlotAvailable(starttime, endtime) {
     // get availabilities for the selected day
-    const dayOfWeek = format(new Date(selectedDate), 'EEEE');
-    const dayAvailabilities = meetingData?.availabilities[dayOfWeek] || [];
-  
+    const dayOfWeek = format(new Date(selectedDate), 'EEEE')
+    const dayAvailabilities = meetingData?.availabilities[dayOfWeek] || []
+
     // check if starttime and endtime fall within any of the available time slots
     const isWithinAvailability = dayAvailabilities.some(({ start, end }) => {
-      return starttime >= start && endtime <= end;
-    });
-  
-    return isWithinAvailability;
+      return starttime >= start && endtime <= end
+    })
+
+    return isWithinAvailability
   }
 
-
-  const handleBooking = async() => {
+  const handleBooking = async () => {
     // determine if requested slot is inside availabilities
     const starttime = format(parse(selectedSlot, 'HH:mm', new Date()), 'HH:mm')
     const endtime = format(
       addMinutes(
-        parse(selectedSlot, 'HH:mm', new Date()), 
+        parse(selectedSlot, 'HH:mm', new Date()),
         meetingData.duration
-      ), 
+      ),
       'HH:mm'
     )
 
-    isTimeSlotAvailable(starttime, endtime) ? createBooking() : createRequest();
+    isTimeSlotAvailable(starttime, endtime) ? createBooking() : createRequest()
   }
 
   const createRequest = async () => {
@@ -140,23 +143,25 @@ const RequestBookingPage = () => {
         starttime: format(parse(selectedSlot, 'HH:mm', new Date()), 'HH:mm'),
         endtime: format(
           addMinutes(
-            parse(selectedSlot, 'HH:mm', new Date()), 
+            parse(selectedSlot, 'HH:mm', new Date()),
             meetingData.duration
-          ), 
+          ),
           'HH:mm'
-        )
-      };
-      
-      const response = await axios.post('http://localhost:8080/requests/create', newRequest);
-      console.log('Response:', response.data);
+        ),
+      }
+
+      const response = await axios.post(
+        'http://localhost:8080/requests/create',
+        newRequest
+      )
+      console.log('Response:', response.data)
       alert('Your request to meet was sent successfully!')
-      return response.data;
+      return response.data
     } catch (error) {
-      console.error('Error creating request:', error);
-      throw error;
+      console.error('Error creating request:', error)
+      throw error
     }
   }
-
 
   // Handle booking a slot
   const createBooking = async () => {
@@ -198,64 +203,64 @@ const RequestBookingPage = () => {
 
   return (
     <>
-    <div className="public-page-wrapper">
-      <div className="display-wrapper">
-        <div className="meeting-details">
-          <h2>{meetingData.title}</h2>
-          <p>
-            <strong>Host:</strong>{' '}
-            {hostData
-              ? `${hostData.firstName} ${hostData.lastName}`
-              : 'Loading...'}
-          </p>
-          <p>
-            <strong>Location:</strong> {meetingData.linkOrLocation}
-          </p>
-          <p>
-            <strong>Duration:</strong> {meetingData.duration} minutes
-          </p>
-          <p>{meetingData.description}</p>
-        </div>
-
-        <div className="preview-wrapper">
-          <div className="calendar-preview">
-            <Calendar
-              dateRange={meetingData.dateRange || { start: '', end: '' }}
-              availableDays={fullTimeAvailabilites || {}}
-              onDateSelect={setSelectedDate}
-            />
+      <div className="public-page-wrapper">
+        <div className="display-wrapper">
+          <div className="meeting-details">
+            <h2>{meetingData.title}</h2>
+            <p>
+              <strong>Host:</strong>{' '}
+              {hostData
+                ? `${hostData.firstName} ${hostData.lastName}`
+                : 'Loading...'}
+            </p>
+            <p>
+              <strong>Location:</strong> {meetingData.linkOrLocation}
+            </p>
+            <p>
+              <strong>Duration:</strong> {meetingData.duration} minutes
+            </p>
+            <p>{meetingData.description}</p>
           </div>
 
-          <div className="time-slot">
-            {selectedDate && (
-              <TimeSlot
-                selectedDate={selectedDate}
+          <div className="preview-wrapper">
+            <div className="calendar-preview">
+              <Calendar
+                dateRange={meetingData.dateRange || { start: '', end: '' }}
                 availableDays={fullTimeAvailabilites || {}}
-                bookings={meetingData.bookings} // Pass bookings to TimeSlots
-                duration={meetingData.duration}
-                clickable={true} // Enable interactivity
-                onSlotSelect={setSelectedSlot} // Pass selected slot to state
+                onDateSelect={setSelectedDate}
               />
+            </div>
+
+            <div className="time-slot">
+              {selectedDate && (
+                <TimeSlot
+                  selectedDate={selectedDate}
+                  availableDays={fullTimeAvailabilites || {}}
+                  bookings={meetingData.bookings} // Pass bookings to TimeSlots
+                  duration={meetingData.duration}
+                  clickable={true} // Enable interactivity
+                  onSlotSelect={setSelectedSlot} // Pass selected slot to state
+                />
+              )}
+            </div>
+
+            {/* Conditionally render the "Book Slot" button */}
+            {meetingData.host !== userId ? (
+              <button
+                onClick={handleBooking}
+                disabled={!selectedSlot}
+                className="alternative-slot-button"
+              >
+                Request Slot
+              </button>
+            ) : (
+              <p className="host-warning">
+                You are the host for this meeting. You cannot book a slot.
+              </p>
             )}
           </div>
-
-          {/* Conditionally render the "Book Slot" button */}
-          {meetingData.host !== userId ? (
-            <button
-              onClick={handleBooking}
-              disabled={!selectedSlot}
-              className="alternative-slot-button"
-            >
-              Request Slot
-            </button>
-          ) : (
-            <p className="host-warning">
-              You are the host for this meeting. You cannot book a slot. 
-            </p>
-          )}
         </div>
       </div>
-    </div>
     </>
   )
 }
