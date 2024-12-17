@@ -90,3 +90,31 @@
 .host-warning {
   margin-top: 0px;
 }
+
+@media (max-width: 1000px) { 
+  .display-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0px;
+    padding: 50px 50px;
+    min-height: 620px;
+    min-width: 0px;
+  }
+
+  .preview-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+    max-width: 500px;
+    min-width: 45%;
+    border: 1px solid #f3f2f2;
+    border-radius: 8px;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: white;
+  }
+}
