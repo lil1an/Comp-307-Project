@@ -24,9 +24,7 @@ const BookingPage = () => {
   // Function to fetch meeting data
   const fetchMeetingData = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:8080/meetings/${meetingId}`
-      )
+      const response = await axios.get(`/meetings/${meetingId}`)
       const meeting = response.data
       const currentDate = format(new Date(), 'yyyy-MM-dd')
       const isSameDate = currentDate === meeting.dateRange['start']
@@ -40,9 +38,7 @@ const BookingPage = () => {
       console.log('Fetching meeting: ', meeting)
 
       if (meeting.host) {
-        const hostResponse = await axios.get(
-          `http://localhost:8080/users/${meeting.host}`
-        )
+        const hostResponse = await axios.get(`/users/${meeting.host}`)
         setHostData(hostResponse.data)
       }
 
@@ -81,7 +77,7 @@ const BookingPage = () => {
 
       const updatedBookings = [...meetingData.bookings, newBooking]
 
-      await axios.put(`http://localhost:8080/meetings/${meetingId}`, {
+      await axios.put(`/meetings/${meetingId}`, {
         bookings: updatedBookings,
       })
 
@@ -150,7 +146,9 @@ const BookingPage = () => {
               </button>
 
               <button
-                onClick={() => window.open(`${location.pathname}/request`, '_blank')}
+                onClick={() =>
+                  window.open(`${location.pathname}/request`, '_blank')
+                }
                 className="alternative-slot-button"
               >
                 Request Alternative Time
