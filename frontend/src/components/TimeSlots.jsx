@@ -1,4 +1,4 @@
-import { format, addMinutes, parse } from 'date-fns'
+import { format, addMinutes, parse, isAfter} from 'date-fns'
 import { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import '../css/time-slot.css'
@@ -12,11 +12,11 @@ const TimeSlots = ({
   clickable = false,
 }) => {
   const [selectedSlot, setSelectedSlot] = useState(null)
-  const location = useLocation() // Assign useLocation() to a variable
+  const location = useLocation()
 
   // Dynamically import CSS based on route
   useEffect(() => {
-    const path = location.pathname // Use the assigned variable
+    const path = location.pathname
 
     if (path === '/edit' || /^\/meetings\/[a-zA-Z0-9]+$/.test(path)) {
       // Matches /edit or /meetings/:meetingId
@@ -77,6 +77,14 @@ const TimeSlots = ({
   // Generate time slots for all intervals of the selected day
   const timeSlots = intervals
     .flatMap(({ start, end }) => generateTimeSlots(start, end))
+    .filter((slot) => {
+      // Filter out past time slots
+      const slotDateTime = parse(slot, 'HH:mm', selectedDate) // Combine date and slot time
+      const now = new Date()
+
+      // Only include slots that are in the future
+      return isAfter(slotDateTime, now)
+    })
     .filter((slot) => !isSlotBooked(slot)) // Exclude booked slots
 
   const handleSlotClick = (slot) => {

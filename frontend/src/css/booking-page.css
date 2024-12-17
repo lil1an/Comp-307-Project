@@ -86,3 +86,7 @@
 .alternative-slot-button:hover {
   background-color: #fae05e;
 }
+
+.host-warning {
+  margin-top: 0px;
+}
