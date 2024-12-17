@@ -1,6 +1,7 @@
 #meeting-table {
   position: relative;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  width: 80%;
 }
 
 #meeting-table-header {
@@ -57,4 +58,36 @@
 
 .notification--selected {
   color: white;
+}
+
+#meeting-table-container {
+  display: flex;
+  justify-content: center;
+  height: calc(100vh - 145px);
+  background-color: #f4f4f4;
+  padding-top: 80px;
+}
+
+/* Tablets */
+@media (max-width: 1200px) { 
+  #meeting-table-container {
+    padding-top: 0px;
+  }
+}
+
+/* Small devices like phones */
+@media (max-width: 576px) { 
+  #meeting-table {
+    width: 100%;
+  }
+
+  #meeting-table-header {
+    padding: 3px;
+  }
+
+  .tab-button {
+    padding: 5px 10px;
+    margin: 3px;
+    width: 90px;
+  }
 }

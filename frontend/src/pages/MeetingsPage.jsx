@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import NavBar from '../components/NavBar'
 import MeetingTable from '../components/MeetingTable'
-import Modal from '../components/Modal'
-import { useLocation } from 'react-router-dom'
+import '../css/meeting-table.css'
 import axios from 'axios'
 
 function MeetingsPage() {
@@ -60,16 +59,6 @@ function MeetingsPage() {
     }
   }, [userId])
 
-  const styles = {
-    'meeting-table-container': {
-      display: 'flex',
-      justifyContent: 'center',
-      height: 'calc(100vh - 145px)',
-      backgroundColor: '#f4f4f4',
-      paddingTop: '80px',
-    },
-  }
-
   return !userId ? (
     <div
       style={{
@@ -84,19 +73,17 @@ function MeetingsPage() {
   ) : (
     <>
       <NavBar />
-      <div style={styles['meeting-table-container']}>
-        <div style={{ width: '80%' }}>
-          <MeetingTable
-            userId={userId}
-            loading={loadingMeetings}
-            upcomingMeetings={meetingsUpcoming}
-            hostingMeetings={meetingsHosting}
-            requestMeetings={meetingsRequested}
-            declinedMeetings={meetingsDeclined}
-            pastMeetings={meetingsPast}
-            fetchMeetingsData={fetchMeetingsData}
-          />
-        </div>
+      <div id="meeting-table-container">
+        <MeetingTable
+          userId={userId}
+          loading={loadingMeetings}
+          upcomingMeetings={meetingsUpcoming}
+          hostingMeetings={meetingsHosting}
+          requestMeetings={meetingsRequested}
+          declinedMeetings={meetingsDeclined}
+          pastMeetings={meetingsPast}
+          fetchMeetingsData={fetchMeetingsData}
+        />
       </div>
     </>
   )

@@ -55,46 +55,48 @@ const MeetingRowComponent = ({
 
   return (
     <div className="meeting-row-container">
-      <div className="meeting-row-datetime-container">
-        <span className="icon-margin">
-          {hostProfilePic ? (
-            <img
-              src={hostProfilePic}
-              className="profile-circle"
-              style={{ height: '50px', width: '50px' }}
-              alt="host profile"
-            />
-          ) : (
-            <CgProfile style={{ height: '50px', width: '50px' }} />
-          )}
-        </span>
-        {typeOfMeeting !== 'Hosting' && 
-          <div>
-            {starttime}-{endtime}
-            <div className="subtitle">{formattedDate}</div>
-          </div>
-        }
-      </div>
-      <div className="meeting-row-title-container">
-        <a 
-          href={`/meetings/${id || meeting._id}`} 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          style={{ color: 'black', textDecoration: 'none' }}
-        >
-          {title}
-        </a>
-        {typeOfMeeting !== 'Hosting' &&
-          <div className="subtitle">
-            { 
-              userIsHostingMeeting 
-                ? `Attendee: ${attendeeName}` 
-                : (typeOfMeeting === 'Requests' || typeOfMeeting === 'Declined') 
-                  ? `Requested by: ${hostName}` 
-                  : `Host: ${hostName}`
-            }
-          </div>
-        }
+      <div className="meeting-row-datetime-and-title-container">
+        <div className="meeting-row-datetime-container">
+          <span className="icon-margin">
+            {hostProfilePic ? (
+              <img
+                src={hostProfilePic}
+                className="profile-circle"
+                style={{ height: '50px', width: '50px' }}
+                alt="host profile"
+              />
+            ) : (
+              <CgProfile style={{ height: '50px', width: '50px' }} />
+            )}
+          </span>
+          {typeOfMeeting !== 'Hosting' && 
+            <div>
+              {starttime}-{endtime}
+              <div className="subtitle">{formattedDate}</div>
+            </div>
+          }
+        </div>
+        <div className="meeting-row-title-container">
+          <a 
+            href={`/meetings/${id || meeting._id}`} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            style={{ color: 'black', textDecoration: 'none' }}
+          >
+            {title}
+          </a>
+          {typeOfMeeting !== 'Hosting' &&
+            <div className="subtitle">
+              { 
+                userIsHostingMeeting 
+                  ? `Attendee: ${attendeeName}` 
+                  : (typeOfMeeting === 'Requests' || typeOfMeeting === 'Declined') 
+                    ? `Requested by: ${hostName}` 
+                    : `Host: ${hostName}`
+              }
+            </div>
+          }
+        </div>
       </div>
       <div className="meeting-row-button-container">
         {(typeOfMeeting === 'Upcoming' || typeOfMeeting === 'Hosting') && (
