@@ -117,7 +117,9 @@ const MeetingRowComponent = ({
                   className="meeting-row-button"
                   onClick={() =>
                     copyToClipboard(
-                      `${window.location.origin}/meetings/${id || meeting._id}`
+                      `${window.location.origin}/meetings/${
+                        id || meeting._id
+                      }`
                     )
                   }
                 >

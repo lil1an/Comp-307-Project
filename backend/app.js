@@ -37,10 +37,10 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cors({ origin: true, credentials: true }))
 
 // Routes
-app.use('/users', userRoutes)
-app.use('/meetings', meetingRoutes)
-app.use('/requests', requestRoutes)
-app.use('/notifications', notificationRoutes)
+app.use('/api/users', userRoutes)
+app.use('/api/meetings', meetingRoutes)
+app.use('/api/requests', requestRoutes)
+app.use('/api/notifications', notificationRoutes)
 
 // Serve Frontend Static Build Files
 const __dirname = path.resolve() // Set __dirname for ES module compatibility
@@ -48,12 +48,14 @@ const __dirname = path.resolve() // Set __dirname for ES module compatibility
 app.use(express.static(path.join(__dirname, '../frontend/build')))
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/build/index.html'))
+  if (!req.path.startsWith('/api')) {
+    res.sendFile(path.join(__dirname, '../frontend/build/index.html'))
+  }
 })
 
 // Start the server
 const PORT = process.env.PORT || 3000
-const HOST = process.env.HOST 
+const HOST = process.env.HOST
 server.listen(PORT, HOST, () => {
   console.log(`Server is running on port ${PORT}`)
 })

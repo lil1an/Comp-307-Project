@@ -33,7 +33,7 @@ function RegistrationPage() {
 
     // Axios posting to our user route for registering user in the database
     axios
-      .post('/users/create', { firstName, lastName, email, password })
+      .post('/api/users/create', { firstName, lastName, email, password })
       .then((result) => {
         showStatusPopup('Registration Successful! Redirecting to Login Page...')
         setTimeout(() => navigate('/login'), 3000)

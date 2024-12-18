@@ -102,7 +102,7 @@ const EditPage = () => {
       // Fetch meeting details for editing
       const fetchMeetingDetails = async () => {
         try {
-          const response = await axios.get(`/meetings/${apptId}`)
+          const response = await axios.get(`/api/meetings/${apptId}`)
           const meeting = response.data
 
           setEventDetails({
@@ -131,7 +131,7 @@ const EditPage = () => {
   // Handle delete a meeting
   const handleMeetingDeleteConfirm = async (meetingId) => {
     try {
-      await axios.delete(`/meetings/${meetingId}`)
+      await axios.delete(`/api/meetings/${meetingId}`)
       alert('Meeting successfully deleted.')
       navigate('/meetings', { state: { id: hostId } })
     } catch (error) {
@@ -169,12 +169,12 @@ const EditPage = () => {
     try {
       if (apptId) {
         // Update existing meeting
-        const response = await axios.put(`/meetings/${apptId}`, meetingdata)
+        const response = await axios.put(`/api/meetings/${apptId}`, meetingdata)
         alert('Your meeting updates were saved.')
         console.log('Event has been updated!', response.data)
       } else {
         // Create new meeting
-        const response = await axios.post('/meetings/create', meetingdata)
+        const response = await axios.post('/api/meetings/create', meetingdata)
         alert('Your meeting was created')
         console.log('Event has been saved!', response.data)
         // Redirect to edit page with the new meeting ID

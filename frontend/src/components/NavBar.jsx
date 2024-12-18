@@ -51,12 +51,12 @@ function NavBar() {
   const updateUnreadNotification = async () => {
     try {
       if (id) {
-        const userResponse = await axios.get(`/users/${id}`)
+        const userResponse = await axios.get(`/api/users/${id}`)
         const userData = userResponse.data
 
         // Notifications have been read.
         const updatedUserData = { ...userData, hasUnreadNotification: false }
-        await axios.put(`/users/${id}`, updatedUserData)
+        await axios.put(`/api/users/${id}`, updatedUserData)
         setHasUnreadNotification(false) // Update state
       }
     } catch (error) {
@@ -67,7 +67,7 @@ function NavBar() {
   const checkUnreadNotification = async () => {
     try {
       if (id) {
-        const response = await axios.get(`/users/${id}`)
+        const response = await axios.get(`/api/users/${id}`)
         setHasUnreadNotification(response.data.hasUnreadNotification)
       }
     } catch (error) {
@@ -108,7 +108,7 @@ function NavBar() {
   const getUserNotifications = async () => {
     try {
       if (id) {
-        const userResponse = await axios.get(`/notifications/userId/${id}`)
+        const userResponse = await axios.get(`/api/notifications/userId/${id}`)
 
         const sortedNotifications = userResponse.data.sort(
           (a, b) => new Date(b.time) - new Date(a.time)
@@ -118,7 +118,7 @@ function NavBar() {
           sortedNotifications.map(async (notif) => {
             try {
               const meetingResponse = await axios.get(
-                `/meetings/${notif.meeting}`
+                `/api/meetings/${notif.meeting}`
               )
               return { ...notif, meetingTitle: meetingResponse.data.title }
             } catch (error) {

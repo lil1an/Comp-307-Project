@@ -30,7 +30,7 @@ function LoginPage() {
     event.preventDefault() // Prevents submit button to reload page.
 
     axios
-      .post('/users/login', { email, password })
+      .post('/api/users/login', { email, password })
       .then((result) => {
         localStorage.setItem('userId', result.data.id)
         navigate('/home')

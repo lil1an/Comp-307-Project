@@ -13,22 +13,28 @@ const TimeSlots = ({
   clickable = false,
 }) => {
   const [selectedSlot, setSelectedSlot] = useState(null)
-  const location = useLocation()
+  const { pathname } = useLocation()
 
-  // Dynamically import CSS based on route
   useEffect(() => {
-    const path = location.pathname
-
-    if (path === '/edit' || /^\/meetings\/[a-zA-Z0-9]+$/.test(path)) {
-      // Matches /edit or /meetings/:meetingId
-      import('../css/time-slot.css')
-    } else if (/^\/meetings\/[a-zA-Z0-9]+\/request$/.test(path)) {
-      // Matches /meetings/:meetingId/request
-      import('../css/request-page.css')
-    } else {
-      import('../css/time-slot.css')
+    const loadCSS = async () => {
+      try {
+        if (
+          pathname === '/edit' ||
+          /^\/meetings\/[a-zA-Z0-9]+$/.test(pathname)
+        ) {
+          await import('../css/calendar.css')
+        } else if (/^\/meetings\/[a-zA-Z0-9]+\/request$/.test(pathname)) {
+          await import('../css/request-page.css')
+        } else {
+          await import('../css/calendar.css')
+        }
+      } catch (error) {
+        console.error('Error loading CSS:', error)
+      }
     }
-  }, [location.pathname]) // Dependency updated correctly
+
+    loadCSS()
+  }, [pathname])
 
   // Return null if no date selected
   if (!selectedDate) return null
