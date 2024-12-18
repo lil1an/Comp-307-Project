@@ -213,7 +213,9 @@ function NavBar() {
         </>
       ) : (
         <>
-          <img src={logo} alt="logo" id="logo" />
+          <Link to="/">
+            <img src={logo} alt="logo" id="logo" />
+          </Link>
           <div id="logout-options">
             <Link to="/login" className="nav-button">
               <FiLogIn className="icon1" />
