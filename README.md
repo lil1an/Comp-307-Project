@@ -8,8 +8,8 @@ A booking software that allows McGill University students and teachers alike to 
 - Vincent St-Pierre
 
 ## Tech Stack
-- JavaScript
 - React
+- JavaScript
 - Node.js
 - MongoDB 
 
@@ -17,13 +17,15 @@ A booking software that allows McGill University students and teachers alike to 
 
 `node` version: 18.20.5; we use `npm`.
 
-Install dependencies:
+### Install dependencies:
 ```
 npm install
 ```
 
-Run in development:
+### Run in development:
 ```
-npm run dev
+npm start
 ```
+in frontend and backend
+
 Commit messages follow the [conventional commits standard](https://www.conventionalcommits.org/en/v1.0.0/). [Helpful info](https://gist.github.com/qoomon/5dfcdf8eec66a051ecd85625518cfd13).
