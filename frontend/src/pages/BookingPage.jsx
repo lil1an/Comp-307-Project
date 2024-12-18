@@ -5,7 +5,7 @@ import Calendar from '../components/Calendar'
 import TimeSlot from '../components/TimeSlots'
 import axios from 'axios'
 import '../css/booking-page.css'
-import { format, addMinutes, parse } from 'date-fns'
+import { format, addMinutes, parse, isBefore, parseISO } from 'date-fns'
 
 const BookingPage = () => {
   const location = useLocation()
@@ -27,10 +27,12 @@ const BookingPage = () => {
     try {
       const response = await axios.get(`/api/meetings/${meetingId}`)
       const meeting = response.data
-      const currentDate = format(new Date(), 'yyyy-MM-dd')
-      const isSameDate = currentDate === meeting.dateRange['start']
 
-      if (!isSameDate) {
+      const currentDate = format(new Date(), 'yyyy-MM-dd')
+      const startDate = meeting.dateRange['start']
+
+      // If the start date is before the current date, update it to the current date
+      if (isBefore(parseISO(startDate), parseISO(currentDate))) {
         meeting.dateRange['start'] = currentDate
       }
 
