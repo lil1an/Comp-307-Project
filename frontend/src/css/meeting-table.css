@@ -68,12 +68,37 @@
   padding-top: 80px;
 }
 
+/* Medium devices like tablets */
+@media (max-width: 1240px) {
+  #meeting-table {
+    width: 90%;
+  }
+
+  .tab-button {
+    padding: 8px 20px;
+    font-size: 14px;
+    width: auto;
+    margin: 5px;
+  }
+
+  #meeting-table-header {
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    justify-content: space-evenly;
+    padding: 5px;
+  }
+
+  #meeting-table-meetings {
+    height: 360px; /* Reduce height for smaller screens */
+  }
+}
+
 /* Small devices like phones */
-@media (max-width: 700px) { 
+@media (max-width: 700px) {
   #meeting-table {
     width: 100%;
   }
-  
+
   #meeting-table-container {
     padding-top: 0px;
   }
