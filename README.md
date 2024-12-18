@@ -20,7 +20,7 @@ A booking software that allows McGill University students and teachers alike to 
 5. Go to https://fall2024-comp307-group13.cs.mcgill.ca/ 
 
 ## Division of Work
-### **Lilan Forsyth (260947087)**
+### **Lilan Forsyth**
 - **Frontend Components:** 
   - Navbar, Calendar, Date Selection, Timeslots, Event Details, Preview, Schedule Settings
 - **Frontend Full Pages:** 
@@ -30,7 +30,7 @@ A booking software that allows McGill University students and teachers alike to 
 
 ---
 
-### **Vincent St-Pierre (260986454)**
+### **Vincent St-Pierre**
 - **Frontend Components:** 
   - Sign-In Form, Register Form, Notifications Sidebar
 - **Frontend Full Pages:** 
@@ -42,7 +42,7 @@ A booking software that allows McGill University students and teachers alike to 
 
 ---
 
-### **Lian Lambert (260899352)**
+### **Lian Lambert**
 - **Frontend Components:** 
   - Modal, Meeting Table, Meeting Rows, Meeting Details
 - **Frontend Full Pages:** 
