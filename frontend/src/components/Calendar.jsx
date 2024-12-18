@@ -13,7 +13,6 @@ import {
   isSameMonth,
   isSameDay,
 } from 'date-fns'
-// import '../css/calendar.css'
 
 // Icons
 import {
