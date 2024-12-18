@@ -12,6 +12,6 @@
 ## How to Deploy Commit2Gather
 1. Please use Google
 2. Be connected to McGill Network (remote: use McGill VPN)
-3. `npm run build` in Frontend 
-4. `node app.js` in Backend 
+3. Run `npm install` then `npm run build` in Frontend 
+4. Run `npm install` then `node app.js` in Backend 
 5. Go to https://fall2024-comp307-group13.cs.mcgill.ca/ 
