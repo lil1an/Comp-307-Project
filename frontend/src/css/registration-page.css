@@ -96,6 +96,15 @@
   .popup-close:focus {
     outline: none;
   }
-  
-  
+
+  @media (max-width: 700px) { 
+
+    .registration-box{
+      padding:20px;
+    }
+
+    .registration-title{
+      margin:5px;
+    }
+  }
   

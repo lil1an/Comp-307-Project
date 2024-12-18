@@ -109,4 +109,16 @@
   .popup-close:focus {
     outline: none;
   }
+
+  @media (max-width: 700px) { 
+    
+    .login-box{
+      padding:20px;
+    }
+
+    .login-title{
+      margin: 5px;
+    }
+
+  }
   
