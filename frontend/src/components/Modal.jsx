@@ -1,7 +1,8 @@
-import React from 'react';
-import '../index.css';
+// Lian Lambert
+import React from 'react'
+import '../index.css'
 import '../css/modal.css'
-import { IoIosClose } from "react-icons/io";
+import { IoIosClose } from 'react-icons/io'
 
 /* Example Usage
   <Modal
@@ -18,8 +19,8 @@ import { IoIosClose } from "react-icons/io";
 */
 
 const Modal = ({
-  visible, 
-  title, 
+  visible,
+  title,
   message = null,
   afterMessageContent = null,
   primaryButtonLabel = null,
@@ -31,54 +32,52 @@ const Modal = ({
   return (
     <>
       {visible && (
-        <div id='modal-background' className='centered'>
-          <div id='modal-container' className='centered border-base border-red'>
+        <div id="modal-background" className="centered">
+          <div id="modal-container" className="centered border-base border-red">
             <div>
               <h1>{title}</h1>
-              <div style={{marginBottom: '15px'}}>{message}</div>
-              {afterMessageContent && (
-                <div>{afterMessageContent}</div>
-              )}
+              <div style={{ marginBottom: '15px' }}>{message}</div>
+              {afterMessageContent && <div>{afterMessageContent}</div>}
               {(primaryButtonLabel || secondaryButtonLabel) && (
-                <div className='centered'>
+                <div className="centered">
                   {secondaryButtonLabel && (
-                    <div 
+                    <div
                       onClick={() => {
                         if (secondaryButtonCallback) {
-                          secondaryButtonCallback();
+                          secondaryButtonCallback()
                         }
-                      }} 
-                      className='modal-button secondary-button border-red'
+                      }}
+                      className="modal-button secondary-button border-red"
                     >
                       {secondaryButtonLabel}
                     </div>
                   )}
                   {primaryButtonLabel && (
-                    <div 
+                    <div
                       onClick={() => {
                         if (primaryButtonCallback) {
-                          primaryButtonCallback();
+                          primaryButtonCallback()
                         }
-                      }} 
-                      className='modal-button primary-button border-red'
+                      }}
+                      className="modal-button primary-button border-red"
                     >
                       {primaryButtonLabel}
                     </div>
                   )}
-              </div>
+                </div>
               )}
               {closeButtonCallback && (
                 <IoIosClose
-                 onClick={() => closeButtonCallback()}
-                 className='close'
+                  onClick={() => closeButtonCallback()}
+                  className="close"
                 />
               )}
             </div>
-        </div>
+          </div>
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
-export default Modal;
+export default Modal

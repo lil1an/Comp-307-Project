@@ -1,3 +1,4 @@
+// Vincent St-Pierre
 import NavBar from '../components/NavBar'
 import '../css/registration-page.css'
 import React, { useState } from 'react'

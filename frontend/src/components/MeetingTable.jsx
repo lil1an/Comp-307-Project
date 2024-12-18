@@ -1,3 +1,4 @@
+// Lian Lambert
 import React, { useState, useEffect } from 'react'
 import MeetingRowComponent from './MeetingRowComponent'
 import '../css/meeting-table.css'

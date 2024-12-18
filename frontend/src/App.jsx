@@ -1,3 +1,4 @@
+// Lilan Forsyth
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import LandingPage from './pages/LandingPage'
 import EditPage from './pages/EditPage'
@@ -21,7 +22,10 @@ function App() {
         <Route path="/registration" element={<RegistrationPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/meetings/:meetingId" element={<BookingPage />} />
-        <Route path="/meetings/:meetingId/request" element={<RequestBookingPage />} />
+        <Route
+          path="/meetings/:meetingId/request"
+          element={<RequestBookingPage />}
+        />
       </Routes>
     </Router>
   )

@@ -1,23 +1,24 @@
-import React from 'react';
+// Lian Lambert
+import React from 'react'
 import { Link } from 'react-router-dom'
-import '../index.css';
-import '../css/meeting-row-component.css';
-import { CgProfile } from "react-icons/cg";
-import { MdEdit } from "react-icons/md";
-import { FaCopy } from "react-icons/fa";
-import { IoMdClose } from "react-icons/io";
-import { FaCheck } from "react-icons/fa6";
+import '../index.css'
+import '../css/meeting-row-component.css'
+import { CgProfile } from 'react-icons/cg'
+import { MdEdit } from 'react-icons/md'
+import { FaCopy } from 'react-icons/fa'
+import { IoMdClose } from 'react-icons/io'
+import { FaCheck } from 'react-icons/fa6'
 
 // NOTE: meeting types are 'Upcoming', 'Hosting', 'Requests', 'Past' or 'Declined'
 
-const MeetingRowComponent = ({ 
+const MeetingRowComponent = ({
   userId,
-  meeting, 
-  typeOfMeeting, 
-  meetingDeclineCallback, 
-  requestDeclineCallback, 
+  meeting,
+  typeOfMeeting,
+  meetingDeclineCallback,
+  requestDeclineCallback,
   requestAcceptCallback,
-  meetingCancelCallback
+  meetingCancelCallback,
 }) => {
   const {
     requestId,
@@ -69,33 +70,31 @@ const MeetingRowComponent = ({
               <CgProfile style={{ height: '50px', width: '50px' }} />
             )}
           </span>
-          {typeOfMeeting !== 'Hosting' && 
+          {typeOfMeeting !== 'Hosting' && (
             <div>
               {starttime}-{endtime}
               <div className="subtitle">{formattedDate}</div>
             </div>
-          }
+          )}
         </div>
         <div className="meeting-row-title-container">
-          <a 
-            href={`/meetings/${id || meeting._id}`} 
-            target="_blank" 
-            rel="noopener noreferrer" 
+          <a
+            href={`/meetings/${id || meeting._id}`}
+            target="_blank"
+            rel="noopener noreferrer"
             style={{ color: 'black', textDecoration: 'none' }}
           >
             {title}
           </a>
-          {typeOfMeeting !== 'Hosting' &&
+          {typeOfMeeting !== 'Hosting' && (
             <div className="subtitle">
-              { 
-                userIsHostingMeeting 
-                  ? `Attendee: ${attendeeName}` 
-                  : (typeOfMeeting === 'Requests' || typeOfMeeting === 'Declined') 
-                    ? `Requested by: ${hostName}` 
-                    : `Host: ${hostName}`
-              }
+              {userIsHostingMeeting
+                ? `Attendee: ${attendeeName}`
+                : typeOfMeeting === 'Requests' || typeOfMeeting === 'Declined'
+                ? `Requested by: ${hostName}`
+                : `Host: ${hostName}`}
             </div>
-          }
+          )}
         </div>
       </div>
       <div className="meeting-row-button-container">
@@ -117,23 +116,30 @@ const MeetingRowComponent = ({
                 <div
                   className="meeting-row-button"
                   onClick={() =>
-                    copyToClipboard(`${window.location.origin}/meetings/${id || meeting._id}`)
+                    copyToClipboard(
+                      `${window.location.origin}/meetings/${id || meeting._id}`
+                    )
                   }
                 >
                   <FaCopy />
                 </div>
               </>
             )}
-            {(typeOfMeeting !== 'Hosting') && (
+            {typeOfMeeting !== 'Hosting' && (
               <div
                 className="meeting-row-button red-background"
                 onClick={() =>
                   userIsHostingMeeting
-                    ? meetingCancelCallback(id || meeting._id, date, starttime, endtime)
+                    ? meetingCancelCallback(
+                        id || meeting._id,
+                        date,
+                        starttime,
+                        endtime
+                      )
                     : meetingDeclineCallback(id, date, starttime, endtime)
                 }
               >
-              <IoMdClose />
+                <IoMdClose />
               </div>
             )}
           </>
@@ -175,6 +181,6 @@ const MeetingRowComponent = ({
       </div>
     </div>
   )
-};
+}
 
-export default MeetingRowComponent;
+export default MeetingRowComponent

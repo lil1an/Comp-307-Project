@@ -1,3 +1,4 @@
+// Lilan Forsyth
 import React from 'react'
 import TimeDropdown from './DropDown'
 import SaveCancelButtons from './SaveCancelButtons'
@@ -51,7 +52,6 @@ const EventDetails = ({ eventDetails, setEventDetails }) => {
             }
           />
         </div>
-
       </div>
     </div>
   )
