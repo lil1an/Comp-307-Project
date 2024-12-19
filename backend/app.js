@@ -14,7 +14,7 @@ import meetingRoutes from './routes/meetingRoutes.js'
 import requestRoutes from './routes/requestRoutes.js'
 import notificationRoutes from './routes/notificationRoutes.js'
 
-// Import models
+// // Import models
 import User from './models/User.js'
 import { hostname } from 'os'
 
@@ -37,20 +37,18 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cors({ origin: true, credentials: true }))
 
 // Routes
-app.use('/api/users', userRoutes)
-app.use('/api/meetings', meetingRoutes)
-app.use('/api/requests', requestRoutes)
-app.use('/api/notifications', notificationRoutes)
+app.use('/server/users', userRoutes)
+app.use('/server/meetings', meetingRoutes)
+app.use('/server/requests', requestRoutes)
+app.use('/server/notifications', notificationRoutes)
 
 // Serve Frontend Static Build Files
 const __dirname = path.resolve() // Set __dirname for ES module compatibility
 
 app.use(express.static(path.join(__dirname, '../frontend/build')))
 
-app.get('*', (req, res) => {
-  if (!req.path.startsWith('/api')) {
-    res.sendFile(path.join(__dirname, '../frontend/build/index.html'))
-  }
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/build/index.html'))
 })
 
 // Start the server
