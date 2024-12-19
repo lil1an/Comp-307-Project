@@ -79,7 +79,7 @@ const MeetingTable = ({
     try {
       // get the meeting
       const meeting = await axios.get(
-        `/api/meetings/${selectedMeetingOrRequest}`
+        `/server/meetings/${selectedMeetingOrRequest}`
       )
 
       // find the booking to remove
@@ -97,7 +97,7 @@ const MeetingTable = ({
         console.log('Booking removed:', meeting.data.bookings)
 
         // send the updated meeting data back to backend
-        await axios.put(`/api/meetings/${selectedMeetingOrRequest}`, {
+        await axios.put(`/server/meetings/${selectedMeetingOrRequest}`, {
           bookings: meeting.data.bookings,
         })
 
@@ -125,7 +125,7 @@ const MeetingTable = ({
     try {
       // get the meeting/attendee
       const meeting = await axios.get(
-        `/api/meetings/${selectedMeetingOrRequest}`
+        `/server/meetings/${selectedMeetingOrRequest}`
       )
 
       // find the booking to remove
@@ -142,7 +142,7 @@ const MeetingTable = ({
         console.log('Booking removed:', meeting.data.bookings)
 
         // send the updated meeting data back to backend
-        await axios.put(`/api/meetings/${selectedMeetingOrRequest}`, {
+        await axios.put(`/server/meetings/${selectedMeetingOrRequest}`, {
           bookings: meeting.data.bookings,
         })
 
@@ -174,7 +174,7 @@ const MeetingTable = ({
 
   const handleRequestDeclineConfirm = async () => {
     try {
-      await axios.put(`/api/requests/${selectedMeetingOrRequest}`, {
+      await axios.put(`/server/requests/${selectedMeetingOrRequest}`, {
         userAnsweringResponse: false,
       })
     } catch (error) {
@@ -200,7 +200,7 @@ const MeetingTable = ({
   const handleRequestAcceptConfirm = async () => {
     // first get the request object
     const requestObject = await axios.get(
-      `/api/requests/${selectedMeetingOrRequest}`
+      `/server/requests/${selectedMeetingOrRequest}`
     )
     if (!requestObject || !requestObject.data || !requestObject.data.meeting) {
       throw new Error('Request not found.')
@@ -208,7 +208,7 @@ const MeetingTable = ({
 
     // next, create the new booking
     const meetingObject = await axios.get(
-      `/api/meetings/${requestObject.data.meeting}`
+      `/server/meetings/${requestObject.data.meeting}`
     )
 
     if (!meetingObject || !meetingObject.data) {
@@ -223,13 +223,13 @@ const MeetingTable = ({
     }
     const updatedBookings = [...meetingObject.data.bookings, newBooking]
 
-    await axios.put(`/api/meetings/${requestObject.data.meeting}`, {
+    await axios.put(`/server/meetings/${requestObject.data.meeting}`, {
       bookings: updatedBookings,
     })
 
     // finally, delete the request
     try {
-      await axios.delete(`/api/requests/${selectedMeetingOrRequest}`)
+      await axios.delete(`/server/requests/${selectedMeetingOrRequest}`)
     } catch (error) {
       throw new Error('Error deleting request.')
     }
@@ -237,9 +237,9 @@ const MeetingTable = ({
     // Creating a notification for the attendee
     try {
       const attendeeData = await axios.get(
-        `/api/users/${requestObject.data.userAskingAccount}`
+        `/server/users/${requestObject.data.userAskingAccount}`
       )
-      const currentUserData = await axios.get(`/api/users/${userId}`)
+      const currentUserData = await axios.get(`/server/users/${userId}`)
 
       const notificationData = {
         time: new Date(),
@@ -248,14 +248,14 @@ const MeetingTable = ({
         meeting: `${meetingObject.data._id}`,
         type: 'Request Update',
       }
-      await axios.post('/api/notifications/create', notificationData)
+      await axios.post('/server/notifications/create', notificationData)
 
       // New notification for attendee toggle.
       const updatedUserData = {
         ...currentUserData,
         hasUnreadNotification: true,
       }
-      await axios.put(`/api/users/${userId}`, updatedUserData)
+      await axios.put(`/server/users/${userId}`, updatedUserData)
     } catch (error) {
       console.log(error)
       throw new Error('Error creating notification')

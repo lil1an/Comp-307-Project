@@ -19,7 +19,7 @@ function HomePage() {
     // Let's avoid giving access to user data directly.
     if (id) {
       axios
-        .get(`/api/users/${id}`)
+        .get(`/server/users/${id}`)
         .then((res) => {
           setFirstName(res.data.firstName)
         })

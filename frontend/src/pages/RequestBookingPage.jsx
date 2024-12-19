@@ -70,7 +70,7 @@ const RequestBookingPage = () => {
   // Function to fetch meeting data
   const fetchMeetingData = async () => {
     try {
-      const response = await axios.get(`/api/meetings/${meetingId}`)
+      const response = await axios.get(`/server/meetings/${meetingId}`)
       const meeting = response.data
       setMeetingData(meeting)
       const currentDate = format(new Date(), 'yyyy-MM-dd')
@@ -81,7 +81,7 @@ const RequestBookingPage = () => {
       }
 
       if (meeting.host) {
-        const hostResponse = await axios.get(`/api/users/${meeting.host}`)
+        const hostResponse = await axios.get(`/server/users/${meeting.host}`)
         setHostData(hostResponse.data)
       }
 
@@ -147,7 +147,7 @@ const RequestBookingPage = () => {
         ),
       }
 
-      const response = await axios.post('/api/requests/create', newRequest)
+      const response = await axios.post('/server/requests/create', newRequest)
       console.log('Response:', response.data)
       alert('Your request to meet was sent successfully!')
       return response.data
@@ -180,7 +180,7 @@ const RequestBookingPage = () => {
 
       const updatedBookings = [...meetingData.bookings, newBooking]
 
-      await axios.put(`/api/meetings/${meetingId}`, {
+      await axios.put(`/server/meetings/${meetingId}`, {
         bookings: updatedBookings,
       })
 

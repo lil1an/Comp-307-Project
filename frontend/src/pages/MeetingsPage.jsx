@@ -26,11 +26,11 @@ function MeetingsPage() {
         declinedRequestsResponse,
         meetingsPastResponse,
       ] = await Promise.all([
-        axios.get(`/api/meetings/upcoming/${userId}`),
-        axios.get(`/api/meetings/hosted/${userId}`),
-        axios.get(`/api/requests/unanswered/${userId}`),
-        axios.get(`/api/requests/declined/${userId}`),
-        axios.get(`/api/meetings/past/${userId}`),
+        axios.get(`/server/meetings/upcoming/${userId}`),
+        axios.get(`/server/meetings/hosted/${userId}`),
+        axios.get(`/server/requests/unanswered/${userId}`),
+        axios.get(`/server/requests/declined/${userId}`),
+        axios.get(`/server/meetings/past/${userId}`),
       ])
 
       // console.log('frontend upcoming', meetingsUpcomingResponse?.data);
